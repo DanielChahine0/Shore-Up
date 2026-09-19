@@ -7,8 +7,8 @@ export function DonateFab({ onClick }: { onClick: () => void }) {
       type="button"
       onClick={onClick}
       aria-label="Donate"
-      className="glass absolute right-4 z-10 flex h-12 w-12 items-center justify-center rounded-full text-foam transition-[bottom] duration-300 hover:text-shell"
-      style={{ bottom: "calc(var(--sheet-offset, 0px) + 44px)" }}
+      className="glass absolute z-10 flex h-12 w-12 items-center justify-center rounded-full text-foam transition-[bottom,right] duration-300 hover:text-shell"
+      style={{ bottom: "calc(var(--sheet-offset, 0px) + 44px)", right: "calc(var(--panel-offset, 0px) + 16px)" }}
     >
       <HeartIcon className="h-5 w-5" />
     </button>

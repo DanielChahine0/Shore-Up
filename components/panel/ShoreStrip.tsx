@@ -18,7 +18,7 @@ export function ShoreStrip({ zones, activeZoneId, onFocusZone }: Props) {
               key={zone.zoneId}
               type="button"
               role="listitem"
-              onPointerEnter={() => onFocusZone(zone.zoneId)}
+              onPointerEnter={(e) => e.pointerType === "mouse" && onFocusZone(zone.zoneId)}
               onPointerLeave={() => onFocusZone(null)}
               onFocus={() => onFocusZone(zone.zoneId)}
               onBlur={() => onFocusZone(null)}

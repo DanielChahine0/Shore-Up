@@ -81,6 +81,7 @@ Map data is (c) OpenStreetMap contributors, credited in the map attribution.
 | `pnpm dev` | Dev server |
 | `pnpm build` / `pnpm start` | Production build and server |
 | `pnpm test` | Unit tests (score rules, zone splitting) |
+| `pnpm test:e2e` | Playwright end-to-end tests on desktop and phone sizes. Needs a Mapbox token and reuses `pnpm dev` if it is running |
 | `pnpm lint` / `pnpm typecheck` | ESLint and TypeScript |
 | `pnpm fetch:beaches` | Pull beach polygons from OpenStreetMap |
 | `pnpm gen:demo` | Generate demo zone state |

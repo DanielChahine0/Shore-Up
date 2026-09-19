@@ -1,6 +1,9 @@
 /** Camera and style constants for the globe. */
 
-export const GLOBE_VIEW = { center: [-40, 28] as [number, number], zoom: 1.6, pitch: 0, bearing: 0 };
+/** The whole globe, sized to fit the viewport: phones need a lower zoom to show the full sphere. */
+export function globeView(viewportWidth: number) {
+  return { center: [-40, 28] as [number, number], zoom: viewportWidth < 640 ? 0.7 : 1.6, pitch: 0, bearing: 0 };
+}
 
 /** Camera flights take 2 to 3 seconds. */
 export const FLIGHT_MS = 2600;

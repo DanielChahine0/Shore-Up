@@ -29,7 +29,7 @@ export function BeachPanel({ beach, score, error, activeZoneId, expanded, onTogg
   return (
     <aside
       aria-label={`${beach.name} details`}
-      className={`glass fade-in fixed inset-x-0 bottom-0 z-10 flex flex-col rounded-t-3xl transition-[max-height] duration-300 ease-out sm:absolute sm:inset-x-auto sm:bottom-4 sm:right-4 sm:top-[76px] sm:w-[380px] sm:max-h-none sm:rounded-3xl ${expanded ? "max-h-[82dvh]" : "max-h-[var(--sheet-peek)]"}`}
+      className={`glass glass-panel fade-in fixed inset-x-0 bottom-0 z-10 flex flex-col rounded-t-3xl transition-[max-height] duration-300 ease-out sm:absolute sm:inset-x-auto sm:bottom-4 sm:right-4 sm:top-[76px] sm:w-[380px] sm:max-h-none sm:rounded-3xl ${expanded ? "max-h-[var(--sheet-expanded)]" : "max-h-[var(--sheet-peek)]"}`}
     >
       <button
         type="button"
@@ -69,9 +69,9 @@ export function BeachPanel({ beach, score, error, activeZoneId, expanded, onTogg
           <>
             <div className="mt-4 flex items-center gap-3">
               <ScoreBadge score={score.score} size="lg" />
-              <span className="text-sm text-mist">overall, across {score.zones.length} zones</span>
+              <span className="whitespace-nowrap text-sm text-mist">across {score.zones.length} zones</span>
               {score.hasDemoData && (
-                <span className="ml-auto rounded-full border border-line px-2 py-0.5 text-[11px] text-mist">{SOURCE_LABELS.demo}</span>
+                <span className="ml-auto whitespace-nowrap rounded-full border border-line px-2 py-0.5 text-[11px] text-mist">{SOURCE_LABELS.demo}</span>
               )}
             </div>
 
@@ -81,14 +81,14 @@ export function BeachPanel({ beach, score, error, activeZoneId, expanded, onTogg
 
             <p className="mt-4 text-sm leading-relaxed text-shell">{score.reason}</p>
 
-            <div className="mt-5 grid grid-cols-3 gap-2">
-              <button type="button" onClick={() => onAction("join")} className="rounded-full bg-foam px-2 py-2 text-[13px] font-semibold text-foam-deep">
+            <div className="mt-5 grid grid-cols-2 gap-2">
+              <button type="button" onClick={() => onAction("join")} className="col-span-2 h-10 rounded-full bg-foam text-sm font-semibold text-foam-deep">
                 Join a cleanup
               </button>
-              <button type="button" onClick={() => onAction("post")} className="rounded-full border border-foam/60 px-2 py-2 text-[13px] font-semibold text-foam">
+              <button type="button" onClick={() => onAction("post")} className="h-10 rounded-full border border-foam/60 text-sm font-semibold text-foam">
                 Post a cleanup
               </button>
-              <button type="button" onClick={() => onAction("donate")} className="rounded-full border border-foam/60 px-2 py-2 text-[13px] font-semibold text-foam">
+              <button type="button" onClick={() => onAction("donate")} className="h-10 rounded-full border border-foam/60 text-sm font-semibold text-foam">
                 Donate
               </button>
             </div>

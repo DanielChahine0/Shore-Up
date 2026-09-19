@@ -11,7 +11,8 @@
     "fetch:beaches": "tsx scripts/fetch-beaches.ts",
     "seed": "tsx scripts/seed.ts",
     "typecheck": "next typegen && tsc --noEmit",
-    "gen:demo": "tsx scripts/gen-demo-state.ts"
+    "gen:demo": "tsx scripts/gen-demo-state.ts",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

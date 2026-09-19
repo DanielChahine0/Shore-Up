@@ -25,6 +25,7 @@ export function SearchBar({ beaches, token, onPickBeach, onPickPlace }: Props) {
   const [active, setActive] = useState(0);
   const listId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const q = normalize(query.trim());
   const beachHits = useMemo(
@@ -78,6 +79,8 @@ export function SearchBar({ beaches, token, onPickBeach, onPickPlace }: Props) {
 
   const pick = (option: Option) => {
     setOpen(false);
+    // Drop focus so a phone keyboard closes and the flight is visible.
+    inputRef.current?.blur();
     if (option.kind === "beach") {
       setQuery(option.beach.name);
       onPickBeach(option.beach.id);
@@ -104,9 +107,10 @@ export function SearchBar({ beaches, token, onPickBeach, onPickPlace }: Props) {
 
   return (
     <div ref={rootRef} className="relative min-w-0 flex-1 sm:w-80 sm:flex-none">
-      <label className="glass flex h-11 items-center gap-2 rounded-full px-4">
+      <label className="glass flex h-11 items-center gap-2 rounded-full px-4 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-foam">
         <SearchIcon className="h-4 w-4 shrink-0 text-mist" />
         <input
+          ref={inputRef}
           type="search"
           role="combobox"
           aria-expanded={showList}
@@ -123,7 +127,7 @@ export function SearchBar({ beaches, token, onPickBeach, onPickPlace }: Props) {
           }}
           onFocus={() => setOpen(true)}
           onKeyDown={onKeyDown}
-          className="w-full min-w-0 bg-transparent text-sm text-shell placeholder:text-mist focus:outline-none [&::-webkit-search-cancel-button]:hidden"
+          className="w-full min-w-0 bg-transparent text-sm text-shell placeholder:text-mist outline-none [&::-webkit-search-cancel-button]:hidden"
         />
       </label>
 

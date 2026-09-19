@@ -45,3 +45,10 @@ next-env.d.ts
 
 # OSM fetch cache
 .cache/
+
+# browser test output
+.playwright-mcp/
+
+# playwright
+test-results/
+playwright-report/

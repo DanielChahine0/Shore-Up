@@ -16,7 +16,8 @@ import { MissingToken } from "./MissingToken";
 import { ZoneTooltip } from "./ZoneTooltip";
 
 const SHEET_PEEK_PX = 264;
-const SHEET_EXPANDED = "82dvh";
+/** Short enough that the donate button and map attribution stay below the top bar. */
+const SHEET_EXPANDED = "62dvh";
 const PANEL_WIDTH_PX = 380 + 16;
 const DESKTOP_QUERY = "(min-width: 640px)";
 
@@ -124,6 +125,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   if (!mapboxToken) return <MissingToken />;
 
   const sheetOffset = !isDesktop && selected ? (sheetExpanded ? SHEET_EXPANDED : `${SHEET_PEEK_PX}px`) : "0px";
+  const panelOffset = isDesktop && selected ? `${PANEL_WIDTH_PX + 8}px` : "0px";
   const activeZoneId = hover?.zoneId ?? panelZoneId;
   const hoveredZone = hover && detail ? detail.score.zones.find((z) => z.zoneId === hover.zoneId) : undefined;
   const awayFromGlobe = Boolean(selected || placeCamera);
@@ -131,7 +133,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   return (
     <main
       className="relative h-dvh w-full overflow-hidden bg-abyss"
-      style={{ "--sheet-offset": sheetOffset, "--sheet-peek": `${SHEET_PEEK_PX}px` } as React.CSSProperties}
+      style={{ "--sheet-offset": sheetOffset, "--panel-offset": panelOffset, "--sheet-peek": `${SHEET_PEEK_PX}px`, "--sheet-expanded": SHEET_EXPANDED } as React.CSSProperties}
     >
       <MapCanvas
         token={mapboxToken}

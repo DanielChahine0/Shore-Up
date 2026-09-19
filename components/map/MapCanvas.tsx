@@ -4,7 +4,7 @@ import mapboxgl, { type GeoJSONSource, type Map as MapboxMap } from "mapbox-gl";
 import { useEffect, useRef } from "react";
 import type { BeachSummary } from "@/lib/beaches";
 import type { BeachDetail } from "@/lib/beachDetail";
-import { FLIGHT_MS, GLOBE_VIEW, NEUTRAL, SATELLITE_FADE, SPIN_DEG_PER_SEC, SPIN_MAX_ZOOM } from "./mapConfig";
+import { FLIGHT_MS, globeView, NEUTRAL, SATELLITE_FADE, SPIN_DEG_PER_SEC, SPIN_MAX_ZOOM } from "./mapConfig";
 
 export type CameraCommand =
   | { kind: "beach"; bounds: [number, number, number, number] }
@@ -36,6 +36,7 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
   const mapRef = useRef<MapboxMap | null>(null);
   const readyRef = useRef(false);
   const spinningRef = useRef(true);
+  const startSpinRef = useRef<() => void>(() => {});
   const latest = useRef({ onSelectBeach, onZoneHover, onReady, padding, selectedId, detail, camera });
   // Map event handlers outlive renders, so they read the newest props through this ref.
   useEffect(() => {
@@ -46,36 +47,50 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
   useEffect(() => {
     if (!containerRef.current) return;
     mapboxgl.accessToken = token;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const startsOnBeach = latest.current.camera?.kind === "beach";
     const map = new mapboxgl.Map({
       container: containerRef.current,
       style: "mapbox://styles/mapbox/dark-v11",
       projection: "globe",
-      ...GLOBE_VIEW,
+      ...globeView(window.innerWidth),
       attributionControl: false,
       logoPosition: "bottom-left",
     });
     mapRef.current = map;
     spinningRef.current = !startsOnBeach;
+    // Handle for end-to-end tests and debugging. Never present in production builds.
+    if (process.env.NODE_ENV !== "production") (window as unknown as { __shoreMap?: MapboxMap }).__shoreMap = map;
     map.addControl(
       new mapboxgl.AttributionControl({ compact: true, customAttribution: "Beach shapes © OpenStreetMap contributors" }),
       "bottom-right",
     );
 
-    const spin = () => {
-      if (!spinningRef.current || map.getZoom() > SPIN_MAX_ZOOM) return;
-      const center = map.getCenter();
-      center.lng -= SPIN_DEG_PER_SEC;
-      map.easeTo({ center, duration: 1000, easing: (t) => t });
-    };
-    // The globe rotates until the user touches it.
-    const stopSpin = () => {
+    // The globe rotates until the user touches it. Rotation is timed per frame so the speed is exact.
+    let spinFrame = 0;
+    let lastTick = 0;
+    const spin = (now: number) => {
+      spinFrame = 0;
       if (!spinningRef.current) return;
+      const dt = lastTick ? Math.min(now - lastTick, 100) / 1000 : 0;
+      lastTick = now;
+      if (!map.isMoving() && map.getZoom() <= SPIN_MAX_ZOOM) {
+        const center = map.getCenter();
+        center.lng -= SPIN_DEG_PER_SEC * dt;
+        map.jumpTo({ center });
+      }
+      spinFrame = requestAnimationFrame(spin);
+    };
+    const startSpin = () => {
+      if (spinFrame || !spinningRef.current || reducedMotion) return;
+      lastTick = 0;
+      spinFrame = requestAnimationFrame(spin);
+    };
+    startSpinRef.current = startSpin;
+    const stopSpin = () => {
       spinningRef.current = false;
-      map.stop();
     };
     for (const evt of ["mousedown", "touchstart", "wheel"] as const) map.on(evt, stopSpin);
-    map.on("moveend", spin);
 
     map.on("style.load", () => {
       map.setFog({
@@ -85,6 +100,10 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
         "space-color": "rgb(3, 8, 15)",
         "star-intensity": 0.55,
       });
+
+      // Tint the base style toward the ocean: navy water, slightly lighter land.
+      if (map.getLayer("water")) map.setPaintProperty("water", "fill-color", "rgb(9, 30, 50)");
+      if (map.getLayer("land")) map.setPaintProperty("land", "background-color", "rgb(22, 40, 56)");
 
       // Satellite imagery fades in by zoom. No style swap, so custom layers survive.
       const firstSymbol = map.getStyle().layers?.find((l) => l.type === "symbol")?.id;
@@ -222,17 +241,19 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
       applySelection(map, latest.current.selectedId);
       if (latest.current.camera) runCamera(map, latest.current.camera, latest.current.padding, false);
       latest.current.onReady();
-      spin();
+      startSpin();
     });
 
     map.on("click", "beach-clusters", (e) => {
       const feature = e.features?.[0];
       const clusterId = feature?.properties?.cluster_id;
       if (clusterId == null || feature?.geometry.type !== "Point") return;
-      const center = feature.geometry.coordinates as [number, number];
-      (map.getSource("beaches") as GeoJSONSource).getClusterExpansionZoom(clusterId, (err, zoom) => {
-        if (err || zoom == null) return;
-        map.easeTo({ center, zoom: zoom + 0.5, duration: 1400 });
+      // Fly to the area that holds every beach in the cluster, not just one zoom level in.
+      (map.getSource("beaches") as GeoJSONSource).getClusterLeaves(clusterId, Infinity, 0, (err, leaves) => {
+        if (err || !leaves?.length) return;
+        const bounds = new mapboxgl.LngLatBounds();
+        for (const leaf of leaves) if (leaf.geometry.type === "Point") bounds.extend(leaf.geometry.coordinates as [number, number]);
+        map.fitBounds(bounds, { padding: withMargin(latest.current.padding, 120), maxZoom: 12, duration: 2000 });
       });
     });
     map.on("click", "beach-dots", (e) => {
@@ -263,6 +284,7 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
 
     return () => {
       readyRef.current = false;
+      cancelAnimationFrame(spinFrame);
       map.remove();
       mapRef.current = null;
     };
@@ -283,6 +305,7 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
     if (!map || !readyRef.current || !camera) return;
     spinningRef.current = camera.kind === "globe";
     runCamera(map, camera, latest.current.padding, true);
+    startSpinRef.current();
   }, [camera]);
 
   useEffect(() => {
@@ -294,7 +317,12 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
     };
   }, [highlightZoneId]);
 
-  return <div ref={containerRef} className="absolute inset-0" role="application" aria-label="Globe and beach map" />;
+  // Mapbox's stylesheet forces `position: relative` on its container, so the sizing lives on a wrapper.
+  return (
+    <div className="absolute inset-0">
+      <div ref={containerRef} className="h-full w-full" role="application" aria-label="Globe and beach map" />
+    </div>
+  );
 }
 
 function applySelection(map: MapboxMap, selectedId: string | null) {
@@ -322,7 +350,7 @@ function applyDetail(map: MapboxMap, detail: BeachDetail | null) {
 function runCamera(map: MapboxMap, camera: CameraCommand, padding: Props["padding"], animate: boolean) {
   const duration = animate ? FLIGHT_MS : 0;
   if (camera.kind === "globe") {
-    map.flyTo({ ...GLOBE_VIEW, duration, padding: { top: 0, right: 0, bottom: 0, left: 0 } });
+    map.flyTo({ ...globeView(window.innerWidth), duration, padding: { top: 0, right: 0, bottom: 0, left: 0 } });
     return;
   }
   if (camera.bounds) {

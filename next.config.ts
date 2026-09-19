@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // The dev badge sits on top of the Mapbox logo, which must stay visible.
+  devIndicators: false,
 };
 
 export default nextConfig;

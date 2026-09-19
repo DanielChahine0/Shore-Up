@@ -47,6 +47,13 @@ The simplest option was chosen each time.
 - **The map lives in a shared layout** for `/` and `/beach/[id]`, so selecting a beach moves the camera instead of reloading the globe.
 - **The selected beach swaps its dot for the outline and zones.**
   Every other beach stays a neutral dot at every zoom level.
+- **Clicking a cluster flies to the area covering all of its beaches**, not just one zoom level in.
+- **The globe rotates at 3 degrees per second, timed per frame**, and is sized down on phones so the whole sphere fits.
+- **The phone bottom sheet expands to 62% of the screen.**
+  Any taller and the donate button and the required Mapbox logo and attribution would slide under the top bar.
+- **On desktop, the donate button and attribution slide left of the open side panel** so neither is covered.
+- **The beach panel is nearly opaque** rather than frosted, because long text over satellite imagery was hard to read.
+- **`window.__shoreMap` exposes the map in development only**, for debugging and tests.
 - **Camera flights are 2.6 seconds** and are skipped for users who prefer reduced motion.
 
 ## Product

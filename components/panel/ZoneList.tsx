@@ -10,7 +10,7 @@ export function ZoneList({ zones, activeZoneId, onFocusZone }: Props) {
       {zones.map((zone) => (
         <li
           key={zone.zoneId}
-          onPointerEnter={() => onFocusZone(zone.zoneId)}
+          onPointerEnter={(e) => e.pointerType === "mouse" && onFocusZone(zone.zoneId)}
           onPointerLeave={() => onFocusZone(null)}
           className={`flex items-center justify-between gap-3 px-1 py-2.5 ${activeZoneId === zone.zoneId ? "bg-tide/40" : ""}`}
         >

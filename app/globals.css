@@ -32,9 +32,17 @@ body {
   box-shadow: 0 12px 40px rgb(2 8 14 / 0.45);
 }
 
-:focus-visible {
-  outline: 2px solid var(--color-foam);
-  outline-offset: 2px;
+/* Panels that hold long text sit over busy satellite imagery, so they are nearly opaque. */
+.glass-panel {
+  background: rgb(9 26 42 / 0.97);
+}
+
+/* In the base layer so component utilities (like the search input's own ring) can override it. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-foam);
+    outline-offset: 2px;
+  }
 }
 
 .fade-in {
@@ -50,7 +58,11 @@ body {
 .mapboxgl-ctrl-bottom-left,
 .mapboxgl-ctrl-bottom-right {
   bottom: var(--sheet-offset, 0px);
-  transition: bottom 300ms ease;
+  transition: bottom 300ms ease, right 300ms ease;
+}
+/* On desktop the attribution slides left of the open side panel. */
+.mapboxgl-ctrl-bottom-right {
+  right: var(--panel-offset, 0px);
 }
 .mapboxgl-ctrl-attrib.mapboxgl-compact {
   background: rgb(9 26 42 / 0.72);
