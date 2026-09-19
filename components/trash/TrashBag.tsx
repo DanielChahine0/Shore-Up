@@ -16,6 +16,9 @@ const ROWS = [
 const TOKEN = 15;
 const SPACING = 19;
 const ORDER = TRASH_ITEMS.map((item) => item.key);
+/** The surface of the fill: two full waves wider than the bag, so it can slide one wave sideways without a gap. */
+const WAVE = "M-40 0q10-3 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0V120H-40Z";
+const WAVE_LINE = "M-40 0q10-3 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0";
 
 /** One icon per item collected, most-collected first, up to what the bag can show. */
 function tokensFor(counts: TrashCounts): TrashItemKey[] {
@@ -64,27 +67,39 @@ export function TrashBag({ counts }: { counts: TrashCounts }) {
         </clipPath>
       </defs>
 
-      {/* Tie at the neck. */}
-      <path d="M44 6c8-5 24-5 32 0l-4 14H48Z" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinejoin="round" />
-
       <g clipPath="url(#trash-bag-body)">
         <rect x="0" y="0" width="120" height="116" className="fill-surface" />
-        <rect x="0" y={fillTop} width="120" height="116" className="fill-brand-strong/25 transition-[y] duration-300 ease-out" />
-        {/* A line at the top of the fill, so the level reads without relying on the tint. */}
-        <rect x="0" y={fillTop} width="120" height="2" className="fill-brand-strong transition-[y] duration-300 ease-out" />
+        {/* The level rises with a little overshoot, and the surface sloshes once per change, then rests. */}
+        <g className="bag-level" style={{ transform: `translateY(${fillTop}px)` }}>
+          <g key={total} className="bag-slosh">
+            <path d={WAVE} className="fill-brand-strong/25" />
+            {/* A line along the surface, so the level reads without relying on the tint. */}
+            <path d={WAVE_LINE} fill="none" strokeWidth="2" className="stroke-brand-strong" />
+          </g>
+        </g>
+        {/* Slots keep their keys, so only a newly filled slot drops in. */}
         {laidOut.map((token) => {
           const Icon = TRASH_ICONS[token.key];
-          return <Icon key={token.id} x={token.x} y={token.y} width={TOKEN} height={TOKEN} className="text-brand-strong" />;
+          return (
+            <g key={token.id} className="bag-drop">
+              <Icon x={token.x} y={token.y} width={TOKEN} height={TOKEN} className="text-brand-strong" />
+            </g>
+          );
         })}
       </g>
+
+      {/* Tie and outline give a small squash as each item lands. */}
+      <g key={`outline-${total}`} className={total > 0 ? "bag-squash" : undefined}>
+        <path d="M44 6c8-5 24-5 32 0l-4 14H48Z" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinejoin="round" />
 
       <path
         d="M48 20C26 32 18 60 20 80c2 20 18 30 40 30s38-10 40-30c2-20-6-48-28-60Z"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2.4"
-        strokeLinejoin="round"
-      />
+          strokeWidth="2.4"
+          strokeLinejoin="round"
+        />
+      </g>
     </svg>
   );
 }
@@ -94,7 +109,9 @@ export function BagTotal({ counts }: { counts: TrashCounts }) {
   const total = totalItems(counts);
   return (
     <p aria-hidden className="text-2xl font-semibold tracking-tight text-ink">
-      {itemLabel(total)}
+      <span key={total} className={`inline-block ${total > 0 ? "bag-count" : ""}`}>
+        {itemLabel(total)}
+      </span>
       <span className="ml-2 align-middle text-sm font-normal text-ink-soft">in the bag</span>
     </p>
   );

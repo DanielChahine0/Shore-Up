@@ -11,6 +11,18 @@ export function SearchIcon({ className }: IconProps) {
   );
 }
 
+/** Two people, traced from the owner's community icon. Solid, unlike the line icons, to match the source. */
+export function CommunityIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+      <circle cx="9.45" cy="8.13" r="4.15" />
+      <path d="M2.37 19.97a7.09 6.5 0 0 1 14.18 0Z" />
+      <path d="M14.23 5.84A3.26 3.26 0 1 1 13.86 11.06A5.3 5.3 0 0 0 14.23 5.84Z" />
+      <path d="M13.85 13.5C14.5 13.15 15.3 13 16 13c3 0 5.2 2.2 5.6 5H17.4c-.6-1.9-1.8-3.4-3.55-4.5Z" />
+    </svg>
+  );
+}
+
 export function HeartIcon({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...base}>

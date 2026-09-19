@@ -5,9 +5,8 @@ import { expect, test } from "@playwright/test";
 test("lands on the globe with signed-out chrome", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("application", { name: "Globe and beach map" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "CN: Join" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Join a community" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Sign in" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Donate" })).toBeVisible();
   await expect(page.locator(".mapboxgl-ctrl-logo")).toBeVisible();
 });
 

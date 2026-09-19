@@ -2,7 +2,6 @@
 
 import { useCallback, useRef, useState, useTransition } from "react";
 import { saveCleanSession } from "@/app/actions/sessions";
-import { DonateFab } from "@/components/chrome/DonateFab";
 import { track } from "@/lib/analytics/track";
 import { TRASH_ITEMS, totalItems, type TrashItemKey } from "@/lib/trash/config";
 import { TrashSheet } from "./TrashSheet";
@@ -15,13 +14,12 @@ export type TrashLoggerProps = {
   beach: { id: string; name: string } | null;
   signedIn: boolean;
   onToast: (message: string) => void;
-  onDonate: () => void;
 };
 
 const ITEM_NAMES = new Map<TrashItemKey, string>(TRASH_ITEMS.map((item) => [item.key, item.name]));
 
 /** Bottom-right "Log trash" button and the clean session sheet. */
-export function TrashLogger({ beach, signedIn, onToast, onDonate }: TrashLoggerProps) {
+export function TrashLogger({ beach, signedIn, onToast }: TrashLoggerProps) {
   const { session, pending, restored, start, adjust, clear, holdForSignIn, dropPending } = useCleanSession();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
@@ -104,10 +102,9 @@ export function TrashLogger({ beach, signedIn, onToast, onDonate }: TrashLoggerP
   return (
     <>
       <div
-        className="absolute z-10 flex flex-col items-end gap-3 transition-[bottom,right] duration-300"
+        className="absolute z-10 transition-[bottom,right] duration-300"
         style={{ bottom: "calc(var(--sheet-offset, 0px) + 44px)", right: "calc(var(--panel-offset, 0px) + 16px)" }}
       >
-        <DonateFab onClick={onDonate} />
         <button
           ref={triggerRef}
           type="button"

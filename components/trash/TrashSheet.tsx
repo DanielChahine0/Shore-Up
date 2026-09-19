@@ -58,11 +58,11 @@ export function TrashSheet(props: TrashSheetProps) {
       <section
         aria-label="Clean session"
         onKeyDown={(e) => e.key === "Escape" && onClose()}
-        // Desktop sits just above the two buttons, which stay where they are; the offsets keep
+        // Desktop sits just above the Log trash button, which stays where it is; the offsets keep
         // it clear of the beach panel and the map attribution.
         // Fully opaque: the beach panel sits underneath on phones and must not show through.
         style={{ background: "var(--color-surface)" }}
-        className="glass glass-panel fade-in fixed inset-x-0 bottom-0 z-20 flex max-h-[86dvh] flex-col rounded-t-3xl sm:absolute sm:inset-x-auto sm:bottom-[calc(var(--sheet-offset,0px)+164px)] sm:right-[calc(var(--panel-offset,0px)+16px)] sm:max-h-[min(calc(100dvh-256px),720px)] sm:w-[380px] sm:rounded-3xl sm:transition-[bottom,right] sm:duration-300"
+        className="glass glass-panel fade-in fixed inset-x-0 bottom-0 z-20 flex max-h-[86dvh] flex-col rounded-t-3xl sm:absolute sm:inset-x-auto sm:bottom-[calc(var(--sheet-offset,0px)+104px)] sm:right-[calc(var(--panel-offset,0px)+16px)] sm:max-h-[min(calc(100dvh-196px),720px)] sm:w-[380px] sm:rounded-3xl sm:transition-[bottom,right] sm:duration-300"
       >
         <header className="flex shrink-0 items-start justify-between gap-3 px-5 pb-1 pt-5">
           <div className="min-w-0">

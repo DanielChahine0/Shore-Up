@@ -6,12 +6,11 @@ Volunteers post cleanups, and every post shows up on the map, in their community
 
 ## Status
 
-The MVP is built in four phases.
+The MVP is built in three phases.
 
 1. Globe, search, beach selection, zones, and side panel on seed data. **Built.**
 2. Auth, profiles, and the people directory. **Built.**
 3. Communities and Community News posts, including score updates. **Built.**
-4. Stripe donations.
 
 ## Setup
 

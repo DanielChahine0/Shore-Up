@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { TopRight } from "./TopRight";
 
-/** Header for every page that is not the map. Same corners as the map: logo left, CN pill and avatar right. */
+/** Header for every page that is not the map. Same corners as the map: logo left, community button and avatar right. */
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-20 flex items-center justify-between gap-2 bg-wash/85 p-4 backdrop-blur">

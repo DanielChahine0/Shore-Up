@@ -49,7 +49,7 @@ The simplest option was chosen each time.
   It starts from Mapbox's light style and hides every layer except land, water, country borders, and country, continent, and major city labels.
   Roads, buildings, land use, points of interest, and satellite imagery are gone, so nothing competes with a beach.
   The kept layers are listed in `components/map/mapConfig.ts`.
-- **Land is a light grey-green (`#AFD0D2`) and the sea is the logo blue**, easing a little lighter as you zoom in.
+- **Land is a light grey-green (`#C7E1E3`) and the sea is the logo blue**, easing a little lighter as you zoom in.
   The sea stays darker than the land at every zoom, so the coastline never fades out.
 - **Every beach is drawn as a sand shape from zoom 9**, served once by `/api/beaches/shapes`, so beaches read as places before one is selected.
 - **Leaving a beach never resets the camera.**
@@ -63,8 +63,8 @@ The simplest option was chosen each time.
 - **Clicking a cluster flies to the area covering all of its beaches**, not just one zoom level in.
 - **The globe rotates at 3 degrees per second, timed per frame**, and is sized down on phones so the whole sphere fits.
 - **The phone bottom sheet expands to 62% of the screen.**
-  Any taller and the donate button and the required Mapbox logo and attribution would slide under the top bar.
-- **On desktop, the donate button and attribution slide left of the open side panel** so neither is covered.
+  Any taller and the Log trash button and the required Mapbox logo and attribution would slide under the top bar.
+- **On desktop, the Log trash button and attribution slide left of the open side panel** so neither is covered.
 - **The beach panel is nearly opaque** rather than frosted, so the map never shows through long text.
 - **`window.__shoreMap` exposes the map in development only**, for debugging and tests.
 - **Camera flights are 2.6 seconds** and are skipped for users who prefer reduced motion.
@@ -140,6 +140,17 @@ The simplest option was chosen each time.
   Each item shows its count between its minus and plus buttons, which span the card at any width down to 320px.
 - **Below 370px the header logo drops its wordmark**, so the CN pill and Sign in never overlap it.
 - **The events panel is full width on phones**, and on desktop the search bar hides while it is open, so nothing pokes out beside or behind it.
+- **The top bar holds every map control**: logo and search on the left, then Events, the community button, and Sign in or the avatar on the right.
+  Events used to float over the map under the logo; in the bar it lines up with the rest and is icon only on phones.
+- **The community button is the owner's two-person icon, not the "CN:" text.**
+  Its name lives in the accessible label and the tooltip.
+- **Hovering or focusing a community card shows a preview** with recent photos and the newest post; clicking the card or the preview opens the community.
+  It waits 180ms so a sweep across the list does not flash, stays open while the pointer is on it, closes on Escape, and is skipped on touch screens.
+- **The trash bag animates once per change and then rests**: the level rises with a little overshoot, the surface sloshes, the new item drops in, and the bag squashes.
+  Nothing loops, and all of it is off under reduced motion.
+- **There are no donations.**
+  The Donate buttons and the planned Stripe phase were removed at the owner's request.
+  The unused `donations` table stays in the applied migrations; dropping it needs a new migration.
 - **The logo mark is an inline SVG traced from `public/brand/shore-up-logo.png`**, so it stays sharp and takes its color from the theme.
 
 ## Tooling

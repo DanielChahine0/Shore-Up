@@ -10,6 +10,10 @@ import { EventCard } from "./EventCard";
 import { CalendarIcon, CrosshairIcon } from "./icons";
 
 export type EventsMenuProps = {
+  open: boolean;
+  onClose: () => void;
+  /** The top bar's Events button, which gets focus back when the panel closes. */
+  triggerRef: React.RefObject<HTMLButtonElement | null>;
   signedIn: boolean;
   onPickBeach: (beachId: string) => void;
   onToast: (message: string) => void;
@@ -29,19 +33,35 @@ function useIsDesktop() {
   );
 }
 
+/** The top bar button that opens the events panel. Icon only on phones, where the bar is tight. */
+export function EventsButton({ open, onOpen, buttonRef }: { open: boolean; onOpen: () => void; buttonRef: React.Ref<HTMLButtonElement> }) {
+  return (
+    <button
+      ref={buttonRef}
+      type="button"
+      onClick={onOpen}
+      aria-label="Events"
+      aria-expanded={open}
+      aria-controls="events-panel"
+      className="glass flex h-11 w-11 shrink-0 items-center justify-center gap-2 rounded-full text-sm font-medium text-ink transition-colors hover:text-brand-strong sm:w-auto sm:px-4"
+    >
+      <CalendarIcon className="h-5 w-5 text-brand-strong sm:h-[18px] sm:w-[18px]" />
+      <span className="hidden sm:inline">Events</span>
+    </button>
+  );
+}
+
 /** Left side panel listing public cleanups near the visitor's chosen place. */
-export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) {
+export function EventsMenu({ open, onClose, triggerRef, signedIn, onPickBeach, onToast }: EventsMenuProps) {
   const isDesktop = useIsDesktop();
   const { place, setPlace } = useHomePlace();
 
-  const [open, setOpen] = useState(false);
   const [shown, setShown] = useState(false);
   const [events, setEvents] = useState<EventItem[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [geoError, setGeoError] = useState<string | null>(null);
 
-  const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const requested = useRef(false);
   const wasOpen = useRef(false);
@@ -66,9 +86,9 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
 
   /** Closing resets the slide, so the next open animates in from the left again. */
   const close = useCallback(() => {
-    setOpen(false);
+    onClose();
     setShown(false);
-  }, []);
+  }, [onClose]);
 
   // Slide in from the left once mounted. Reduced motion zeroes the transition in globals.css.
   useEffect(() => {
@@ -90,9 +110,9 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
   // Opening moves focus into the panel; closing hands it back to the toggle.
   useEffect(() => {
     if (open) panelRef.current?.focus();
-    else if (wasOpen.current) toggleRef.current?.focus();
+    else if (wasOpen.current) triggerRef.current?.focus();
     wasOpen.current = open;
-  }, [open]);
+  }, [open, triggerRef]);
 
   const { near, far } = useMemo(() => rankEvents(events ?? [], place), [events, place]);
 
@@ -131,18 +151,6 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
 
   return (
     <>
-      <button
-        ref={toggleRef}
-        type="button"
-        onClick={() => setOpen(true)}
-        aria-expanded={open}
-        aria-controls="events-panel"
-        className={`glass absolute left-4 top-[120px] z-10 flex h-11 items-center gap-2 rounded-full px-4 text-sm font-medium text-ink sm:top-[76px] ${open ? "hidden" : ""}`}
-      >
-        <CalendarIcon className="h-[18px] w-[18px] text-brand-strong" />
-        Events
-      </button>
-
       {open && (
         <aside
           id="events-panel"

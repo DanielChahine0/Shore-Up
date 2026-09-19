@@ -12,7 +12,7 @@ import { ScoreBadge } from "./ScoreBadge";
 import { ShoreStrip } from "./ShoreStrip";
 import { ZoneList } from "./ZoneList";
 
-export type PanelAction = "join" | "host" | "post" | "donate";
+export type PanelAction = "join" | "host" | "post";
 
 const cleanupDate = new Intl.DateTimeFormat("en-CA", { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 
@@ -75,7 +75,7 @@ export function BeachPanel({ beach, score, upcomingCleanups, recentPosts, error,
 
         {score && (
           <>
-            <div className="mt-4 flex items-center gap-3">
+            <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
               <ScoreBadge score={score.score} size="lg" />
               <span className="whitespace-nowrap text-sm text-ink-soft">across {score.zones.length} zones</span>
               {score.hasDemoData && (
@@ -90,14 +90,11 @@ export function BeachPanel({ beach, score, upcomingCleanups, recentPosts, error,
             <p className="mt-4 text-sm leading-relaxed text-ink">{score.reason}</p>
 
             <div className="mt-5 grid grid-cols-2 gap-2">
-              <button type="button" onClick={() => onAction("join")} className="col-span-2 h-11 rounded-full bg-brand-strong text-sm font-semibold text-white">
+              <button type="button" onClick={() => onAction("join")} className="h-11 rounded-full bg-brand-strong text-sm font-semibold text-white">
                 Join a cleanup
               </button>
               <button type="button" onClick={() => onAction("post")} className="h-11 rounded-full border border-brand-strong/60 text-sm font-semibold text-brand-strong">
                 Post a cleanup
-              </button>
-              <button type="button" onClick={() => onAction("donate")} className="h-11 rounded-full border border-brand-strong/60 text-sm font-semibold text-brand-strong">
-                Donate
               </button>
             </div>
 

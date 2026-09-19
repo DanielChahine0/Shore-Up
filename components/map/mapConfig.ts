@@ -18,7 +18,7 @@ export const SPIN_MAX_ZOOM = 4;
  * None of these is a cleanliness-scale color.
  */
 export const MAP_COLORS = {
-  land: "#afd0d2",
+  land: "#c7e1e3",
   /** The logo blue from far away, easing a little lighter up close so zone colors stand out against it. */
   waterFar: "#499ab2",
   waterNear: "#5ea6bc",

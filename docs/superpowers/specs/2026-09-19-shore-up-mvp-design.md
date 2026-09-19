@@ -45,7 +45,7 @@ See `supabase/migrations/0001_schema.sql` and `0002_rls.sql`.
 1. Globe, search, beach selection, zones, and side panel on seed data.
 2. Auth, profiles, and the people directory.
 3. Communities and Community News posts, including score updates.
-4. Stripe donations.
+4. ~~Stripe donations.~~ Dropped at the owner's request; see DECISIONS.md.
 
 Each phase ends with a stop for testing.
 

@@ -104,6 +104,34 @@ type FeedRow = {
   photo_paths: string[];
 };
 
+/** What the communities list shows when a card is hovered: recent photos and the newest post. */
+export type CommunityPreview = {
+  photoUrls: string[];
+  latest: { body: string; beachName: string; createdAt: string } | null;
+};
+
+const PREVIEW_PHOTOS = 3;
+
+/** Previews for every community from one read of the newest posts, keyed by community slug. */
+export async function listCommunityPreviews(): Promise<Record<string, CommunityPreview>> {
+  if (!supabaseConfigured()) return {};
+  const supabase = await supabaseServer();
+  const { data, error } = await supabase.from("post_feed").select("community_slug, beach_id, body, created_at, photo_paths").order("created_at", { ascending: false }).limit(300);
+  if (error) throw new Error(`Could not load community previews: ${error.message}`);
+
+  const previews: Record<string, CommunityPreview> = {};
+  for (const row of (data ?? []) as Pick<FeedRow, "community_slug" | "beach_id" | "body" | "created_at" | "photo_paths">[]) {
+    const preview = (previews[row.community_slug] ??= { photoUrls: [], latest: null });
+    preview.latest ??= { body: row.body, beachName: getBeach(row.beach_id)?.name ?? row.beach_id, createdAt: row.created_at };
+    for (const path of row.photo_paths) {
+      const url = postPhotoUrl(path);
+      // Demo posts share a small pool of photos, and the same one twice in a row reads as a glitch.
+      if (preview.photoUrls.length < PREVIEW_PHOTOS && !preview.photoUrls.includes(url)) preview.photoUrls.push(url);
+    }
+  }
+  return previews;
+}
+
 /** Newest posts for a community or a beach. */
 export async function listPosts(filter: { communityId: string } | { beachId: string }, viewerId: string | null, limit = 30): Promise<FeedPost[]> {
   if (!supabaseConfigured()) return [];

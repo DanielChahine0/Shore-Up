@@ -16,7 +16,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
       <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-white">
         <LogoMark className="w-5" />
       </span>
-      {/* On narrow headers the mark stands alone so the CN pill keeps its room. */}
+      {/* On narrow headers the mark stands alone so the buttons on the right keep their room. */}
       <span className={`text-[15px] font-bold uppercase tracking-wide text-ink ${compact ? "hidden sm:inline" : "hidden min-[370px]:inline"}`}>Shore Up</span>
     </Link>
   );

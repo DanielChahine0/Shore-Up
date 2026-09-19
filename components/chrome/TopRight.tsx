@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { Avatar } from "@/components/ui/Avatar";
+import { CommunityIcon } from "@/components/ui/icons";
 import { useViewer } from "./useViewer";
 
 /**
- * CN pill with the profile slot to its right.
- * The pill reads "CN: " plus the user's community and opens its feed, or "CN: Join"
- * and opens the list of communities. The avatar opens the profile; signed-out
- * users see "Sign in" instead.
+ * Community button with the profile slot to its right.
+ * The button opens the user's community feed, or the list of communities when they
+ * have not joined one. It is an icon, so its name lives in the label and the tooltip.
+ * The avatar opens the profile; signed-out users see "Sign in" instead.
  */
 export function TopRight() {
   const viewer = useViewer();
@@ -17,11 +18,11 @@ export function TopRight() {
     <nav aria-label="Account" className="flex min-w-0 shrink items-center gap-2">
       <Link
         href={community ? `/cn/${community.slug}` : "/communities"}
-        aria-label={community ? `CN: ${community.name}` : "CN: Join"}
-        className="glass flex h-11 min-w-0 max-w-[46vw] items-center rounded-full px-3 text-sm text-ink min-[370px]:px-4 sm:max-w-xs"
+        aria-label={community ? `Your community: ${community.name}` : "Join a community"}
+        title={community ? community.name : "Join a community"}
+        className="glass flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-brand-strong transition-colors hover:text-brand-deep"
       >
-        <span className="shrink-0 text-ink-soft">CN:&nbsp;</span>
-        <span className="truncate font-medium">{community ? community.name : "Join"}</span>
+        <CommunityIcon className="h-[22px] w-[22px]" />
       </Link>
       {viewer === undefined ? (
         <span className="h-11 w-11 shrink-0" aria-hidden />
