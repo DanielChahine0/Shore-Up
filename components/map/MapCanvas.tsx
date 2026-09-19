@@ -140,7 +140,7 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
         source: "beaches",
         paint: {
           "circle-color": MAP_COLORS.brandDeep,
-          "circle-radius": ["case", ["has", "point_count"], ["interpolate", ["linear"], ["get", "point_count"], 2, 20, 12, 30], 12],
+          "circle-radius": ["case", ["has", "point_count"], ["interpolate", ["linear"], ["get", "point_count"], 2, 25, 12, 36], 12],
           "circle-blur": 1,
           "circle-opacity": 0.35,
         },
@@ -154,7 +154,7 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
           "circle-color": MAP_COLORS.brandDeep,
           "circle-stroke-color": MAP_COLORS.white,
           "circle-stroke-width": 2,
-          "circle-radius": ["interpolate", ["linear"], ["get", "point_count"], 2, 11, 12, 16],
+          "circle-radius": ["interpolate", ["linear"], ["get", "point_count"], 2, 15, 12, 21],
         },
       });
       map.addLayer({
@@ -162,7 +162,7 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
         type: "symbol",
         source: "beaches",
         filter: ["has", "point_count"],
-        layout: { "text-field": ["get", "point_count_abbreviated"], "text-size": 12, "text-font": ["DIN Pro Medium", "Arial Unicode MS Regular"], "text-allow-overlap": true },
+        layout: { "text-field": ["get", "point_count_abbreviated"], "text-size": 16, "text-font": ["DIN Pro Bold", "Arial Unicode MS Bold"], "text-allow-overlap": true },
         paint: { "text-color": MAP_COLORS.white },
       });
       map.addLayer({
@@ -229,11 +229,13 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
         source: "zone-labels",
         layout: {
           "text-field": ["to-string", ["get", "score"]],
-          "text-size": 14,
+          // Grows as the beach fills the screen, so the score stays in proportion to its zone. Long thin
+          // beaches fit at a lower zoom, where the gentler sizes keep neighbouring scores apart.
+          "text-size": ["interpolate", ["linear"], ["zoom"], 12, 15, 14.5, 19, 16, 28, 17.5, 34],
           "text-font": ["DIN Pro Bold", "Arial Unicode MS Bold"],
           "text-allow-overlap": true,
         },
-        paint: { "text-color": MAP_COLORS.ink, "text-halo-color": MAP_COLORS.white, "text-halo-width": 1.8 },
+        paint: { "text-color": MAP_COLORS.ink, "text-halo-color": MAP_COLORS.white, "text-halo-width": 2.4 },
       });
 
       readyRef.current = true;
