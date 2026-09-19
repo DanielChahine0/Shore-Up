@@ -55,7 +55,7 @@ export async function listDirectory(): Promise<DirectoryEntry[]> {
 
   const beaches = listBeaches();
   const beachById = new Map(beaches.map((b) => [b.id, b]));
-  return (people.data ?? []).map((p) => {
+  const entries: DirectoryEntry[] = (people.data ?? []).map((p) => {
     const next = nextByUser.get(p.id);
     const nextBeach = next ? beachById.get(next.beach_id) : undefined;
     const areaBeach = beaches.find((b) => p.area && p.area.toLowerCase().includes(b.area.toLowerCase()));
@@ -71,4 +71,8 @@ export async function listDirectory(): Promise<DirectoryEntry[]> {
       near: ref ? { lat: ref.lat, lng: ref.lng } : null,
     };
   });
+
+  // People you can act on come first: hosts looking for volunteers, then anyone with a plan, then by name.
+  const rank = (e: DirectoryEntry) => (e.nextCleanup ? (e.mode === "looking_for_volunteers" ? 0 : 1) : 2);
+  return entries.sort((a, b) => rank(a) - rank(b) || a.displayName.localeCompare(b.displayName));
 }

@@ -1,9 +1,7 @@
 import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+import { SUPABASE_PUBLIC_KEY as publishableKey, SUPABASE_URL as url } from "./env";
 
 export function supabaseConfigured(): boolean {
   return Boolean(url && publishableKey);

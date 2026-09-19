@@ -20,7 +20,7 @@ export function SignInForm({ next, linkError }: { next: string; linkError: boole
     return (
       <Card title="Sign-in isn't set up yet">
         <p className="text-sm leading-relaxed text-mist">
-          Add <code className="text-shell">NEXT_PUBLIC_SUPABASE_URL</code> and <code className="text-shell">NEXT_PUBLIC_SUPABASE_ANON_KEY</code> to{" "}
+          Add <code className="text-shell">NEXT_PUBLIC_SUPABASE_URL</code> and <code className="text-shell">NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code> to{" "}
           <code className="text-shell">.env.local</code>, then restart the dev server. The README has the steps.
         </p>
       </Card>
