@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Agent tooling vendored into the repo, not project source.
+    ".claude/**",
   ]),
 ]);
 
