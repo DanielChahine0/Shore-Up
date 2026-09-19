@@ -12,11 +12,11 @@ export function ZoneList({ zones, activeZoneId, onFocusZone }: Props) {
           key={zone.zoneId}
           onPointerEnter={(e) => e.pointerType === "mouse" && onFocusZone(zone.zoneId)}
           onPointerLeave={() => onFocusZone(null)}
-          className={`flex items-center justify-between gap-3 px-1 py-2.5 ${activeZoneId === zone.zoneId ? "bg-tide/40" : ""}`}
+          className={`flex items-center justify-between gap-3 px-1 py-2.5 ${activeZoneId === zone.zoneId ? "bg-tint/40" : ""}`}
         >
           <div className="min-w-0">
-            <p className="text-sm font-medium text-shell">{zone.name}</p>
-            <p className="text-xs text-mist">
+            <p className="text-sm font-medium text-ink">{zone.name}</p>
+            <p className="text-xs text-ink-soft">
               Water {WATER_LABELS[zone.waterStatus].toLowerCase()}, litter {LITTER_LABELS[zone.litterLevel].toLowerCase()}
             </p>
           </div>

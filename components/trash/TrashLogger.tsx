@@ -113,12 +113,12 @@ export function TrashLogger({ beach, signedIn, onToast, onDonate }: TrashLoggerP
           type="button"
           onClick={() => (open ? close() : setOpen(true))}
           aria-expanded={open}
-          className="glass flex h-12 items-center gap-2 rounded-full pl-4 pr-5 text-sm font-semibold text-shell transition-colors hover:text-foam"
+          className="glass flex h-12 items-center gap-2 rounded-full pl-4 pr-5 text-sm font-semibold text-ink transition-colors hover:text-brand-strong"
         >
-          <BagIcon className="h-5 w-5 text-foam" />
+          <BagIcon className="h-5 w-5 text-brand-strong" />
           Log trash
           {restored && running > 0 && (
-            <span className="rounded-full bg-foam px-2 py-0.5 text-xs font-semibold text-foam-deep">
+            <span className="rounded-full bg-brand-strong px-2 py-0.5 text-xs font-semibold text-white">
               {running}
               <span className="sr-only"> items in this session</span>
             </span>

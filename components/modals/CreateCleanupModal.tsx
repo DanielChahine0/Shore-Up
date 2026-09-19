@@ -6,7 +6,7 @@ import { CloseIcon } from "@/components/ui/icons";
 import type { BeachSummary } from "@/lib/beaches";
 import type { ZoneScore } from "@/lib/scores/types";
 
-const field = "mt-1 w-full rounded-xl border border-line bg-navy px-3 text-sm text-shell";
+const field = "mt-1 w-full rounded-xl border border-line-strong bg-surface px-3 text-sm text-ink";
 
 type Props = { beach: BeachSummary; zones: ZoneScore[]; onClose: () => void };
 
@@ -31,7 +31,7 @@ export function CreateCleanupModal({ beach, zones, onClose }: Props) {
       onClose={onClose}
       onClick={(e) => e.target === dialogRef.current && onClose()}
       aria-labelledby="create-cleanup-title"
-      className="glass glass-panel m-auto w-[min(92vw,420px)] rounded-3xl p-0 text-shell backdrop:bg-abyss/70"
+      className="glass glass-panel m-auto w-[min(92vw,420px)] rounded-3xl p-0 text-ink backdrop:bg-wash/70"
     >
       <form action={action} className="p-6">
         <div className="flex items-start justify-between gap-3">
@@ -39,9 +39,9 @@ export function CreateCleanupModal({ beach, zones, onClose }: Props) {
             <h2 id="create-cleanup-title" className="text-lg font-semibold tracking-tight">
               Host a cleanup
             </h2>
-            <p className="text-sm text-mist">{beach.name}</p>
+            <p className="text-sm text-ink-soft">{beach.name}</p>
           </div>
-          <button type="button" onClick={onClose} aria-label="Close" className="-mr-1.5 rounded-full p-1.5 text-mist hover:text-shell">
+          <button type="button" onClick={onClose} aria-label="Close" className="-mr-1.5 rounded-full p-1.5 text-ink-soft hover:text-ink">
             <CloseIcon className="h-5 w-5" />
           </button>
         </div>
@@ -66,16 +66,16 @@ export function CreateCleanupModal({ beach, zones, onClose }: Props) {
         </label>
         <label className="mt-3 block text-sm">
           Notes for volunteers
-          <textarea name="notes" rows={3} maxLength={1000} placeholder="Where to meet, what to bring" className={`${field} py-2.5 placeholder:text-mist`} />
+          <textarea name="notes" rows={3} maxLength={1000} placeholder="Where to meet, what to bring" className={`${field} py-2.5 placeholder:text-ink-soft`} />
         </label>
 
         {state.error && (
-          <p role="alert" className="mt-3 rounded-xl border border-line bg-navy px-3 py-2 text-sm">
+          <p role="alert" className="mt-3 rounded-xl border border-line bg-surface px-3 py-2 text-sm">
             {state.error}
           </p>
         )}
 
-        <button type="submit" disabled={pending} className="mt-5 h-11 w-full rounded-full bg-foam text-sm font-semibold text-foam-deep disabled:opacity-60">
+        <button type="submit" disabled={pending} className="mt-5 h-11 w-full rounded-full bg-brand-strong text-sm font-semibold text-white disabled:opacity-60">
           {pending ? "Saving" : "Create cleanup"}
         </button>
       </form>

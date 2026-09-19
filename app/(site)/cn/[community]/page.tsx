@@ -23,17 +23,17 @@ export default async function CommunityNewsPage({ params }: PageProps<"/cn/[comm
 
   return (
     <>
-      <p className="text-sm text-mist">Community News</p>
-      <h1 className="mt-0.5 text-2xl font-semibold tracking-tight text-shell">{community.name}</h1>
-      <p className="text-sm text-mist">
+      <p className="text-sm text-ink-soft">Community News</p>
+      <h1 className="mt-0.5 text-2xl font-semibold tracking-tight text-ink">{community.name}</h1>
+      <p className="text-sm text-ink-soft">
         {community.area}, {community.memberCount} {community.memberCount === 1 ? "member" : "members"}
       </p>
 
       {community.nonprofit && (
-        <div className="mt-4 rounded-2xl border border-line bg-navy/60 p-4">
-          <p className="text-xs text-mist">Hosted by</p>
-          <p className="text-sm font-semibold text-shell">{community.nonprofit.name}</p>
-          {community.nonprofit.description && <p className="mt-1 text-sm leading-relaxed text-mist">{community.nonprofit.description}</p>}
+        <div className="mt-4 rounded-2xl border border-line bg-surface p-4">
+          <p className="text-xs text-ink-soft">Hosted by</p>
+          <p className="text-sm font-semibold text-ink">{community.nonprofit.name}</p>
+          {community.nonprofit.description && <p className="mt-1 text-sm leading-relaxed text-ink-soft">{community.nonprofit.description}</p>}
         </div>
       )}
 

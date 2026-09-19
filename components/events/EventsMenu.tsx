@@ -137,9 +137,9 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
         onClick={() => setOpen(true)}
         aria-expanded={open}
         aria-controls="events-panel"
-        className={`glass absolute left-4 top-[212px] z-10 flex h-11 items-center gap-2 rounded-full px-4 text-sm font-medium text-shell sm:top-[132px] ${open ? "hidden" : ""}`}
+        className={`glass absolute left-4 top-[212px] z-10 flex h-11 items-center gap-2 rounded-full px-4 text-sm font-medium text-ink sm:top-[132px] ${open ? "hidden" : ""}`}
       >
-        <CalendarIcon className="h-[18px] w-[18px] text-foam" />
+        <CalendarIcon className="h-[18px] w-[18px] text-brand-strong" />
         Events
       </button>
 
@@ -151,15 +151,15 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
           aria-label="Cleanup events near you"
           // Unlike the other panels this one runs the full height, over the logo and search bar
           // rather than only the map, so it is fully opaque: glass-panel's last 3% let them ghost through.
-          style={{ background: "rgb(9 26 42)" }}
+          style={{ background: "var(--color-surface)" }}
           className={`glass glass-panel absolute bottom-0 left-0 top-0 z-20 flex w-[calc(100%-2rem)] max-w-[360px] flex-col transition-transform duration-300 ease-out sm:w-[360px] ${shown ? "translate-x-0" : "-translate-x-full"}`}
         >
           <header className="flex items-start justify-between gap-3 px-5 pt-5">
             <div className="min-w-0">
-              <h2 className="text-lg font-semibold tracking-tight text-shell">Events</h2>
-              <p className="text-sm text-mist">{place ? `Shore cleanups near ${place.name}` : "Shore cleanups anyone can join"}</p>
+              <h2 className="text-lg font-semibold tracking-tight text-ink">Events</h2>
+              <p className="text-sm text-ink-soft">{place ? `Shore cleanups near ${place.name}` : "Shore cleanups anyone can join"}</p>
             </div>
-            <button type="button" onClick={close} aria-label="Close events" className="-mr-1.5 rounded-full p-1.5 text-mist hover:text-shell">
+            <button type="button" onClick={close} aria-label="Close events" className="-mr-1.5 rounded-full p-1.5 text-ink-soft hover:text-ink">
               <CloseIcon className="h-5 w-5" />
             </button>
           </header>
@@ -169,14 +169,14 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
               <button
                 type="button"
                 onClick={useMyLocation}
-                className="flex h-11 items-center gap-2 rounded-full border border-line px-4 text-sm font-medium text-shell hover:border-foam/60"
+                className="flex h-11 items-center gap-2 rounded-full border border-line-strong px-4 text-sm font-medium text-ink hover:border-brand-strong/60"
               >
-                <CrosshairIcon className="h-[18px] w-[18px] text-foam" />
+                <CrosshairIcon className="h-[18px] w-[18px] text-brand-strong" />
                 Use my location
               </button>
-              <p className="mt-2 text-xs text-mist">It stays in this browser, rounded to about 11 km.</p>
+              <p className="mt-2 text-xs text-ink-soft">It stays in this browser, rounded to about 11 km.</p>
               {geoError && (
-                <p role="alert" className="mt-2 text-xs text-shell">
+                <p role="alert" className="mt-2 text-xs text-ink">
                   {geoError}
                 </p>
               )}
@@ -184,12 +184,12 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
           )}
 
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-5 pt-4">
-            {loading && <p className="text-sm text-mist">Loading cleanups near you.</p>}
+            {loading && <p className="text-sm text-ink-soft">Loading cleanups near you.</p>}
 
             {error && (
-              <div className="rounded-2xl border border-line p-4 text-sm text-shell">
+              <div className="rounded-2xl border border-line p-4 text-sm text-ink">
                 <p role="alert">{error}</p>
-                <button type="button" onClick={load} className="mt-3 h-11 rounded-full bg-foam px-4 text-sm font-semibold text-foam-deep">
+                <button type="button" onClick={load} className="mt-3 h-11 rounded-full bg-brand-strong px-4 text-sm font-semibold text-white">
                   Try again
                 </button>
               </div>
@@ -197,11 +197,11 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
 
             {events && !loading && !error && (
               <>
-                {near.length === 0 ? <p className="text-sm text-mist">{emptyCopy}</p> : <ul className="grid gap-3">{near.map(renderCard)}</ul>}
+                {near.length === 0 ? <p className="text-sm text-ink-soft">{emptyCopy}</p> : <ul className="grid gap-3">{near.map(renderCard)}</ul>}
 
                 {far.length > 0 && (
                   <>
-                    <h3 className="mb-3 mt-6 text-sm font-semibold text-shell">Further away</h3>
+                    <h3 className="mb-3 mt-6 text-sm font-semibold text-ink">Further away</h3>
                     <ul className="grid gap-3">{far.map(renderCard)}</ul>
                   </>
                 )}

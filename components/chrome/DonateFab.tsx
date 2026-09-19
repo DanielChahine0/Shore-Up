@@ -10,7 +10,7 @@ export function DonateFab({ onClick }: { onClick: () => void }) {
       type="button"
       onClick={onClick}
       aria-label="Donate"
-      className="glass flex h-12 w-12 items-center justify-center rounded-full text-foam transition-colors hover:text-shell"
+      className="glass flex h-12 w-12 items-center justify-center rounded-full text-brand-strong transition-colors hover:text-ink"
     >
       <HeartIcon className="h-5 w-5" />
     </button>

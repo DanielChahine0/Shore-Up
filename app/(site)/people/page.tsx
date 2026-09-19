@@ -9,7 +9,7 @@ export const metadata: Metadata = { title: "People" };
 
 export default async function PeoplePage() {
   if (!supabaseConfigured()) {
-    return <p className="mt-10 text-center text-sm text-mist">The directory opens once Supabase is configured. See the README.</p>;
+    return <p className="mt-10 text-center text-sm text-ink-soft">The directory opens once Supabase is configured. See the README.</p>;
   }
   const [people, viewer] = await Promise.all([listDirectory(), getViewer()]);
 
@@ -22,14 +22,14 @@ export default async function PeoplePage() {
 
   return (
     <>
-      <h1 className="text-2xl font-semibold tracking-tight text-shell">People</h1>
-      <p className="mt-1.5 max-w-prose text-sm leading-relaxed text-mist">
+      <h1 className="text-2xl font-semibold tracking-tight text-ink">People</h1>
+      <p className="mt-1.5 max-w-prose text-sm leading-relaxed text-ink-soft">
         Volunteers who chose to be listed. You see a city or neighbourhood and the beach of a planned cleanup, never anyone&apos;s exact location.
       </p>
       {viewer && !viewer.directory_opt_in && (
-        <p className="mt-3 text-sm text-mist">
+        <p className="mt-3 text-sm text-ink-soft">
           You aren&apos;t listed.{" "}
-          <Link href="/profile/edit" className="font-medium text-foam">
+          <Link href="/profile/edit" className="font-medium text-brand-strong">
             Add yourself from your profile
           </Link>
         </p>

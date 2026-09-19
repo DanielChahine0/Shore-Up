@@ -34,7 +34,7 @@ export function JoinButton({ cleanupId, returnTo, joined = false, signedIn = tru
 
   if (!signedIn) {
     return (
-      <Link href={`/signin?next=${encodeURIComponent(returnTo)}`} className={`inline-flex items-center rounded-full bg-foam font-semibold text-foam-deep ${sizing}`}>
+      <Link href={`/signin?next=${encodeURIComponent(returnTo)}`} className={`inline-flex items-center rounded-full bg-brand-strong font-semibold text-white ${sizing}`}>
         Sign in to register
       </Link>
     );
@@ -65,12 +65,12 @@ export function JoinButton({ cleanupId, returnTo, joined = false, signedIn = tru
         disabled={pending}
         aria-pressed={isJoined}
         aria-label={isJoined ? "Cancel your registration" : "Register for this cleanup"}
-        className={`rounded-full font-semibold disabled:opacity-60 ${sizing} ${isJoined ? "border border-line text-shell" : "bg-foam text-foam-deep"}`}
+        className={`rounded-full font-semibold disabled:opacity-60 ${sizing} ${isJoined ? "border border-line text-ink" : "bg-brand-strong text-white"}`}
       >
         {isJoined ? "Cancel" : "Register"}
       </button>
       {error && (
-        <span role="alert" className="max-w-56 text-right text-xs text-shell">
+        <span role="alert" className="max-w-56 text-right text-xs text-ink">
           {error}
         </span>
       )}

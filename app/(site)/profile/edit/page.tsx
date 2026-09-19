@@ -10,7 +10,7 @@ export default async function EditProfilePage() {
   if (!viewer) redirect("/signin?next=/profile/edit");
   return (
     <>
-      <h1 className="text-2xl font-semibold tracking-tight text-shell">Edit profile</h1>
+      <h1 className="text-2xl font-semibold tracking-tight text-ink">Edit profile</h1>
       <ProfileForm profile={viewer} />
     </>
   );

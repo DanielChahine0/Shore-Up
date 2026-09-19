@@ -57,7 +57,7 @@ export function TrashBag({ counts }: { counts: TrashCounts }) {
   const laidOut = layOut(tokensFor(counts));
 
   return (
-    <svg viewBox="0 0 120 116" aria-hidden className="h-28 w-auto shrink-0 text-mist" role="presentation">
+    <svg viewBox="0 0 120 116" aria-hidden className="h-28 w-auto shrink-0 text-ink-soft" role="presentation">
       <defs>
         <clipPath id="trash-bag-body">
           <path d="M48 20C26 32 18 60 20 80c2 20 18 30 40 30s38-10 40-30c2-20-6-48-28-60Z" />
@@ -68,13 +68,13 @@ export function TrashBag({ counts }: { counts: TrashCounts }) {
       <path d="M44 6c8-5 24-5 32 0l-4 14H48Z" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinejoin="round" />
 
       <g clipPath="url(#trash-bag-body)">
-        <rect x="0" y="0" width="120" height="116" className="fill-navy" />
-        <rect x="0" y={fillTop} width="120" height="116" className="fill-foam/25 transition-[y] duration-300 ease-out" />
+        <rect x="0" y="0" width="120" height="116" className="fill-surface" />
+        <rect x="0" y={fillTop} width="120" height="116" className="fill-brand-strong/25 transition-[y] duration-300 ease-out" />
         {/* A line at the top of the fill, so the level reads without relying on the tint. */}
-        <rect x="0" y={fillTop} width="120" height="2" className="fill-foam transition-[y] duration-300 ease-out" />
+        <rect x="0" y={fillTop} width="120" height="2" className="fill-brand-strong transition-[y] duration-300 ease-out" />
         {laidOut.map((token) => {
           const Icon = TRASH_ICONS[token.key];
-          return <Icon key={token.id} x={token.x} y={token.y} width={TOKEN} height={TOKEN} className="text-foam" />;
+          return <Icon key={token.id} x={token.x} y={token.y} width={TOKEN} height={TOKEN} className="text-brand-strong" />;
         })}
       </g>
 
@@ -93,9 +93,9 @@ export function TrashBag({ counts }: { counts: TrashCounts }) {
 export function BagTotal({ counts }: { counts: TrashCounts }) {
   const total = totalItems(counts);
   return (
-    <p aria-hidden className="text-2xl font-semibold tracking-tight text-shell">
+    <p aria-hidden className="text-2xl font-semibold tracking-tight text-ink">
       {itemLabel(total)}
-      <span className="ml-2 align-middle text-sm font-normal text-mist">in the bag</span>
+      <span className="ml-2 align-middle text-sm font-normal text-ink-soft">in the bag</span>
     </p>
   );
 }

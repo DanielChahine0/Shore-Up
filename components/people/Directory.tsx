@@ -10,7 +10,7 @@ import { JoinButton } from "./JoinButton";
 
 const NEAR_KM = 50;
 const dateFmt = new Intl.DateTimeFormat("en-CA", { weekday: "short", month: "short", day: "numeric" });
-const select = "h-10 rounded-full border border-line bg-navy px-3 text-sm text-shell";
+const select = "h-10 rounded-full border border-line-strong bg-surface px-3 text-sm text-ink";
 
 type Props = { people: DirectoryEntry[]; viewerId: string | null; joinedCleanupIds: string[] };
 
@@ -55,7 +55,7 @@ export function Directory({ people, viewerId, joinedCleanupIds }: Props) {
           onClick={toggleNear}
           aria-pressed={here !== null}
           disabled={locating === "busy"}
-          className={`h-10 rounded-full border px-4 text-sm ${here ? "border-foam bg-foam/15 text-foam" : "border-line text-shell"}`}
+          className={`h-10 rounded-full border px-4 text-sm ${here ? "border-brand-strong bg-brand-strong/15 text-brand-strong" : "border-line text-ink"}`}
         >
           {locating === "busy" ? "Finding you" : "Near me"}
         </button>
@@ -76,11 +76,11 @@ export function Directory({ people, viewerId, joinedCleanupIds }: Props) {
           ))}
         </select>
       </div>
-      {here && <p className="mt-2 text-xs text-mist">Showing people within about {NEAR_KM} km. Your location is rounded on this device and never saved.</p>}
-      {locating === "denied" && <p className="mt-2 text-xs text-mist">Location is off for this site. Filter by beach instead, or allow location in your browser.</p>}
+      {here && <p className="mt-2 text-xs text-ink-soft">Showing people within about {NEAR_KM} km. Your location is rounded on this device and never saved.</p>}
+      {locating === "denied" && <p className="mt-2 text-xs text-ink-soft">Location is off for this site. Filter by beach instead, or allow location in your browser.</p>}
 
       {shown.length === 0 ? (
-        <p className="mt-10 text-center text-sm text-mist">
+        <p className="mt-10 text-center text-sm text-ink-soft">
           {people.length === 0 ? "Nobody is listed yet. Opt in from your profile to be the first." : "Nobody matches those filters. Try widening them."}
         </p>
       ) : (
@@ -92,21 +92,21 @@ export function Directory({ people, viewerId, joinedCleanupIds }: Props) {
               </Link>
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                  <Link href={`/profile/${p.username}`} className="truncate text-[15px] font-medium text-shell hover:text-foam">
+                  <Link href={`/profile/${p.username}`} className="truncate text-[15px] font-medium text-ink hover:text-brand-strong">
                     {p.displayName}
                   </Link>
-                  <span className={`rounded-full border px-2 py-0.5 text-[11px] font-medium ${p.mode === "looking_for_volunteers" ? "border-foam/60 text-foam" : "border-line text-mist"}`}>
+                  <span className={`rounded-full border px-2 py-0.5 text-[11px] font-medium ${p.mode === "looking_for_volunteers" ? "border-brand-strong/60 text-brand-strong" : "border-line text-ink-soft"}`}>
                     {DIRECTORY_MODE_LABELS[p.mode]}
                   </span>
                 </div>
-                <p className="truncate text-sm text-mist">{p.area || "Area not shared"}</p>
-                <p className="mt-0.5 truncate text-sm text-shell">
+                <p className="truncate text-sm text-ink-soft">{p.area || "Area not shared"}</p>
+                <p className="mt-0.5 truncate text-sm text-ink">
                   {p.nextCleanup ? (
-                    <Link href={`/cleanups/${p.nextCleanup.id}`} className="hover:text-foam">
+                    <Link href={`/cleanups/${p.nextCleanup.id}`} className="hover:text-brand-strong">
                       {p.nextCleanup.beachName}, {dateFmt.format(new Date(p.nextCleanup.startsAt))}
                     </Link>
                   ) : (
-                    <span className="text-mist">No cleanup planned</span>
+                    <span className="text-ink-soft">No cleanup planned</span>
                   )}
                 </p>
               </div>

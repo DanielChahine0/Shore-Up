@@ -45,8 +45,12 @@ The simplest option was chosen each time.
 
 ## Map
 
-- **One dark style, with satellite as a raster layer whose opacity follows zoom** (invisible at zoom 10, opaque at 13.5).
-  There is no style swap, so custom layers are never wiped.
+- **The map shows beaches and almost nothing else.**
+  It starts from Mapbox's light style and hides every layer except land, water, country borders, and country, continent, and major city labels.
+  Roads, buildings, land use, points of interest, and satellite imagery are gone, so nothing competes with a beach.
+  The kept layers are listed in `components/map/mapConfig.ts`.
+- **Land is white and the sea is the logo blue**, easing lighter as you zoom in so the zone colors stand out against it.
+- **Every beach is drawn as a sand shape from zoom 9**, served once by `/api/beaches/shapes`, so beaches read as places before one is selected.
 - **Leaving a beach never resets the camera.**
   Closing the panel leaves the view exactly where it is.
   "Back to globe" zooms out to the whole globe centered on the current spot, not the starting view.
@@ -54,13 +58,13 @@ The simplest option was chosen each time.
 - **"Back to globe" is offered whenever the map is zoomed past the whole-globe view**, not only while a beach is open.
 - **The map lives in a shared layout** for `/` and `/beach/[id]`, so selecting a beach moves the camera instead of reloading the globe.
 - **The selected beach swaps its dot for the outline and zones.**
-  Every other beach stays a neutral dot at every zoom level.
+  Every other beach stays a neutral white dot ringed in deep blue at every zoom level.
 - **Clicking a cluster flies to the area covering all of its beaches**, not just one zoom level in.
 - **The globe rotates at 3 degrees per second, timed per frame**, and is sized down on phones so the whole sphere fits.
 - **The phone bottom sheet expands to 62% of the screen.**
   Any taller and the donate button and the required Mapbox logo and attribution would slide under the top bar.
 - **On desktop, the donate button and attribution slide left of the open side panel** so neither is covered.
-- **The beach panel is nearly opaque** rather than frosted, because long text over satellite imagery was hard to read.
+- **The beach panel is nearly opaque** rather than frosted, so the map never shows through long text.
 - **`window.__shoreMap` exposes the map in development only**, for debugging and tests.
 - **Camera flights are 2.6 seconds** and are skipped for users who prefer reduced motion.
 
@@ -110,10 +114,27 @@ The simplest option was chosen each time.
 - **Feeds show public author details only.**
   A post by someone with a private profile appears as "A volunteer".
 - **Likes update at once and roll back if the server refuses.**
-- **Demo post photos are generated abstract shorelines**, so the seeded feed never uses a real person's picture.
+- **Demo post photos are public domain photos of real beach cleanups** from Wikimedia Commons, stored in `public/photos/cleanups`.
+  This replaced generated abstract shorelines, at the owner's request, so the feed looks like the real thing.
+  The feed shows no credit line, so it only uses photos that need none; no photo is a close-up of a child.
+- **Events borrow a stock cleanup photo**, picked from the event id so it never changes, because events have no photo of their own yet.
+  Some of these are CC BY 2.0, so every event photo shows its credit and links to its source.
+  The list, with alt text and licenses, is `lib/images/cleanupPhotos.ts`.
 - **Demo posts count toward demo users' stats and badges** but never toward a zone's litter score.
 - **A stale session is cleared quietly.**
   If the account behind a saved session no longer exists, the app signs out locally instead of erroring.
+
+## Look and accessibility
+
+- **Light mode only, in white and the logo blue `#499AB2`.**
+  There is no dark theme, and `color-scheme: light` stops browsers from inventing one.
+- **The logo blue never sits behind small white text**, because that pair is only 3.2:1.
+  It is used for the logo, large shapes, and the sea.
+  Buttons, links, and focus rings use a darker shade of the same hue, `#2A6F85`, which is 5.7:1 with white.
+- **Every text pair meets WCAG 2.1 AA (4.5:1), and every control edge meets 3:1**, which is what AODA requires.
+  Inputs, selects, and outlined buttons use the stronger border color; cards keep the soft decorative one.
+  The ratios are recorded beside the tokens in `app/globals.css`.
+- **The logo mark is an inline SVG traced from `public/brand/shore-up-logo.png`**, so it stays sharp and takes its color from the theme.
 
 ## Tooling
 

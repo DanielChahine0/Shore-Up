@@ -57,45 +57,45 @@ export function CommunityList({ communities, joinedIds }: Props) {
           onClick={toggleNear}
           aria-pressed={here !== null}
           disabled={locating === "busy"}
-          className={`h-10 rounded-full border px-4 text-sm ${here ? "border-foam bg-foam/15 text-foam" : "border-line text-shell"}`}
+          className={`h-10 rounded-full border px-4 text-sm ${here ? "border-brand-strong bg-brand-strong/15 text-brand-strong" : "border-line text-ink"}`}
         >
           {locating === "busy" ? "Finding you" : "Nearest first"}
         </button>
-        {here && <p className="text-xs text-mist">Sorted by distance. Your location is rounded on this device and never saved.</p>}
-        {locating === "denied" && <p className="text-xs text-mist">Location is off for this site, so the list stays alphabetical.</p>}
+        {here && <p className="text-xs text-ink-soft">Sorted by distance. Your location is rounded on this device and never saved.</p>}
+        {locating === "denied" && <p className="text-xs text-ink-soft">Location is off for this site, so the list stays alphabetical.</p>}
       </div>
 
       {error && (
-        <p role="alert" className="mt-3 rounded-xl border border-line bg-navy px-3 py-2 text-sm text-shell">
+        <p role="alert" className="mt-3 rounded-xl border border-line bg-surface px-3 py-2 text-sm text-ink">
           {error}
         </p>
       )}
 
       <ul className="mt-5 grid gap-3 sm:grid-cols-2">
         {sorted.map((c) => (
-          <li key={c.id} className="flex flex-col rounded-3xl border border-line bg-navy/60 p-5">
-            <Link href={`/cn/${c.slug}`} className="text-lg font-semibold tracking-tight text-shell hover:text-foam">
+          <li key={c.id} className="flex flex-col rounded-3xl border border-line bg-surface p-5">
+            <Link href={`/cn/${c.slug}`} className="text-lg font-semibold tracking-tight text-ink hover:text-brand-strong">
               {c.name}
             </Link>
-            <p className="text-sm text-mist">
+            <p className="text-sm text-ink-soft">
               {c.area}
               {here && `, about ${Math.max(10, Math.round(distanceKm(here, c) / 10) * 10)} km away`}
             </p>
-            <p className="mt-2 text-sm text-mist">
+            <p className="mt-2 text-sm text-ink-soft">
               {c.memberCount} {c.memberCount === 1 ? "member" : "members"}
               {c.nonprofit && `, hosted by ${c.nonprofit.name}`}
             </p>
             <div className="mt-4 flex items-center gap-3">
               {joined.has(c.id) ? (
-                <Link href={`/cn/${c.slug}`} className="flex h-10 items-center rounded-full border border-line px-5 text-sm text-shell">
+                <Link href={`/cn/${c.slug}`} className="flex h-10 items-center rounded-full border border-line-strong px-5 text-sm text-ink">
                   Open feed
                 </Link>
               ) : (
-                <button type="button" onClick={() => onJoin(c)} disabled={busyId === c.id} className="h-10 rounded-full bg-foam px-5 text-sm font-semibold text-foam-deep disabled:opacity-60">
+                <button type="button" onClick={() => onJoin(c)} disabled={busyId === c.id} className="h-10 rounded-full bg-brand-strong px-5 text-sm font-semibold text-white disabled:opacity-60">
                   {busyId === c.id ? "Joining" : "Join"}
                 </button>
               )}
-              {joined.has(c.id) && <span className="text-xs text-mist">You&apos;re a member</span>}
+              {joined.has(c.id) && <span className="text-xs text-ink-soft">You&apos;re a member</span>}
             </div>
           </li>
         ))}

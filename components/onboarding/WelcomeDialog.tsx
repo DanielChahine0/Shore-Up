@@ -22,7 +22,7 @@ const SIGN_IN_HREF = "/signin?next=%2F";
 const SIGN_UP_HREF = "/signin?mode=signup&next=%2F";
 
 const tile =
-  "flex min-h-[7rem] flex-col rounded-2xl border border-line bg-tide/35 p-4 text-left hover:border-foam/60 hover:bg-tide/60";
+  "flex min-h-[7rem] flex-col rounded-2xl border border-line bg-tint/35 p-4 text-left hover:border-brand-strong/60 hover:bg-tint/60";
 
 function isWelcomed() {
   try {
@@ -197,32 +197,32 @@ function Panel({ mapboxToken, signedIn, onPickPlace, onDone }: PanelProps) {
       onClose={() => finish()}
       onClick={(e) => e.target === dialogRef.current && finish()}
       aria-labelledby={`${ids}-title`}
-      className="glass glass-panel fade-in m-auto max-h-[92dvh] w-[min(94vw,440px)] overflow-y-auto rounded-3xl p-0 text-shell backdrop:bg-abyss/70"
+      className="glass glass-panel fade-in m-auto max-h-[92dvh] w-[min(94vw,440px)] overflow-y-auto rounded-3xl p-0 text-ink backdrop:bg-wash/70"
     >
       {step === "choose" ? (
         <div className="p-6">
           <h2 id={`${ids}-title`} className="text-xl font-semibold tracking-tight">
             Welcome to Shore Up
           </h2>
-          <p className="mt-1.5 text-sm leading-relaxed text-mist">
+          <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
             Shore Up maps how clean the world&apos;s beaches are, so you can find the ones near you and help look after them.
           </p>
 
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             <Link href={SIGN_UP_HREF} className={tile}>
-              <PersonIcon className="h-5 w-5 text-foam" />
+              <PersonIcon className="h-5 w-5 text-brand-strong" />
               <span className="mt-3 block text-sm font-semibold">Create an account</span>
-              <span className="mt-1 block text-xs leading-relaxed text-mist">Post cleanups, host one, and join a community.</span>
+              <span className="mt-1 block text-xs leading-relaxed text-ink-soft">Post cleanups, host one, and join a community.</span>
             </Link>
             <button type="button" onClick={() => setStep("place")} className={tile}>
-              <GlobeIcon className="h-5 w-5 text-foam" />
+              <GlobeIcon className="h-5 w-5 text-brand-strong" />
               <span className="mt-3 block text-sm font-semibold">Continue as guest</span>
-              <span className="mt-1 block text-xs leading-relaxed text-mist">Explore the map and see what needs help.</span>
+              <span className="mt-1 block text-xs leading-relaxed text-ink-soft">Explore the map and see what needs help.</span>
             </button>
           </div>
 
-          <p className="mt-5 text-center text-sm text-mist">
-            <Link href={SIGN_IN_HREF} className="rounded-full font-medium text-foam hover:underline">
+          <p className="mt-5 text-center text-sm text-ink-soft">
+            <Link href={SIGN_IN_HREF} className="rounded-full font-medium text-brand-strong hover:underline">
               I already have an account
             </Link>
           </p>
@@ -232,27 +232,27 @@ function Panel({ mapboxToken, signedIn, onPickPlace, onDone }: PanelProps) {
           <h2 id={`${ids}-title`} className="text-xl font-semibold tracking-tight">
             Where do you want to look after?
           </h2>
-          <p className="mt-1.5 text-sm leading-relaxed text-mist">The globe will take you there. You can move anywhere else whenever you like.</p>
+          <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">The globe will take you there. You can move anywhere else whenever you like.</p>
 
           <button
             ref={locateRef}
             type="button"
             onClick={useMyLocation}
             disabled={locating}
-            className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foam text-sm font-semibold text-foam-deep disabled:opacity-60"
+            className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-full bg-brand-strong text-sm font-semibold text-white disabled:opacity-60"
           >
             <LocateIcon className="h-4 w-4" />
             {locating ? "Finding you" : "Use my location"}
           </button>
 
           {error && (
-            <p role="alert" className="mt-3 flex items-start gap-2 rounded-xl border border-line bg-navy px-3 py-2.5 text-sm leading-relaxed">
+            <p role="alert" className="mt-3 flex items-start gap-2 rounded-xl border border-line bg-surface px-3 py-2.5 text-sm leading-relaxed">
               <AlertIcon className="mt-0.5 h-4 w-4 shrink-0" />
               {error}
             </p>
           )}
 
-          <div className="my-5 flex items-center gap-3 text-xs text-mist">
+          <div className="my-5 flex items-center gap-3 text-xs text-ink-soft">
             <span className="h-px flex-1 bg-line" />
             or
             <span className="h-px flex-1 bg-line" />
@@ -262,7 +262,7 @@ function Panel({ mapboxToken, signedIn, onPickPlace, onDone }: PanelProps) {
             Or type a place
           </label>
           <div className="relative mt-1.5">
-            <SearchIcon className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-mist" />
+            <SearchIcon className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" />
             <input
               id={inputId}
               type="text"
@@ -280,12 +280,12 @@ function Panel({ mapboxToken, signedIn, onPickPlace, onDone }: PanelProps) {
                 setDismissed(false);
               }}
               onKeyDown={onKeyDown}
-              className="h-12 w-full rounded-xl border border-line bg-navy pl-10 pr-3 text-sm text-shell placeholder:text-mist"
+              className="h-12 w-full rounded-xl border border-line bg-surface pl-10 pr-3 text-sm text-ink placeholder:text-ink-soft"
             />
           </div>
 
           {showList && (
-            <ul id={listId} role="listbox" aria-label="Place suggestions" className="mt-2 max-h-56 overflow-y-auto rounded-2xl border border-line bg-navy p-1.5">
+            <ul id={listId} role="listbox" aria-label="Place suggestions" className="mt-2 max-h-56 overflow-y-auto rounded-2xl border border-line bg-surface p-1.5">
               {places.slice(0, MAX_SUGGESTIONS).map((p, i) => (
                 <li
                   key={p.id}
@@ -294,22 +294,22 @@ function Panel({ mapboxToken, signedIn, onPickPlace, onDone }: PanelProps) {
                   aria-selected={i === active}
                   onPointerEnter={() => setActive(i)}
                   onClick={() => choose(p)}
-                  className={`flex min-h-11 cursor-pointer items-center rounded-xl px-3 py-2 ${i === active ? "bg-tide/70" : ""}`}
+                  className={`flex min-h-11 cursor-pointer items-center rounded-xl px-3 py-2 ${i === active ? "bg-tint/70" : ""}`}
                 >
                   <span className="min-w-0">
                     <span className="block truncate text-sm">{p.name}</span>
-                    {p.context && <span className="block truncate text-xs text-mist">{p.context}</span>}
+                    {p.context && <span className="block truncate text-xs text-ink-soft">{p.context}</span>}
                   </span>
                 </li>
               ))}
-              {places.length === 0 && <li className="px-3 py-2 text-sm text-mist">Place search is unavailable right now. You can skip this and search later.</li>}
+              {places.length === 0 && <li className="px-3 py-2 text-sm text-ink-soft">Place search is unavailable right now. You can skip this and search later.</li>}
             </ul>
           )}
 
-          <p className="mt-4 text-xs leading-relaxed text-mist">We only keep a rough area, on this device. Your exact location is never stored.</p>
+          <p className="mt-4 text-xs leading-relaxed text-ink-soft">We only keep a rough area, on this device. Your exact location is never stored.</p>
 
           <div className="mt-3 flex justify-center">
-            <button type="button" onClick={() => finish()} className="flex h-11 items-center rounded-full px-4 text-sm font-medium text-foam hover:underline">
+            <button type="button" onClick={() => finish()} className="flex h-11 items-center rounded-full px-4 text-sm font-medium text-brand-strong hover:underline">
               Skip for now
             </button>
           </div>

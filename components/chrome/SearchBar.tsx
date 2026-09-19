@@ -107,8 +107,8 @@ export function SearchBar({ beaches, token, onPickBeach, onPickPlace }: Props) {
 
   return (
     <div ref={rootRef} className="relative min-w-0 flex-1 sm:w-80 sm:flex-none">
-      <label className="glass flex h-11 items-center gap-2 rounded-full px-4 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-foam">
-        <SearchIcon className="h-4 w-4 shrink-0 text-mist" />
+      <label className="glass flex h-11 items-center gap-2 rounded-full px-4 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-brand-strong">
+        <SearchIcon className="h-4 w-4 shrink-0 text-ink-soft" />
         <input
           ref={inputRef}
           type="search"
@@ -127,7 +127,7 @@ export function SearchBar({ beaches, token, onPickBeach, onPickPlace }: Props) {
           }}
           onFocus={() => setOpen(true)}
           onKeyDown={onKeyDown}
-          className="w-full min-w-0 bg-transparent text-sm text-shell placeholder:text-mist outline-none [&::-webkit-search-cancel-button]:hidden"
+          className="w-full min-w-0 bg-transparent text-sm text-ink placeholder:text-ink-soft outline-none [&::-webkit-search-cancel-button]:hidden"
         />
       </label>
 
@@ -145,18 +145,18 @@ export function SearchBar({ beaches, token, onPickBeach, onPickPlace }: Props) {
                 aria-selected={i === active}
                 onPointerEnter={() => setActive(i)}
                 onClick={() => pick(option)}
-                className={`flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 ${i === active ? "bg-tide/70" : ""}`}
+                className={`flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 ${i === active ? "bg-tint/70" : ""}`}
               >
-                {isBeach ? <WaveIcon className="h-4 w-4 shrink-0 text-foam" /> : <PinIcon className="h-4 w-4 shrink-0 text-mist" />}
+                {isBeach ? <WaveIcon className="h-4 w-4 shrink-0 text-brand-strong" /> : <PinIcon className="h-4 w-4 shrink-0 text-ink-soft" />}
                 <span className="min-w-0">
-                  <span className="block truncate text-sm text-shell">{title}</span>
-                  <span className="block truncate text-xs text-mist">{isBeach ? `Beach in ${sub}` : sub}</span>
+                  <span className="block truncate text-sm text-ink">{title}</span>
+                  <span className="block truncate text-xs text-ink-soft">{isBeach ? `Beach in ${sub}` : sub}</span>
                 </span>
               </li>
             );
           })}
           {options.length === 0 && (
-            <li className="px-3 py-2 text-sm text-mist">
+            <li className="px-3 py-2 text-sm text-ink-soft">
               {placeError ? "Place search is unavailable right now. Beach names still work." : "No beach or place matches that yet."}
             </li>
           )}

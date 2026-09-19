@@ -9,7 +9,7 @@ import type { BeachDetail } from "@/lib/beachDetail";
 
 const MAX_PHOTOS = 4;
 const MAX_BYTES = 5 * 1024 * 1024;
-const field = "mt-1 w-full rounded-xl border border-line bg-navy px-3 text-sm text-shell";
+const field = "mt-1 w-full rounded-xl border border-line-strong bg-surface px-3 text-sm text-ink";
 
 export type PostTarget = { id: string; slug: string; name: string };
 type BeachOption = { id: string; name: string; area: string };
@@ -113,7 +113,7 @@ export function NewPostModal({ communities, beaches, initialBeachId, initialZone
       onClose={onClose}
       onClick={(e) => e.target === dialogRef.current && onClose()}
       aria-labelledby="new-post-title"
-      className="glass glass-panel m-auto max-h-[92dvh] w-[min(94vw,480px)] overflow-y-auto rounded-3xl p-0 text-shell backdrop:bg-abyss/70"
+      className="glass glass-panel m-auto max-h-[92dvh] w-[min(94vw,480px)] overflow-y-auto rounded-3xl p-0 text-ink backdrop:bg-wash/70"
     >
       <form onSubmit={onSubmit} className="p-6">
         <div className="flex items-start justify-between gap-3">
@@ -121,9 +121,9 @@ export function NewPostModal({ communities, beaches, initialBeachId, initialZone
             <h2 id="new-post-title" className="text-lg font-semibold tracking-tight">
               Post a cleanup
             </h2>
-            <p className="text-sm text-mist">Posting sets the zone&apos;s litter to low and turns it greener on the map.</p>
+            <p className="text-sm text-ink-soft">Posting sets the zone&apos;s litter to low and turns it greener on the map.</p>
           </div>
-          <button type="button" onClick={onClose} aria-label="Close" className="-mr-1.5 rounded-full p-1.5 text-mist hover:text-shell">
+          <button type="button" onClick={onClose} aria-label="Close" className="-mr-1.5 rounded-full p-1.5 text-ink-soft hover:text-ink">
             <CloseIcon className="h-5 w-5" />
           </button>
         </div>
@@ -182,34 +182,34 @@ export function NewPostModal({ communities, beaches, initialBeachId, initialZone
           <legend className="text-sm">Photos (1 to 4)</legend>
           <div className="mt-1.5 grid grid-cols-4 gap-2">
             {photos.map((photo, i) => (
-              <div key={photo.path} className="relative aspect-square overflow-hidden rounded-xl bg-tide">
+              <div key={photo.path} className="relative aspect-square overflow-hidden rounded-xl bg-tint">
                 <img src={photo.url} alt={`Photo ${i + 1}`} className="h-full w-full object-cover" />
                 <button
                   type="button"
                   onClick={() => setPhotos((list) => list.filter((p) => p.path !== photo.path))}
                   aria-label={`Remove photo ${i + 1}`}
-                  className="absolute right-1 top-1 rounded-full bg-abyss/80 p-1 text-shell"
+                  className="absolute right-1 top-1 rounded-full bg-wash/80 p-1 text-ink"
                 >
                   <CloseIcon className="h-3.5 w-3.5" />
                 </button>
               </div>
             ))}
             {Array.from({ length: uploading }, (_, i) => (
-              <div key={`u${i}`} className="aspect-square animate-pulse rounded-xl bg-tide/70" aria-label="Uploading photo" />
+              <div key={`u${i}`} className="aspect-square animate-pulse rounded-xl bg-tint/70" aria-label="Uploading photo" />
             ))}
             {photos.length + uploading < MAX_PHOTOS && (
-              <button type="button" onClick={() => fileRef.current?.click()} className="flex aspect-square items-center justify-center rounded-xl border border-dashed border-line text-sm text-mist hover:border-foam/60 hover:text-shell">
+              <button type="button" onClick={() => fileRef.current?.click()} className="flex aspect-square items-center justify-center rounded-xl border border-dashed border-line text-sm text-ink-soft hover:border-brand-strong/60 hover:text-ink">
                 Add
               </button>
             )}
           </div>
           <input ref={fileRef} type="file" multiple accept="image/jpeg,image/png,image/webp" onChange={onPickPhotos} className="sr-only" aria-label="Cleanup photos" />
-          <p className="mt-1.5 text-xs text-mist">JPG, PNG, or WebP up to 5 MB each. Location data is removed from every photo.</p>
+          <p className="mt-1.5 text-xs text-ink-soft">JPG, PNG, or WebP up to 5 MB each. Location data is removed from every photo.</p>
         </fieldset>
 
         <label className="mt-4 block text-sm">
           What did you find?
-          <textarea name="body" required maxLength={2000} rows={3} placeholder="Mostly bottle caps and fishing line near the rocks." className={`${field} py-2.5 placeholder:text-mist`} />
+          <textarea name="body" required maxLength={2000} rows={3} placeholder="Mostly bottle caps and fishing line near the rocks." className={`${field} py-2.5 placeholder:text-ink-soft`} />
         </label>
 
         <label className="mt-3 block text-sm">
@@ -218,12 +218,12 @@ export function NewPostModal({ communities, beaches, initialBeachId, initialZone
         </label>
 
         {error && (
-          <p role="alert" className="mt-3 rounded-xl border border-line bg-navy px-3 py-2 text-sm">
+          <p role="alert" className="mt-3 rounded-xl border border-line bg-surface px-3 py-2 text-sm">
             {error}
           </p>
         )}
 
-        <button type="submit" disabled={pending || uploading > 0} className="mt-5 h-11 w-full rounded-full bg-foam text-sm font-semibold text-foam-deep disabled:opacity-60">
+        <button type="submit" disabled={pending || uploading > 0} className="mt-5 h-11 w-full rounded-full bg-brand-strong text-sm font-semibold text-white disabled:opacity-60">
           {pending ? "Posting" : uploading > 0 ? "Uploading photos" : "Post cleanup"}
         </button>
       </form>

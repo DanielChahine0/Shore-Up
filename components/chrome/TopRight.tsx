@@ -18,9 +18,9 @@ export function TopRight() {
       <Link
         href={community ? `/cn/${community.slug}` : "/communities"}
         aria-label={community ? `CN: ${community.name}` : "CN: Join"}
-        className="glass flex h-11 min-w-0 max-w-[46vw] items-center rounded-full px-4 text-sm text-shell sm:max-w-xs"
+        className="glass flex h-11 min-w-0 max-w-[46vw] items-center rounded-full px-4 text-sm text-ink sm:max-w-xs"
       >
-        <span className="shrink-0 text-mist">CN:&nbsp;</span>
+        <span className="shrink-0 text-ink-soft">CN:&nbsp;</span>
         <span className="truncate font-medium">{community ? community.name : "Join"}</span>
       </Link>
       {viewer === undefined ? (
@@ -30,7 +30,7 @@ export function TopRight() {
           <Avatar name={viewer.displayName} src={viewer.avatarUrl} size={44} />
         </Link>
       ) : (
-        <Link href="/signin" className="flex h-11 shrink-0 items-center rounded-full bg-foam px-4 text-sm font-semibold text-foam-deep">
+        <Link href="/signin" className="flex h-11 shrink-0 items-center rounded-full bg-brand-strong px-4 text-sm font-semibold text-white">
           Sign in
         </Link>
       )}

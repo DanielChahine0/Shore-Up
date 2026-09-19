@@ -164,7 +164,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
 
   return (
     <main
-      className="relative h-dvh w-full overflow-hidden bg-abyss"
+      className="relative h-dvh w-full overflow-hidden bg-wash"
       style={{ "--sheet-offset": sheetOffset, "--panel-offset": panelOffset, "--sheet-peek": `${SHEET_PEEK_PX}px`, "--sheet-expanded": SHEET_EXPANDED } as React.CSSProperties}
     >
       <MapCanvas

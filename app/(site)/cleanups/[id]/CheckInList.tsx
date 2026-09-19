@@ -79,21 +79,21 @@ function CheckInRow({ cleanupId, entry }: { cleanupId: string; entry: CheckInEnt
     <li className="rounded-2xl border border-line p-3">
       <div className="flex flex-wrap items-center gap-3">
         <Avatar name={name} src={entry.avatarUrl} size={40} />
-        <span className="min-w-0 flex-1 truncate text-sm font-medium text-shell">{name}</span>
+        <span className="min-w-0 flex-1 truncate text-sm font-medium text-ink">{name}</span>
 
-        <label className="flex h-11 items-center gap-2 text-sm text-shell">
+        <label className="flex h-11 items-center gap-2 text-sm text-ink">
           <input
             type="checkbox"
             checked={checkedIn}
             disabled={pending}
             onChange={toggle}
             aria-label={`Checked in: ${name}`}
-            className="h-5 w-5 accent-[color:var(--color-foam)]"
+            className="h-5 w-5 accent-[color:var(--color-brand-strong)]"
           />
           Checked in
         </label>
 
-        <span className="flex items-center gap-2 text-sm text-mist">
+        <span className="flex items-center gap-2 text-sm text-ink-soft">
           Items
           <input
             type="number"
@@ -105,7 +105,7 @@ function CheckInRow({ cleanupId, entry }: { cleanupId: string; entry: CheckInEnt
             disabled={pending || !checkedIn}
             onChange={(e) => setItems(e.target.value)}
             aria-label={`Items collected by ${name}`}
-            className="h-11 w-24 rounded-xl border border-line bg-navy px-3 text-sm text-shell disabled:opacity-60"
+            className="h-11 w-24 rounded-xl border border-line bg-surface px-3 text-sm text-ink disabled:opacity-60"
           />
         </span>
 
@@ -114,19 +114,19 @@ function CheckInRow({ cleanupId, entry }: { cleanupId: string; entry: CheckInEnt
           onClick={save}
           disabled={pending || !unsaved}
           aria-label={`Save items for ${name}`}
-          className="h-11 rounded-full bg-foam px-4 text-sm font-semibold text-foam-deep disabled:opacity-50"
+          className="h-11 rounded-full bg-brand-strong px-4 text-sm font-semibold text-white disabled:opacity-50"
         >
           Save
         </button>
       </div>
 
-      {!valid && checkedIn && <p className="mt-2 text-xs text-shell">Enter a whole number from 0 to 5000.</p>}
+      {!valid && checkedIn && <p className="mt-2 text-xs text-ink">Enter a whole number from 0 to 5000.</p>}
       {error && (
-        <p role="alert" className="mt-2 text-xs text-shell">
+        <p role="alert" className="mt-2 text-xs text-ink">
           {error}
         </p>
       )}
-      <p role="status" className="mt-2 text-xs text-mist empty:mt-0">
+      <p role="status" className="mt-2 text-xs text-ink-soft empty:mt-0">
         {pending ? "Saving" : (status ?? "")}
       </p>
     </li>

@@ -17,7 +17,7 @@ This document records the architecture chosen to deliver it, and `DECISIONS.md` 
 
 ## Map
 
-- One dark style with a satellite raster layer whose opacity follows zoom.
+- One light style stripped down to land, water, borders, and major labels, with beaches drawn as sand shapes. (Originally a dark style with satellite imagery; see DECISIONS.md.)
 - A clustered GeoJSON source for neutral beach dots.
 - Zone fill, zone score labels, and a glowing outline for the selected beach only.
 - The map is mounted in a layout shared by `/` and `/beach/[id]`.
