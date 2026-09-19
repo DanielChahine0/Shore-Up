@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "providers": {
+    "posthog": {
+      "name": "PostHog"
+    },
+    "vercel": {
+      "name": "Vercel"
+    }
+  },
+  "resources": {
+    "posthog-analytics": {
+      "name": "posthog-analytics",
+      "providerName": "PostHog",
+      "serviceId": "analytics"
+    },
+    "posthog-plan": {
+      "name": "posthog-plan",
+      "providerName": "PostHog",
+      "serviceId": "free"
+    },
+    "shore-up": {
+      "name": "shore-up",
+      "providerName": "Vercel",
+      "serviceId": "project"
+    },
+    "vercel-plan": {
+      "name": "vercel-plan",
+      "providerName": "Vercel",
+      "serviceId": "hobby"
+    }
+  }
+}

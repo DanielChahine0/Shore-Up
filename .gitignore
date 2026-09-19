@@ -59,3 +59,4 @@ playwright-report/
 .env
 .env.*
 !.env.example
+.projects/state.local.json
