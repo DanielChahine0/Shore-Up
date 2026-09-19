@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { signOut } from "@/app/actions/profile";
 import { Avatar } from "@/components/ui/Avatar";
-import { ACHIEVEMENTS, cleanupsToNextLevel, levelFor, type AchievementKey } from "@/lib/achievements/config";
+import { ACHIEVEMENTS, cleanupsToNextLevel, levelFor, type FixedAchievementKey } from "@/lib/achievements/config";
 import { MODE_LABELS } from "@/lib/profiles/modes";
 import { getProfileByUsername, getProfileDetails } from "@/lib/profiles/queries";
 import { supabaseConfigured } from "@/lib/supabase/server";
@@ -85,7 +85,7 @@ export default async function ProfilePage({ params }: PageProps<"/profile/[usern
       <section className="mt-8">
         <h2 className="text-base font-semibold text-shell">Achievements</h2>
         <ul className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {(Object.keys(ACHIEVEMENTS) as AchievementKey[]).map((key) => {
+          {(Object.keys(ACHIEVEMENTS) as FixedAchievementKey[]).map((key) => {
             const has = earned.has(key);
             return (
               <li key={key} className={`rounded-2xl border p-3 ${has ? "border-foam/50 bg-foam/10" : "border-line opacity-60"}`}>

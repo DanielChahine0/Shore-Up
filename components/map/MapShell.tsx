@@ -2,15 +2,17 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
-import { DonateFab } from "@/components/chrome/DonateFab";
 import { Logo } from "@/components/chrome/Logo";
 import { SearchBar, type PlaceResult } from "@/components/chrome/SearchBar";
 import { TopRight } from "@/components/chrome/TopRight";
 import { useViewer } from "@/components/chrome/useViewer";
+import { EventsMenu } from "@/components/events/EventsMenu";
 import { CreateCleanupModal } from "@/components/modals/CreateCleanupModal";
 import { NewPostModal } from "@/components/modals/NewPostModal";
-import { ACHIEVEMENTS } from "@/lib/achievements/config";
+import { WelcomeDialog } from "@/components/onboarding/WelcomeDialog";
+import { achievementName } from "@/lib/achievements/config";
 import { BeachPanel, type PanelAction } from "@/components/panel/BeachPanel";
+import { TrashLogger } from "@/components/trash/TrashLogger";
 import { Toast } from "@/components/ui/Toast";
 import type { BeachSummary } from "@/lib/beaches";
 import type { BeachDetail } from "@/lib/beachDetail";
@@ -232,14 +234,17 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
           onClose={() => setPosting(false)}
           onPosted={({ newAchievements }) => {
             setPosting(false);
-            setToast(newAchievements.length > 0 ? `Badge earned: ${newAchievements.map((k) => ACHIEVEMENTS[k].name).join(", ")}` : "Posted. Litter in that zone is now low.");
+            setToast(newAchievements.length > 0 ? `Badge earned: ${newAchievements.map(achievementName).join(", ")}` : "Posted. Litter in that zone is now low.");
             // Reload this beach so the zone changes color right away.
             setAttempt((n) => n + 1);
           }}
         />
       )}
 
-      <DonateFab onClick={() => setToast(PHASE_NOTES.donate)} />
+      {/* Each of these owns its own buttons, panels, and dialogs. */}
+      <EventsMenu signedIn={Boolean(viewer)} onPickBeach={selectBeach} onToast={setToast} />
+      <TrashLogger beach={selected ? { id: selected.id, name: selected.name } : null} signedIn={Boolean(viewer)} onToast={setToast} onDonate={() => setToast(PHASE_NOTES.donate)} />
+      <WelcomeDialog mapboxToken={mapboxToken} signedIn={Boolean(viewer)} onPickPlace={pickPlace} />
       {toast && <Toast message={toast} onDone={clearToast} />}
       {children}
     </main>

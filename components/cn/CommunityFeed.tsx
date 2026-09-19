@@ -6,7 +6,7 @@ import { joinCommunity, leaveCommunity } from "@/app/actions/communities";
 import { refreshViewer } from "@/components/chrome/useViewer";
 import { NewPostModal, type PostTarget } from "@/components/modals/NewPostModal";
 import { Toast } from "@/components/ui/Toast";
-import { ACHIEVEMENTS } from "@/lib/achievements/config";
+import { achievementName } from "@/lib/achievements/config";
 import type { Community, FeedPost } from "@/lib/communities/queries";
 import { PostCard } from "./PostCard";
 
@@ -83,7 +83,7 @@ export function CommunityFeed({ community, posts, isMember, signedIn, beaches, n
           onClose={() => setPosting(false)}
           onPosted={({ newAchievements }) => {
             setPosting(false);
-            setToast(newAchievements.length > 0 ? `Badge earned: ${newAchievements.map((k) => ACHIEVEMENTS[k].name).join(", ")}` : "Posted. Litter in that zone is now low.");
+            setToast(newAchievements.length > 0 ? `Badge earned: ${newAchievements.map(achievementName).join(", ")}` : "Posted. Litter in that zone is now low.");
             router.refresh();
           }}
         />
