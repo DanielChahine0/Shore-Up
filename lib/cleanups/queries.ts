@@ -49,6 +49,63 @@ export async function listUpcomingCleanups(beachId?: string, limit = 5): Promise
   }));
 }
 
+export type CheckInEntry = {
+  userId: string;
+  /** Null when the volunteer's profile is not public. They still get checked in, just without a name. */
+  username: string | null;
+  displayName: string | null;
+  avatarUrl: string | null;
+  checkedIn: boolean;
+  itemsVerified: number;
+};
+
+export type CheckInBoard = { roster: CheckInEntry[]; checkedIn: number; itemsVerified: number };
+
+/** PostgREST when the table is not in the schema cache, and Postgres when the relation is missing. */
+function isMissingTable(error: { code?: string | null }): boolean {
+  return error.code === "PGRST205" || error.code === "42P01";
+}
+
+/**
+ * Everyone registered for a cleanup and what the organizer has ticked off. The
+ * roster comes from cleanup_attendees so private volunteers are in it too; names
+ * are left-joined from the public view in code.
+ */
+export async function getCheckInBoard(cleanupId: string): Promise<CheckInBoard> {
+  if (!supabaseConfigured()) return { roster: [], checkedIn: 0, itemsVerified: 0 };
+  const supabase = await supabaseServer();
+  const [attendees, profiles, checkins] = await Promise.all([
+    supabase.from("cleanup_attendees").select("user_id, joined_at").eq("cleanup_id", cleanupId).order("joined_at"),
+    supabase.from("cleanup_attendee_profiles").select("user_id, username, display_name, avatar_url").eq("cleanup_id", cleanupId),
+    supabase.from("cleanup_checkins").select("user_id, items_verified").eq("cleanup_id", cleanupId),
+  ]);
+  if (attendees.error) throw new Error(`Could not load who is registered: ${attendees.error.message}`);
+  if (profiles.error) throw new Error(`Could not load attendee names: ${profiles.error.message}`);
+  // Check-ins arrive with migration 0005. Until it is applied, nobody has been checked in.
+  if (checkins.error && !isMissingTable(checkins.error)) throw new Error(`Could not load check-ins: ${checkins.error.message}`);
+
+  const named = new Map((profiles.data ?? []).map((p) => [p.user_id as string, p]));
+  const ticked = new Map((checkins.data ?? []).map((c) => [c.user_id as string, c.items_verified as number]));
+
+  const roster: CheckInEntry[] = (attendees.data ?? []).map((a) => {
+    const profile = named.get(a.user_id);
+    return {
+      userId: a.user_id,
+      username: profile?.username ?? null,
+      displayName: profile?.display_name ?? null,
+      avatarUrl: profile?.avatar_url ?? null,
+      checkedIn: ticked.has(a.user_id),
+      itemsVerified: ticked.get(a.user_id) ?? 0,
+    };
+  });
+
+  return {
+    roster,
+    checkedIn: ticked.size,
+    itemsVerified: [...ticked.values()].reduce((sum, items) => sum + items, 0),
+  };
+}
+
 export type CleanupDetail = {
   id: string;
   beachId: string;
