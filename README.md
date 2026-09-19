@@ -6,12 +6,15 @@ Volunteers post cleanups, and every post shows up on the map, in their community
 
 ## Status
 
-The MVP is built in four phases.
+The MVP was built in phases.
 
 1. Globe, search, beach selection, zones, and side panel on seed data. **Built.**
 2. Auth, profiles, and the people directory. **Built.**
 3. Communities and Community News posts, including score updates. **Built.**
-4. Stripe donations.
+4. Clean sessions (trash logging), badges, the events menu with organizer check-ins, and the first-visit welcome. **Built.**
+
+Donations were dropped from the MVP.
+Hosting and analytics are provisioned through Stripe Projects (`stripe projects status`).
 
 ## Setup
 
@@ -37,12 +40,10 @@ All secrets live in `.env.local`, which is git-ignored.
 | `NEXT_PUBLIC_SUPABASE_URL` | Phase 2 (optional in 1) | Supabase dashboard, Project Settings, Data API |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Phase 2 (optional in 1) | Supabase dashboard, Project Settings, API Keys (`sb_publishable_`). The legacy `anon` key also works |
 | `SUPABASE_SERVICE_ROLE_KEY` | Phase 2 (optional in 1) | Project Settings, API Keys, Legacy API Keys tab. Server only, bypasses Row Level Security |
-| `STRIPE_SECRET_KEY` | Phase 4 | dashboard.stripe.com in test mode, Developers, API keys |
-| `STRIPE_WEBHOOK_SECRET` | Phase 4 | Printed by `stripe listen` |
-| `NEXT_PUBLIC_SITE_URL` | Phase 4 | `http://localhost:3000` locally |
+| `POSTHOG_ANALYTICS_HOST`, `POSTHOG_ANALYTICS_API_KEY` | Optional | Written to `.env` by Stripe Projects (`stripe projects env --pull`). Leave empty to turn analytics off |
 
 Variables prefixed `NEXT_PUBLIC_` are sent to the browser.
-Never put that prefix on the service role key or a Stripe secret.
+Never put that prefix on the service role key.
 
 Until the Supabase variables are set, zone scores come from the demo file `data/seed/zone-state.json`.
 Once they are set, scores come from the database through the same `getBeachZones` interface.

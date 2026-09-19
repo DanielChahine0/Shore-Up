@@ -58,8 +58,8 @@ The simplest option was chosen each time.
 - **Clicking a cluster flies to the area covering all of its beaches**, not just one zoom level in.
 - **The globe rotates at 3 degrees per second, timed per frame**, and is sized down on phones so the whole sphere fits.
 - **The phone bottom sheet expands to 62% of the screen.**
-  Any taller and the donate button and the required Mapbox logo and attribution would slide under the top bar.
-- **On desktop, the donate button and attribution slide left of the open side panel** so neither is covered.
+  Any taller and the "Log trash" button and the required Mapbox logo and attribution would slide under the top bar.
+- **On desktop, the "Log trash" button and attribution slide left of the open side panel** so neither is covered.
 - **The beach panel is nearly opaque** rather than frosted, because long text over satellite imagery was hard to read.
 - **`window.__shoreMap` exposes the map in development only**, for debugging and tests.
 - **Camera flights are 2.6 seconds** and are skipped for users who prefer reduced motion.
@@ -122,3 +122,11 @@ The simplest option was chosen each time.
   They run two at a time, because they share one dev server and a free-tier database, and the "core moment within 3 seconds" check should measure the app rather than contention between tests.
 - **Map tests wait for the camera to arrive**, since the beach panel renders before the map style has loaded.
 - The project was scaffolded in a lowercase temp folder, because npm rejects the capital letters in `Shore-Up`.
+
+## Donations removed
+
+- **Donations were dropped from the MVP at the product owner's request.**
+  The donate button, the beach panel's Donate action, and the Stripe Checkout plan are gone, and no Stripe payment keys are needed.
+- **The `donations` table and `recipient_totals` view from migration 0001 are left in place.**
+  They are empty, no client can reach them, and dropping them would mean a destructive migration for no user-visible gain.
+- **Stripe is still part of the project through Stripe Projects**, which provisions hosting (Vercel) and analytics (PostHog) and carries the public Supabase and Mapbox settings as project variables.

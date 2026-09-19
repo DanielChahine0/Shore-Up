@@ -22,14 +22,10 @@ import { MissingToken } from "./MissingToken";
 import { ZoneTooltip } from "./ZoneTooltip";
 
 const SHEET_PEEK_PX = 264;
-/** Short enough that the donate button and map attribution stay below the top bar. */
+/** Short enough that the map attribution stays below the top bar. */
 const SHEET_EXPANDED = "62dvh";
 const PANEL_WIDTH_PX = 380 + 16;
 const DESKTOP_QUERY = "(min-width: 640px)";
-
-const PHASE_NOTES: Record<"donate", string> = {
-  donate: "Donations open with Stripe Checkout (phase 4).",
-};
 
 function useIsDesktop() {
   return useSyncExternalStore(
@@ -136,7 +132,6 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   }, [router]);
 
   const onPanelAction = (action: PanelAction) => {
-    if (action === "donate") return setToast(PHASE_NOTES.donate);
     const signIn = () => router.push(`/signin?next=${encodeURIComponent(`/beach/${selectedId}`)}`);
     if (action === "post") {
       if (!viewer) return signIn();
@@ -243,7 +238,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
 
       {/* Each of these owns its own buttons, panels, and dialogs. */}
       <EventsMenu signedIn={Boolean(viewer)} onPickBeach={selectBeach} onToast={setToast} />
-      <TrashLogger beach={selected ? { id: selected.id, name: selected.name } : null} signedIn={Boolean(viewer)} onToast={setToast} onDonate={() => setToast(PHASE_NOTES.donate)} />
+      <TrashLogger beach={selected ? { id: selected.id, name: selected.name } : null} signedIn={Boolean(viewer)} onToast={setToast} />
       <WelcomeDialog mapboxToken={mapboxToken} signedIn={Boolean(viewer)} onPickPlace={pickPlace} />
       {toast && <Toast message={toast} onDone={clearToast} />}
       {children}
