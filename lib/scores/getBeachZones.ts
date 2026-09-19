@@ -10,7 +10,7 @@ import type { BeachScore, ZoneScore } from "./types";
  * cleanliness comes through here.
  */
 export async function getBeachZones(beachId: string, now: Date = new Date()): Promise<ZoneScore[]> {
-  const states = await activeZoneStateSource().getZoneStates(beachId);
+  const states = await activeZoneStateSource().getZoneStates(beachId, now);
   return states.map((s) => scoreZone(s, now)).sort((a, b) => a.position - b.position);
 }
 

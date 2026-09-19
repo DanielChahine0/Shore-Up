@@ -97,3 +97,15 @@ describe("beach score and reason", () => {
     expect(reason).toContain("Zone B has heavy litter");
   });
 });
+
+describe("demo source timing", () => {
+  it("measures relative demo ages against the caller's instant, so day counts are exact", async () => {
+    const { demoFileSource } = await import("@/lib/scores/sources");
+    const at = new Date("2026-09-19T12:00:00.000Z");
+    const zones = await demoFileSource.getZoneStates("woodbine", at);
+    const zoneC = zones.find((z) => z.position === 3)!;
+    // Exactly 14 days, not 13.999: the band depends on it.
+    expect(at.getTime() - new Date(zoneC.lastCleanedAt).getTime()).toBe(14 * 86_400_000);
+    expect(scoreZone(zoneC, at).summary).toBe("Poor: heavy litter, last cleaned 14 days ago");
+  });
+});

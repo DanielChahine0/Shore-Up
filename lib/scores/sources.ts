@@ -20,8 +20,8 @@ export type DemoZoneState = {
 
 /** Seeded demo data from the repo. Used until Supabase is configured. */
 export const demoFileSource: ZoneStateSource = {
-  async getZoneStates(beachId) {
-    const now = Date.now();
+  async getZoneStates(beachId, at) {
+    const now = at.getTime();
     return (demoState as DemoZoneState[])
       .filter((z) => z.beachId === beachId)
       .map((z) => ({
@@ -50,13 +50,27 @@ type ZoneStateRow = {
   litter_source: DataSource;
 };
 
-/** Reads the zone_state view: latest water reading plus latest cleanup post per zone. */
+/**
+ * Reads the zone_state view: latest water reading plus latest cleanup post per zone.
+ *
+ * Demo litter ages are rebuilt here from the stored day count rather than taken from the
+ * view's timestamp, and measured against the caller's `now`. Any second reading of a clock
+ * (the database's, or this server's a request later) lands a few milliseconds off, which is
+ * enough to turn "14 days ago" into 13 and change a band. One instant, no drift.
+ */
 export const supabaseSource: ZoneStateSource = {
-  async getZoneStates(beachId) {
+  async getZoneStates(beachId, at) {
     const supabase = await supabaseServer();
-    const { data, error } = await supabase.from("zone_state").select("*").eq("beach_id", beachId);
-    if (error) throw new Error(`zone_state query failed: ${error.message}`);
-    return (data as ZoneStateRow[]).map((r) => ({
+    const [state, demo] = await Promise.all([
+      supabase.from("zone_state").select("*").eq("beach_id", beachId),
+      supabase.from("zones").select("id, demo_last_cleaned_days").eq("beach_id", beachId),
+    ]);
+    if (state.error) throw new Error(`zone_state query failed: ${state.error.message}`);
+    if (demo.error) throw new Error(`zones query failed: ${demo.error.message}`);
+
+    const now = at.getTime();
+    const demoDays = new Map((demo.data ?? []).map((z) => [z.id as string, z.demo_last_cleaned_days as number]));
+    return (state.data as ZoneStateRow[]).map((r) => ({
       zoneId: r.zone_id,
       beachId: r.beach_id,
       name: r.name,
@@ -64,7 +78,7 @@ export const supabaseSource: ZoneStateSource = {
       waterStatus: r.water_status,
       waterSource: r.water_source,
       waterObservedAt: r.water_observed_at,
-      lastCleanedAt: r.last_cleaned_at,
+      lastCleanedAt: r.litter_source === "demo" ? new Date(now - (demoDays.get(r.zone_id) ?? 0) * MS_PER_DAY).toISOString() : r.last_cleaned_at,
       litterSource: r.litter_source,
     }));
   },

@@ -14,6 +14,10 @@ The simplest option was chosen each time.
 - **Demo litter uses a relative age.**
   Each zone stores `demo_last_cleaned_days`, and the zone reads as last cleaned that many days ago until a volunteer posts.
   This keeps the Woodbine demo stable on any day, and lets the tooltip say "last cleaned 14 days ago".
+- **A score is computed against one instant.**
+  Demo litter ages are relative ("14 days ago"), and reading a clock twice (the database's, or the server's again after a network request) landed a few milliseconds apart.
+  That was enough to turn 14 days into 13 and move a zone from Poor to Fair.
+  The caller's `now` is passed into every data source, and demo ages are rebuilt from the stored day count.
 - **Seeded demo posts never change a litter score.**
   Posts flagged `is_demo` fill the feeds but are ignored by the `zone_state` view, so only real cleanups move the map.
 - **The beach score is the plain mean of its zone scores.**

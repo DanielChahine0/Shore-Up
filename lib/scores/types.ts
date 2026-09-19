@@ -19,7 +19,11 @@ export type ZoneState = {
  * forecasting service all sit behind this, so the UI never changes.
  */
 export interface ZoneStateSource {
-  getZoneStates(beachId: string): Promise<ZoneState[]>;
+  /**
+   * `now` is the single instant the whole score is computed against. Sources that build
+   * relative demo timestamps must use it rather than reading the clock again.
+   */
+  getZoneStates(beachId: string, now: Date): Promise<ZoneState[]>;
 }
 
 export type ZoneScore = {

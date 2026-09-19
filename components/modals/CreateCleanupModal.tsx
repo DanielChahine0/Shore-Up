@@ -15,10 +15,11 @@ export function CreateCleanupModal({ beach, zones, onClose }: Props) {
   const [state, action, pending] = useActionState<CreateCleanupState, FormData>(createCleanup, {});
   const [localTime, setLocalTime] = useState("");
 
+  // No close() on cleanup: closing fires the dialog's "close" event, which would dismiss the
+  // modal during React's development double-mount. Unmounting removes it from the top layer anyway.
   useEffect(() => {
     const dialog = dialogRef.current;
-    dialog?.showModal();
-    return () => dialog?.close();
+    if (dialog && !dialog.open) dialog.showModal();
   }, []);
 
   // The picker works in the visitor's own time zone; the server gets an exact instant.
