@@ -55,7 +55,7 @@ export default async function CleanupPage({ params }: PageProps<"/cleanups/[id]"
         )}
         <div className="flex items-center gap-3">
           {faces.length > 0 && (
-            <span className="flex -space-x-2" aria-hidden>
+            <span className="flex -space-x-1" aria-hidden>
               {faces.map((a) => (
                 <span key={a.userId} className="rounded-full ring-2 ring-navy">
                   <Avatar name={a.displayName} src={a.avatarUrl} size={32} />

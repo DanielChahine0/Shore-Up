@@ -46,7 +46,7 @@ export function EventCard({ event, signedIn, onPickBeach, onRegisteredChange, on
       <div className="mt-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <p className="flex items-center gap-2">
           {event.attendees.length > 0 && (
-            <span className="flex -space-x-2" aria-hidden>
+            <span className="flex -space-x-1" aria-hidden>
               {event.attendees.map((person) => (
                 <span key={person.userId} className="rounded-full ring-2 ring-navy">
                   <Avatar name={person.displayName} src={person.avatarUrl} size={28} />

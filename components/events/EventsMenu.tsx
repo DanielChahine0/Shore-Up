@@ -149,10 +149,11 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
           ref={panelRef}
           tabIndex={-1}
           aria-label="Cleanup events near you"
-          // Unlike the other panels this one runs the full height, over the logo and search bar
-          // rather than only the map, so it is fully opaque: glass-panel's last 3% let them ghost through.
+          // On phones this runs the full height, over the logo and search bar rather than only the
+          // map, so it is fully opaque: glass-panel's last 3% let them ghost through. On desktop it
+          // sits below the top bar like the beach panel, and stops short of the Mapbox logo.
           style={{ background: "rgb(9 26 42)" }}
-          className={`glass glass-panel absolute bottom-0 left-0 top-0 z-20 flex w-[calc(100%-2rem)] max-w-[360px] flex-col transition-transform duration-300 ease-out sm:w-[360px] ${shown ? "translate-x-0" : "-translate-x-full"}`}
+          className={`glass glass-panel absolute bottom-0 left-0 top-0 z-20 flex w-[calc(100%-2rem)] max-w-[360px] flex-col overflow-hidden transition-transform duration-300 ease-out sm:bottom-10 sm:left-4 sm:top-[76px] sm:w-[360px] sm:rounded-3xl ${shown ? "translate-x-0" : "-translate-x-[calc(100%+1rem)]"}`}
         >
           <header className="flex items-start justify-between gap-3 px-5 pt-5">
             <div className="min-w-0">
