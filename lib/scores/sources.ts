@@ -1,4 +1,5 @@
 import "server-only";
+import officialReadings from "@/data/seed/water-official.json";
 import demoState from "@/data/seed/zone-state.json";
 import { supabaseConfigured, supabaseServer } from "@/lib/supabase/server";
 import type { DataSource, WaterStatus } from "./config";
@@ -18,20 +19,41 @@ export type DemoZoneState = {
   lastCleanedDaysAgo: number;
 };
 
-/** Seeded demo data from the repo. Used until Supabase is configured. */
+/**
+ * The latest published result for a zone from the authority that samples its water,
+ * imported by `pnpm fetch:beaches`. `detail` is the result in the authority's own terms.
+ */
+export type OfficialReading = {
+  zoneId: string;
+  beachId: string;
+  waterStatus: WaterStatus;
+  observedAt: string;
+  authority: "toronto" | "nsw-beachwatch" | "eea";
+  siteId: string;
+  siteName: string;
+  detail: string;
+};
+
+const officialByZone = new Map((officialReadings as OfficialReading[]).map((r) => [r.zoneId, r]));
+
+/**
+ * Seeded data from the repo: official water readings where an authority publishes them,
+ * demo values everywhere else. Used until Supabase is configured.
+ */
 export const demoFileSource: ZoneStateSource = {
   async getZoneStates(beachId, at) {
     const now = at.getTime();
     return (demoState as DemoZoneState[])
       .filter((z) => z.beachId === beachId)
-      .map((z) => ({
+      .map((z) => ({ z, official: officialByZone.get(z.zoneId) }))
+      .map(({ z, official }) => ({
         zoneId: z.zoneId,
         beachId: z.beachId,
         name: z.name,
         position: z.position,
-        waterStatus: z.waterStatus,
-        waterSource: "demo" as const,
-        waterObservedAt: new Date(now - z.waterObservedHoursAgo * MS_PER_HOUR).toISOString(),
+        waterStatus: official?.waterStatus ?? z.waterStatus,
+        waterSource: official ? ("official" as const) : ("demo" as const),
+        waterObservedAt: official?.observedAt ?? new Date(now - z.waterObservedHoursAgo * MS_PER_HOUR).toISOString(),
         lastCleanedAt: new Date(now - z.lastCleanedDaysAgo * MS_PER_DAY).toISOString(),
         litterSource: "demo" as const,
       }));

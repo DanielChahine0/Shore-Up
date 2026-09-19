@@ -14,9 +14,11 @@ import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
 import { config } from "dotenv";
 import type { FeatureCollection } from "geojson";
-import type { DemoZoneState } from "../lib/scores/sources";
+import type { DemoZoneState, OfficialReading } from "../lib/scores/sources";
 
 const ROOT = path.resolve(__dirname, "..");
+/** Rows per insert or upsert, so a few thousand zones never exceed the API's request size. */
+const INSERT_CHUNK = 500;
 config({ path: path.join(ROOT, ".env.local") });
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -41,7 +43,9 @@ async function main() {
     const p = f.properties as { id: string; name: string; area: string; country: string; lng: number; lat: number; osm_id: string };
     return { id: p.id, name: p.name, area: p.area, country: p.country, lng: p.lng, lat: p.lat, osm_id: p.osm_id };
   });
-  check("beaches", (await supabase.from("beaches").upsert(beachRows)).error);
+  for (let i = 0; i < beachRows.length; i += INSERT_CHUNK) {
+    check("beaches", (await supabase.from("beaches").upsert(beachRows.slice(i, i + INSERT_CHUNK))).error);
+  }
 
   const zoneRows = zoneStates.map((z) => ({
     id: z.zoneId,
@@ -50,18 +54,25 @@ async function main() {
     position: z.position,
     demo_last_cleaned_days: z.lastCleanedDaysAgo,
   }));
-  check("zones", (await supabase.from("zones").upsert(zoneRows)).error);
+  for (let i = 0; i < zoneRows.length; i += INSERT_CHUNK) {
+    check("zones", (await supabase.from("zones").upsert(zoneRows.slice(i, i + INSERT_CHUNK))).error);
+  }
 
-  // Replace demo readings only. Official, model, and volunteer readings are never touched.
-  check("clear demo water readings", (await supabase.from("water_readings").delete().eq("source", "demo")).error);
+  // Replace the readings this script owns: demo ones and the imported official ones. Model and volunteer readings are never touched.
+  // A zone with an official reading gets no demo row, because zone_state takes the newest and a seasonal class is older than "6 hours ago".
+  const official = await readJson<OfficialReading[]>("data/seed/water-official.json");
+  const hasOfficial = new Set(official.map((r) => r.zoneId));
+  check("clear seeded water readings", (await supabase.from("water_readings").delete().in("source", ["demo", "official"])).error);
   const now = Date.now();
-  const readingRows = zoneStates.map((z) => ({
-    zone_id: z.zoneId,
-    status: z.waterStatus,
-    source: "demo",
-    observed_at: new Date(now - z.waterObservedHoursAgo * 3_600_000).toISOString(),
-  }));
-  check("water readings", (await supabase.from("water_readings").insert(readingRows)).error);
+  const readingRows = [
+    ...zoneStates
+      .filter((z) => !hasOfficial.has(z.zoneId))
+      .map((z) => ({ zone_id: z.zoneId, status: z.waterStatus, source: "demo", observed_at: new Date(now - z.waterObservedHoursAgo * 3_600_000).toISOString() })),
+    ...official.map((r) => ({ zone_id: r.zoneId, status: r.waterStatus, source: "official", observed_at: r.observedAt })),
+  ];
+  for (let i = 0; i < readingRows.length; i += INSERT_CHUNK) {
+    check("water readings", (await supabase.from("water_readings").insert(readingRows.slice(i, i + INSERT_CHUNK))).error);
+  }
 
   const users = await seedDemoUsers();
   const cleanups = await seedCleanups(users);
