@@ -36,36 +36,42 @@ function CheckInRow({ cleanupId, entry }: { cleanupId: string; entry: CheckInEnt
   const valid = items.trim() !== "" && Number.isInteger(count) && count >= 0 && count <= 5000;
   const unsaved = checkedIn && valid && count !== savedItems;
 
-  const run = (work: () => Promise<{ ok: true; message: string } | { ok: false; error: string }>, onOk: () => void) => {
+  const run = (work: () => Promise<{ ok: true; message: string } | { ok: false; error: string }>, onOk: () => void, onFail?: () => void) => {
     setError(null);
     setStatus(null);
     startTransition(async () => {
       const result = await work();
-      if (!result.ok) return setError(result.error);
+      if (!result.ok) {
+        onFail?.();
+        return setError(result.error);
+      }
       onOk();
       setStatus(result.message);
     });
   };
 
   const toggle = () => {
+    // Optimistic: the tick responds at once and rolls back if the server refuses.
     if (checkedIn) {
+      setCheckedIn(false);
       return run(
         () => undoCheckIn(cleanupId, entry.userId),
         () => {
-          setCheckedIn(false);
           setSavedItems(0);
           setItems("0");
         },
+        () => setCheckedIn(true),
       );
     }
     const first = valid ? count : 0;
+    setCheckedIn(true);
     run(
       () => checkInAttendee(cleanupId, entry.userId, first),
       () => {
-        setCheckedIn(true);
         setSavedItems(first);
         setItems(String(first));
       },
+      () => setCheckedIn(false),
     );
   };
 
@@ -105,7 +111,7 @@ function CheckInRow({ cleanupId, entry }: { cleanupId: string; entry: CheckInEnt
             disabled={pending || !checkedIn}
             onChange={(e) => setItems(e.target.value)}
             aria-label={`Items collected by ${name}`}
-            className="h-11 w-24 rounded-xl border border-line bg-surface px-3 text-sm text-ink disabled:opacity-60"
+            className="h-11 w-24 rounded-xl border border-line-strong bg-surface px-3 text-sm text-ink disabled:opacity-60"
           />
         </span>
 

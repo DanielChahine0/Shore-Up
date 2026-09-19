@@ -98,7 +98,7 @@ export default async function CleanupPage({ params }: PageProps<"/cleanups/[id]"
 
       <section className="mt-8">
         <h2 className="text-base font-semibold text-ink">
-          {cleanup.attendeeCount} {cleanup.attendeeCount === 1 ? "person" : "people"} going
+          {cleanup.attendeeCount} {cleanup.attendeeCount === 1 ? "person" : "people"} {cleanup.isUpcoming ? "going" : "registered"}
         </h2>
         <ul className="mt-3 grid gap-3 sm:grid-cols-2">
           {cleanup.attendees.map((a) => (
