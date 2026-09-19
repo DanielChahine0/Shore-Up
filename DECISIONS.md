@@ -43,7 +43,11 @@ The simplest option was chosen each time.
 
 - **One dark style, with satellite as a raster layer whose opacity follows zoom** (invisible at zoom 10, opaque at 13.5).
   There is no style swap, so custom layers are never wiped.
-- **The globe stops rotating on the first touch and resumes after "Back to globe".**
+- **Leaving a beach never resets the camera.**
+  Closing the panel leaves the view exactly where it is.
+  "Back to globe" zooms out to the whole globe centered on the current spot, not the starting view.
+- **The globe stops rotating on the first touch and does not resume**, so the user's position is never moved for them.
+- **"Back to globe" is offered whenever the map is zoomed past the whole-globe view**, not only while a beach is open.
 - **The map lives in a shared layout** for `/` and `/beach/[id]`, so selecting a beach moves the camera instead of reloading the globe.
 - **The selected beach swaps its dot for the outline and zones.**
   Every other beach stays a neutral dot at every zoom level.

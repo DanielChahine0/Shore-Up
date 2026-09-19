@@ -58,7 +58,8 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   const [sheetExpanded, setSheetExpanded] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [mapReady, setMapReady] = useState(false);
-  const [hasLeftGlobe, setHasLeftGlobe] = useState(false);
+  const [globeCamera, setGlobeCamera] = useState<CameraCommand | null>(null);
+  const [away, setAway] = useState(false);
 
   // Only ever show data for the beach that is selected right now.
   const detail = loaded && loaded.id === selectedId ? loaded.detail : null;
@@ -79,12 +80,12 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
     return () => controller.abort();
   }, [selectedId, attempt]);
 
-  // The camera follows the URL: a beach flies in, leaving a beach flies back out.
+  // A selected beach flies in. Leaving one moves nothing: the camera stays where the user is
+  // unless they ask for "Back to globe".
   const camera = useMemo<CameraCommand | null>(() => {
     if (selected) return { kind: "beach", bounds: selected.bounds };
-    if (placeCamera) return placeCamera;
-    return hasLeftGlobe ? { kind: "globe" } : null;
-  }, [selected, placeCamera, hasLeftGlobe]);
+    return placeCamera ?? globeCamera;
+  }, [selected, placeCamera, globeCamera]);
 
   const padding = useMemo(
     () =>
@@ -97,7 +98,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   const selectBeach = useCallback(
     (id: string) => {
       setPlaceCamera(null);
-      setHasLeftGlobe(true);
+      setGlobeCamera(null);
       setSheetExpanded(false);
       router.push(`/beach/${id}`);
     },
@@ -106,18 +107,26 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
 
   const pickPlace = useCallback(
     (place: PlaceResult) => {
-      setHasLeftGlobe(true);
+      setGlobeCamera(null);
       setPlaceCamera({ kind: "place", center: place.center, bounds: place.bounds });
       if (selectedId) router.push("/");
     },
     [router, selectedId],
   );
 
+  /** Zooms out to the whole globe, centered on wherever the user already is. */
   const backToGlobe = useCallback(() => {
     setPlaceCamera(null);
-    setHasLeftGlobe(true);
+    setGlobeCamera({ kind: "globe" });
     if (selectedId) router.push("/");
   }, [router, selectedId]);
+
+  /** Closes the beach panel and leaves the camera exactly where it is. */
+  const closeBeach = useCallback(() => {
+    setPlaceCamera(null);
+    setGlobeCamera(null);
+    router.push("/");
+  }, [router]);
 
   const clearToast = useCallback(() => setToast(null), []);
   const markReady = useCallback(() => setMapReady(true), []);
@@ -128,7 +137,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   const panelOffset = isDesktop && selected ? `${PANEL_WIDTH_PX + 8}px` : "0px";
   const activeZoneId = hover?.zoneId ?? panelZoneId;
   const hoveredZone = hover && detail ? detail.score.zones.find((z) => z.zoneId === hover.zoneId) : undefined;
-  const awayFromGlobe = Boolean(selected || placeCamera);
+  const awayFromGlobe = away || Boolean(selected);
 
   return (
     <main
@@ -145,6 +154,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
         highlightZoneId={panelZoneId}
         onSelectBeach={selectBeach}
         onZoneHover={setHover}
+        onAwayChange={setAway}
         onReady={markReady}
       />
 
@@ -182,7 +192,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
           onFocusZone={setPanelZoneId}
           onAction={(action) => setToast(PHASE_NOTES[action])}
           onRetry={() => setAttempt((n) => n + 1)}
-          onClose={backToGlobe}
+          onClose={closeBeach}
         />
       )}
 

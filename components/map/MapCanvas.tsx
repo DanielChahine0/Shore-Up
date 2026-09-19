@@ -4,7 +4,7 @@ import mapboxgl, { type GeoJSONSource, type Map as MapboxMap } from "mapbox-gl";
 import { useEffect, useRef } from "react";
 import type { BeachSummary } from "@/lib/beaches";
 import type { BeachDetail } from "@/lib/beachDetail";
-import { FLIGHT_MS, globeView, NEUTRAL, SATELLITE_FADE, SPIN_DEG_PER_SEC, SPIN_MAX_ZOOM } from "./mapConfig";
+import { AWAY_FROM_GLOBE_ZOOM, FLIGHT_MS, globeView, NEUTRAL, SATELLITE_FADE, SPIN_DEG_PER_SEC, SPIN_MAX_ZOOM } from "./mapConfig";
 
 export type CameraCommand =
   | { kind: "beach"; bounds: [number, number, number, number] }
@@ -26,21 +26,22 @@ type Props = {
   highlightZoneId: string | null;
   onSelectBeach: (id: string) => void;
   onZoneHover: (hover: ZoneHover) => void;
+  /** Fires when the camera crosses between the whole-globe view and a zoomed-in view. */
+  onAwayChange: (away: boolean) => void;
   onReady: () => void;
 };
 
 const EMPTY: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
 
-export function MapCanvas({ token, beaches, selectedId, detail, camera, padding, highlightZoneId, onSelectBeach, onZoneHover, onReady }: Props) {
+export function MapCanvas({ token, beaches, selectedId, detail, camera, padding, highlightZoneId, onSelectBeach, onZoneHover, onAwayChange, onReady }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapboxMap | null>(null);
   const readyRef = useRef(false);
   const spinningRef = useRef(true);
-  const startSpinRef = useRef<() => void>(() => {});
-  const latest = useRef({ onSelectBeach, onZoneHover, onReady, padding, selectedId, detail, camera });
+  const latest = useRef({ onSelectBeach, onZoneHover, onAwayChange, onReady, padding, selectedId, detail, camera });
   // Map event handlers outlive renders, so they read the newest props through this ref.
   useEffect(() => {
-    latest.current = { onSelectBeach, onZoneHover, onReady, padding, selectedId, detail, camera };
+    latest.current = { onSelectBeach, onZoneHover, onAwayChange, onReady, padding, selectedId, detail, camera };
   });
 
   // Create the map once.
@@ -86,11 +87,18 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
       lastTick = 0;
       spinFrame = requestAnimationFrame(spin);
     };
-    startSpinRef.current = startSpin;
     const stopSpin = () => {
       spinningRef.current = false;
     };
     for (const evt of ["mousedown", "touchstart", "wheel"] as const) map.on(evt, stopSpin);
+
+    let away = false;
+    map.on("zoom", () => {
+      const next = map.getZoom() > AWAY_FROM_GLOBE_ZOOM;
+      if (next === away) return;
+      away = next;
+      latest.current.onAwayChange(next);
+    });
 
     map.on("style.load", () => {
       map.setFog({
@@ -303,9 +311,9 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !readyRef.current || !camera) return;
-    spinningRef.current = camera.kind === "globe";
+    // Any camera command counts as the user taking control, so the idle rotation never resumes.
+    spinningRef.current = false;
     runCamera(map, camera, latest.current.padding, true);
-    startSpinRef.current();
   }, [camera]);
 
   useEffect(() => {
@@ -350,7 +358,8 @@ function applyDetail(map: MapboxMap, detail: BeachDetail | null) {
 function runCamera(map: MapboxMap, camera: CameraCommand, padding: Props["padding"], animate: boolean) {
   const duration = animate ? FLIGHT_MS : 0;
   if (camera.kind === "globe") {
-    map.flyTo({ ...globeView(window.innerWidth), duration, padding: { top: 0, right: 0, bottom: 0, left: 0 } });
+    // Zoom out over wherever the user already is. Never reset to the starting view.
+    map.flyTo({ ...globeView(window.innerWidth), center: map.getCenter(), duration, padding: { top: 0, right: 0, bottom: 0, left: 0 } });
     return;
   }
   if (camera.bounds) {

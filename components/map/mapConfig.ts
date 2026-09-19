@@ -17,3 +17,6 @@ export const SATELLITE_FADE = { from: 10, to: 13.5 };
 
 /** Beach dots, clusters, and labels. Never a cleanliness-scale color. */
 export const NEUTRAL = "rgb(234, 244, 244)";
+
+/** Past this zoom the user has left the whole-globe view, and "Back to globe" is offered. */
+export const AWAY_FROM_GLOBE_ZOOM = 3;

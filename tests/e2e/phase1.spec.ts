@@ -41,3 +41,50 @@ test("place search offers geocoded places", async ({ page }) => {
   await search.fill("Lisbon");
   await expect(page.getByRole("option", { name: /Lisbon/ }).first()).toBeVisible({ timeout: 8000 });
 });
+
+type MapHandle = { getCenter(): { lng: number; lat: number }; getZoom(): number; isMoving(): boolean };
+const camera = (page: import("@playwright/test").Page) =>
+  page.evaluate(() => {
+    const map = (window as unknown as { __shoreMap: MapHandle }).__shoreMap;
+    return { ...map.getCenter(), zoom: map.getZoom() };
+  });
+const settled = (page: import("@playwright/test").Page) =>
+  page.waitForFunction(() => {
+    const map = (window as unknown as { __shoreMap?: MapHandle }).__shoreMap;
+    return map && !map.isMoving();
+  });
+
+test("closing a beach leaves the camera where it is", async ({ page }) => {
+  await page.goto("/beach/cherry");
+  await expect(page.getByRole("heading", { name: "Cherry Beach" })).toBeVisible();
+  await settled(page);
+  const before = await camera(page);
+
+  await page.getByRole("button", { name: "Close beach details" }).click();
+  await expect(page.getByRole("heading", { name: "Cherry Beach" })).toBeHidden();
+  await page.waitForTimeout(500);
+  await settled(page);
+  expect(await camera(page)).toEqual(before);
+  // Still zoomed in, so the way out is still offered.
+  await expect(page.getByRole("button", { name: "Back to globe" })).toBeVisible();
+});
+
+test("Back to globe zooms out over the current spot, not the starting view", async ({ page }) => {
+  await page.goto("/beach/bondi");
+  await expect(page.getByRole("heading", { name: "Bondi Beach" })).toBeVisible();
+  await settled(page);
+
+  await page.getByRole("button", { name: "Back to globe" }).click();
+  await page.waitForTimeout(500);
+  await settled(page);
+  const after = await camera(page);
+  expect(after.zoom).toBeLessThan(2);
+  // Still over Sydney (151 E, 34 S), not back over the Atlantic.
+  expect(after.lng).toBeGreaterThan(140);
+  expect(after.lat).toBeLessThan(-20);
+  await expect(page.getByRole("button", { name: "Back to globe" })).toBeHidden();
+
+  // And it stays put: the idle rotation does not resume.
+  await page.waitForTimeout(1200);
+  expect((await camera(page)).lng).toBeCloseTo(after.lng, 3);
+});

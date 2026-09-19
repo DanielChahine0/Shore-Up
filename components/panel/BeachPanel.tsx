@@ -49,7 +49,7 @@ export function BeachPanel({ beach, score, error, activeZoneId, expanded, onTogg
               {beach.area}, {beach.country}
             </p>
           </div>
-          <button type="button" onClick={onClose} aria-label="Close beach details" className="hidden rounded-full p-1.5 text-mist hover:text-shell sm:block">
+          <button type="button" onClick={onClose} aria-label="Close beach details" className="-mr-1.5 rounded-full p-1.5 text-mist hover:text-shell">
             <CloseIcon className="h-5 w-5" />
           </button>
         </header>
