@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { joinCleanup, leaveCleanup } from "@/app/actions/cleanups";
+import { track } from "@/lib/analytics/track";
 
 type Props = {
   cleanupId: string;
@@ -46,7 +47,10 @@ export function JoinButton({ cleanupId, returnTo, joined = false, signedIn = tru
     onChange?.(next);
     startTransition(async () => {
       const result = next ? await joinCleanup(cleanupId, returnTo) : await leaveCleanup(cleanupId);
-      if (result.ok) return onDone?.(result.message);
+      if (result.ok) {
+        track(next ? "event_registered" : "event_cancelled");
+        return onDone?.(result.message);
+      }
       setIsJoined(!next);
       onChange?.(!next);
       setError(result.error);

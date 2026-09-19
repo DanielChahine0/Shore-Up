@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState, useTransition } from "react";
 import { saveCleanSession } from "@/app/actions/sessions";
 import { DonateFab } from "@/components/chrome/DonateFab";
+import { track } from "@/lib/analytics/track";
 import { TRASH_ITEMS, totalItems, type TrashItemKey } from "@/lib/trash/config";
 import { TrashSheet } from "./TrashSheet";
 import { BagIcon } from "./icons";
@@ -76,6 +77,7 @@ export function TrashLogger({ beach, signedIn, onToast, onDonate }: TrashLoggerP
         return;
       }
       onSaved();
+      track("clean_session_finished", { signed_in: true, total_items: result.result.totalItems, item_types: Object.keys(entry.counts).length, unlocked_now: result.result.unlockedNow });
       onToast(finishMessage(result.result));
     });
   };
@@ -87,6 +89,7 @@ export function TrashLogger({ beach, signedIn, onToast, onDonate }: TrashLoggerP
       const held = holdForSignIn();
       if (!held) return;
       setJustFinished(held);
+      track("clean_session_finished", { signed_in: false, total_items: totalItems(held.counts), item_types: Object.keys(held.counts).length, unlocked_now: false });
       setAnnouncement(`Session finished with ${itemLabel(totalItems(held.counts))}. Sign in to save it.`);
       return;
     }
