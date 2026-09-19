@@ -2,8 +2,8 @@
  * Seeds Supabase with demo data. Safe to re-run: reference rows are upserted
  * and demo water readings are replaced.
  *
- * Seeds beaches, zones, demo water readings, 20 demo users, and 3 upcoming
- * cleanups. Communities and posts are added in phase 3.
+ * Seeds beaches, zones, demo water readings, 20 demo users, 3 upcoming cleanups,
+ * 5 communities (one hosted by a nonprofit), and 30 demo posts with placeholder photos.
  *
  * Usage: pnpm seed   (needs NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local)
  */
@@ -11,6 +11,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { randomBytes } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
+import sharp from "sharp";
 import { config } from "dotenv";
 import type { FeatureCollection } from "geojson";
 import type { DemoZoneState } from "../lib/scores/sources";
@@ -65,6 +66,9 @@ async function main() {
   const users = await seedDemoUsers();
   const cleanups = await seedCleanups(users);
 
+  const community = await seedCommunities(users, beachRows, zoneStates);
+
+  console.log(`Seeded ${community.communities} communities and ${community.posts} demo posts.`);
   console.log(`Seeded ${users.size} demo users and ${cleanups} upcoming cleanups.`);
   console.log(`Seeded ${beachRows.length} beaches, ${zoneRows.length} zones, ${readingRows.length} demo water readings.`);
 }
@@ -136,6 +140,115 @@ async function seedCleanups(users: Map<string, string>): Promise<number> {
     check(`attendees at ${plan.beach}`, (await supabase.from("cleanup_attendees").insert(attendees)).error);
   }
   return plans.length;
+}
+
+type CommunitySeed = {
+  nonprofits: { slug: string; name: string; description: string; url: string | null }[];
+  communities: { slug: string; name: string; area: string; beach: string; nonprofit: string | null; members: string[] }[];
+  posts: { author: string; community: string; beaches: string[]; count: number }[];
+  bodies: string[];
+};
+
+const PLACEHOLDER_COUNT = 6;
+
+/** Abstract shoreline placeholders (sand meeting water), so the feed has photos without using anyone's real picture. */
+async function uploadPlaceholderPhotos(): Promise<string[]> {
+  const paths: string[] = [];
+  for (let i = 0; i < PLACEHOLDER_COUNT; i++) {
+    const shore = 38 + i * 7;
+    const tilt = (i % 2 === 0 ? 1 : -1) * (4 + i * 2);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+      <defs>
+        <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d3b55"/><stop offset="1" stop-color="#3d8f9f"/></linearGradient>
+        <linearGradient id="sand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c7a3"/><stop offset="1" stop-color="#b89f75"/></linearGradient>
+      </defs>
+      <rect width="1200" height="900" fill="url(#sand)"/>
+      <path d="M0 0 H1200 V${shore * 9 + tilt * 6} Q900 ${shore * 9 + 60 - tilt * 4} 600 ${shore * 9 + 10} T0 ${shore * 9 - tilt * 6} Z" fill="url(#sea)"/>
+      <path d="M0 ${shore * 9 - tilt * 6 + 14} Q300 ${shore * 9 + 40} 600 ${shore * 9 + 26} T1200 ${shore * 9 + tilt * 6 + 16}" fill="none" stroke="#eaf4f4" stroke-opacity="0.55" stroke-width="10"/>
+    </svg>`;
+    const webp = await sharp(Buffer.from(svg)).webp({ quality: 80 }).toBuffer();
+    const path = `demo/shore-${i + 1}.webp`;
+    const { error } = await supabase.storage.from("post-photos").upload(path, webp, { contentType: "image/webp", upsert: true });
+    check(`placeholder photo ${i + 1}`, error);
+    paths.push(path);
+  }
+  return paths;
+}
+
+async function seedCommunities(
+  users: Map<string, string>,
+  beachRows: { id: string; lng: number; lat: number }[],
+  zoneStates: DemoZoneState[],
+): Promise<{ communities: number; posts: number }> {
+  const seed = await readJson<CommunitySeed>("data/seed/communities.json");
+  const beachById = new Map(beachRows.map((b) => [b.id, b]));
+
+  check("nonprofits", (await supabase.from("nonprofits").upsert(seed.nonprofits, { onConflict: "slug" })).error);
+  const nonprofits = await supabase.from("nonprofits").select("id, slug");
+  check("read nonprofits", nonprofits.error);
+  const nonprofitId = new Map((nonprofits.data ?? []).map((n) => [n.slug as string, n.id as string]));
+
+  const communityRows = seed.communities.map((c) => {
+    const beach = beachById.get(c.beach)!;
+    // Rounded to 2 decimals: a neighbourhood, not a meeting point.
+    return { slug: c.slug, name: c.name, area: c.area, lng: Number(beach.lng.toFixed(2)), lat: Number(beach.lat.toFixed(2)), nonprofit_id: c.nonprofit ? nonprofitId.get(c.nonprofit) : null };
+  });
+  check("communities", (await supabase.from("communities").upsert(communityRows, { onConflict: "slug" })).error);
+  const communities = await supabase.from("communities").select("id, slug");
+  check("read communities", communities.error);
+  const communityId = new Map((communities.data ?? []).map((c) => [c.slug as string, c.id as string]));
+
+  const members = seed.communities.flatMap((c, ci) =>
+    c.members.map((username, mi) => ({
+      community_id: communityId.get(c.slug),
+      user_id: users.get(username),
+      // Staggered so "first community joined" is stable for people in two communities.
+      joined_at: new Date(Date.now() - (90 - ci * 5 - mi) * 86_400_000).toISOString(),
+    })),
+  );
+  check("community members", (await supabase.from("community_members").upsert(members, { onConflict: "community_id,user_id" })).error);
+
+  // Demo posts are replaced wholesale. They fill the feeds but never change a litter score.
+  check("clear demo posts", (await supabase.from("posts").delete().eq("is_demo", true)).error);
+  const photos = await uploadPlaceholderPhotos();
+  const zonesByBeach = new Map<string, string[]>();
+  for (const z of zoneStates) zonesByBeach.set(z.beachId, [...(zonesByBeach.get(z.beachId) ?? []), z.zoneId]);
+
+  let n = 0;
+  const postRows = seed.posts.flatMap((plan) =>
+    Array.from({ length: plan.count }, (_, i) => {
+      const beach = plan.beaches[i % plan.beaches.length];
+      const zones = zonesByBeach.get(beach)!;
+      const k = n++;
+      return {
+        author_id: users.get(plan.author),
+        community_id: communityId.get(plan.community),
+        beach_id: beach,
+        zone_id: zones[k % zones.length],
+        body: seed.bodies[k % seed.bodies.length],
+        bags: 1 + (k % 5),
+        is_demo: true,
+        created_at: new Date(Date.now() - (2 + k * 2) * 86_400_000 - (k % 7) * 3_600_000).toISOString(),
+      };
+    }),
+  );
+  const inserted = await supabase.from("posts").insert(postRows).select("id");
+  check("demo posts", inserted.error);
+  const photoRows = (inserted.data ?? []).flatMap((post, k) =>
+    Array.from({ length: 1 + (k % 3 === 0 ? 1 : 0) }, (_, j) => ({ post_id: post.id, position: j + 1, path: photos[(k + j) % photos.length] })),
+  );
+  check("demo post photos", (await supabase.from("post_photos").insert(photoRows)).error);
+
+  // Badges that the demo posts would have earned.
+  const badges = seed.posts.flatMap((plan) => {
+    const keys = ["first_cleanup"];
+    if (plan.count >= 10) keys.push("ten_cleanups");
+    if (new Set(plan.beaches.slice(0, plan.count)).size >= 5) keys.push("five_beaches");
+    return keys.map((achievement_key) => ({ user_id: users.get(plan.author), achievement_key }));
+  });
+  check("demo achievements", (await supabase.from("user_achievements").upsert(badges, { onConflict: "user_id,achievement_key", ignoreDuplicates: true })).error);
+
+  return { communities: communityRows.length, posts: postRows.length };
 }
 
 main().catch((err) => {

@@ -41,7 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 # keep the env template
-!.env.example
 
 # OSM fetch cache
 .cache/
@@ -52,3 +51,11 @@ next-env.d.ts
 # playwright
 test-results/
 playwright-report/
+
+.projects/cache
+.projects/vault
+.projects/state.test.json
+.projects/state.local.test.json
+.env
+.env.*
+!.env.example

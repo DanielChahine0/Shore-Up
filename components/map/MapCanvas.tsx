@@ -92,13 +92,17 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
     };
     for (const evt of ["mousedown", "touchstart", "wheel"] as const) map.on(evt, stopSpin);
 
+    // Checked on every zoom, at the end of every move, and once after the first camera placement,
+    // so the state is right even when a jump happens before listeners or React state are ready.
     let away = false;
-    map.on("zoom", () => {
+    const syncAway = () => {
       const next = map.getZoom() > AWAY_FROM_GLOBE_ZOOM;
       if (next === away) return;
       away = next;
       latest.current.onAwayChange(next);
-    });
+    };
+    map.on("zoom", syncAway);
+    map.on("moveend", syncAway);
 
     map.on("style.load", () => {
       map.setFog({
@@ -249,6 +253,7 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
       applySelection(map, latest.current.selectedId);
       if (latest.current.camera) runCamera(map, latest.current.camera, latest.current.padding, false);
       latest.current.onReady();
+      syncAway();
       startSpin();
     });
 

@@ -1,12 +1,14 @@
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { processImage, UploadError } from "@/lib/images/process";
+import { postPhotoUrl } from "@/lib/images/urls";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { supabaseServer } from "@/lib/supabase/server";
 
 /**
- * Avatar upload. The image is validated, stripped of EXIF, and re-encoded on
- * the server before it is stored. Post photos are added here in phase 3.
+ * Photo upload for avatars and cleanup posts (form field "kind": "avatar" or "post").
+ * Every image is validated, stripped of EXIF and GPS data, and re-encoded on the
+ * server before it is stored. Files live under the uploader's user id.
  */
 export async function POST(request: Request) {
   const supabase = await supabaseServer();
@@ -17,9 +19,11 @@ export async function POST(request: Request) {
   const file = form.get("file");
   if (!(file instanceof File)) return NextResponse.json({ error: "Choose a photo to upload." }, { status: 400 });
 
+  const kind = form.get("kind") === "post" ? "post" : "avatar";
+
   let webp: Buffer;
   try {
-    webp = await processImage(file, "avatar");
+    webp = await processImage(file, kind);
   } catch (err) {
     if (err instanceof UploadError) return NextResponse.json({ error: err.message }, { status: 400 });
     throw err;
@@ -27,6 +31,13 @@ export async function POST(request: Request) {
 
   const admin = supabaseAdmin();
   const path = `${auth.user.id}/${randomUUID()}.webp`;
+
+  if (kind === "post") {
+    const stored = await admin.storage.from("post-photos").upload(path, webp, { contentType: "image/webp", cacheControl: "31536000" });
+    if (stored.error) return NextResponse.json({ error: "The photo didn't upload. Try again." }, { status: 500 });
+    return NextResponse.json({ path, url: postPhotoUrl(path) });
+  }
+
   const upload = await admin.storage.from("avatars").upload(path, webp, { contentType: "image/webp", cacheControl: "31536000" });
   if (upload.error) return NextResponse.json({ error: "The photo didn't upload. Try again." }, { status: 500 });
 

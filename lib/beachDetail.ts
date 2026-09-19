@@ -1,6 +1,7 @@
 import type { Feature, FeatureCollection, MultiPolygon, Polygon } from "geojson";
 import type { BeachSummary } from "./beaches";
 import type { CleanupSummary } from "./cleanups/queries";
+import type { FeedPost } from "./communities/queries";
 import type { BeachScore } from "./scores/types";
 
 /** Everything the map and panel need for one selected beach. */
@@ -11,4 +12,5 @@ export type BeachDetail = {
   zones: FeatureCollection<Polygon | MultiPolygon>;
   score: BeachScore;
   upcomingCleanups: CleanupSummary[];
+  recentPosts: FeedPost[];
 };

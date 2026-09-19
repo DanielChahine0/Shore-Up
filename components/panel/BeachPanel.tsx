@@ -3,7 +3,9 @@
 import { CloseIcon } from "@/components/ui/icons";
 import type { BeachSummary } from "@/lib/beaches";
 import Link from "next/link";
+import { PostCard } from "@/components/cn/PostCard";
 import type { CleanupSummary } from "@/lib/cleanups/queries";
+import type { FeedPost } from "@/lib/communities/queries";
 import type { BeachScore } from "@/lib/scores/types";
 import { SOURCE_LABELS } from "@/lib/scores/config";
 import { ScoreBadge } from "./ScoreBadge";
@@ -18,6 +20,7 @@ type Props = {
   beach: BeachSummary;
   score: BeachScore | null;
   upcomingCleanups: CleanupSummary[];
+  recentPosts: FeedPost[];
   error: string | null;
   activeZoneId: string | null;
   /** Phone bottom sheet state. Ignored on desktop. */
@@ -30,7 +33,7 @@ type Props = {
 };
 
 /** Side panel on desktop, bottom sheet on phones. */
-export function BeachPanel({ beach, score, upcomingCleanups, error, activeZoneId, expanded, onToggleExpanded, onFocusZone, onAction, onRetry, onClose }: Props) {
+export function BeachPanel({ beach, score, upcomingCleanups, recentPosts, error, activeZoneId, expanded, onToggleExpanded, onFocusZone, onAction, onRetry, onClose }: Props) {
   return (
     <aside
       aria-label={`${beach.name} details`}
@@ -133,7 +136,15 @@ export function BeachPanel({ beach, score, upcomingCleanups, error, activeZoneId
 
             <section className="mt-6">
               <h2 className="text-sm font-semibold text-shell">Community News from this beach</h2>
-              <p className="mt-1.5 text-sm text-mist">No cleanup posts yet. The first one turns a zone greener.</p>
+              {recentPosts.length === 0 ? (
+                <p className="mt-1.5 text-sm text-mist">No cleanup posts yet. The first one turns a zone greener.</p>
+              ) : (
+                <div className="mt-2 space-y-3">
+                  {recentPosts.map((post) => (
+                    <PostCard key={post.id} post={post} compact />
+                  ))}
+                </div>
+              )}
             </section>
           </>
         )}

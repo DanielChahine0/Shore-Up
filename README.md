@@ -10,7 +10,7 @@ The MVP is built in four phases.
 
 1. Globe, search, beach selection, zones, and side panel on seed data. **Built.**
 2. Auth, profiles, and the people directory. **Built.**
-3. Communities and Community News posts, including score updates.
+3. Communities and Community News posts, including score updates. **Built.**
 4. Stripe donations.
 
 ## Setup
@@ -59,7 +59,8 @@ pnpm seed
 ```
 
 The seed script is safe to re-run.
-It upserts beaches, zones, and the 20 demo users, and replaces demo water readings and the 3 demo cleanups.
+It upserts beaches, zones, the 20 demo users, and the 5 communities, and replaces demo water readings, the 3 demo cleanups, and the 30 demo posts.
+Demo post photos are generated shoreline placeholders, not real pictures.
 Demo accounts use the reserved `.example` email domain and random passwords, so nobody can sign in as them.
 
 ### Sign-in setup

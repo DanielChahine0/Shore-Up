@@ -7,7 +7,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-20 flex items-center justify-between gap-2 bg-abyss/85 p-4 backdrop-blur">
       <div className="flex min-w-0 items-center gap-1 sm:gap-2">
-        <Logo />
+        <Logo compact />
         <nav aria-label="Sections" className="flex items-center text-sm">
           <Link href="/people" className="rounded-full px-3 py-2 text-mist hover:text-shell">
             People

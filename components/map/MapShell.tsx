@@ -8,6 +8,8 @@ import { SearchBar, type PlaceResult } from "@/components/chrome/SearchBar";
 import { TopRight } from "@/components/chrome/TopRight";
 import { useViewer } from "@/components/chrome/useViewer";
 import { CreateCleanupModal } from "@/components/modals/CreateCleanupModal";
+import { NewPostModal } from "@/components/modals/NewPostModal";
+import { ACHIEVEMENTS } from "@/lib/achievements/config";
 import { BeachPanel, type PanelAction } from "@/components/panel/BeachPanel";
 import { Toast } from "@/components/ui/Toast";
 import type { BeachSummary } from "@/lib/beaches";
@@ -23,8 +25,7 @@ const SHEET_EXPANDED = "62dvh";
 const PANEL_WIDTH_PX = 380 + 16;
 const DESKTOP_QUERY = "(min-width: 640px)";
 
-const PHASE_NOTES: Record<"post" | "donate", string> = {
-  post: "Posting cleanups opens with Community News (phase 3).",
+const PHASE_NOTES: Record<"donate", string> = {
   donate: "Donations open with Stripe Checkout (phase 4).",
 };
 
@@ -60,6 +61,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   const [sheetExpanded, setSheetExpanded] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [hosting, setHosting] = useState(false);
+  const [posting, setPosting] = useState(false);
   const [mapReady, setMapReady] = useState(false);
   const [globeCamera, setGlobeCamera] = useState<CameraCommand | null>(null);
   const [away, setAway] = useState(false);
@@ -132,11 +134,18 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   }, [router]);
 
   const onPanelAction = (action: PanelAction) => {
-    if (action === "post" || action === "donate") return setToast(PHASE_NOTES[action]);
+    if (action === "donate") return setToast(PHASE_NOTES.donate);
+    const signIn = () => router.push(`/signin?next=${encodeURIComponent(`/beach/${selectedId}`)}`);
+    if (action === "post") {
+      if (!viewer) return signIn();
+      // Posts go to a community's news feed, so joining one comes first.
+      if (!viewer.community) return router.push("/communities");
+      return setPosting(true);
+    }
     const next = detail?.upcomingCleanups[0];
     // "Join a cleanup" goes to the next one here. With none planned, it offers to host.
     if (action === "join" && next) return router.push(`/cleanups/${next.id}`);
-    if (!viewer) return router.push(`/signin?next=${encodeURIComponent(`/beach/${selectedId}`)}`);
+    if (!viewer) return signIn();
     setHosting(true);
   };
 
@@ -198,6 +207,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
           beach={selected}
           score={detail?.score ?? null}
           upcomingCleanups={detail?.upcomingCleanups ?? []}
+          recentPosts={detail?.recentPosts ?? []}
           error={error}
           activeZoneId={activeZoneId}
           expanded={sheetExpanded}
@@ -210,6 +220,24 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
       )}
 
       {hosting && selected && detail && <CreateCleanupModal beach={selected} zones={detail.score.zones} onClose={() => setHosting(false)} />}
+
+      {posting && selected && detail && viewer?.community && (
+        <NewPostModal
+          communities={[viewer.community]}
+          beaches={beaches.map((b) => ({ id: b.id, name: b.name, area: b.area }))}
+          initialBeachId={selected.id}
+          // Start on the zone the user was looking at, or the one a cleanup would help most
+          // (unsafe water is not something a cleanup can fix, so those come last).
+          initialZoneId={activeZoneId ?? [...detail.score.zones].sort((a, b) => Number(a.unsafeOverride) - Number(b.unsafeOverride) || a.score - b.score)[0]?.zoneId}
+          onClose={() => setPosting(false)}
+          onPosted={({ newAchievements }) => {
+            setPosting(false);
+            setToast(newAchievements.length > 0 ? `Badge earned: ${newAchievements.map((k) => ACHIEVEMENTS[k].name).join(", ")}` : "Posted. Litter in that zone is now low.");
+            // Reload this beach so the zone changes color right away.
+            setAttempt((n) => n + 1);
+          }}
+        />
+      )}
 
       <DonateFab onClick={() => setToast(PHASE_NOTES.donate)} />
       {toast && <Toast message={toast} onDone={clearToast} />}

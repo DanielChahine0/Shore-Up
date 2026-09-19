@@ -11,7 +11,8 @@ const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SU
 test.describe.configure({ mode: "serial" });
 test.skip(({ isMobile }) => isMobile, "One signed-in journey is enough; layout is covered by phase 1 on phones.");
 
-const stamp = Date.now();
+// Unique per worker process, so parallel projects never collide on one address or username.
+const stamp = `${Date.now()}${process.pid}`;
 const email = `e2e.${stamp}@shoreup-tests.dev`;
 const password = `Tide-${stamp}-pool`;
 const username = `e2e_${stamp}`;

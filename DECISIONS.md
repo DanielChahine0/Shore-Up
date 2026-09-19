@@ -93,7 +93,32 @@ The simplest option was chosen each time.
 - **Google's logo is drawn in one color**, because green, yellow, and red are reserved for the cleanliness scale.
 - **The avatar opens the profile, and Sign out lives on the profile page**, matching the layout spec.
 
+## Communities and Community News
+
+- **Posting a cleanup is one database function**, `create_cleanup_post`.
+  It checks membership, that the zone belongs to the beach, and that every photo was uploaded by the poster, then writes the post and awards badges in one transaction.
+  Direct inserts into `posts` are closed, so the rules cannot be skipped.
+- **A cleanup post must go to a community**, because Community News is where posts live.
+  "Post a cleanup" sends a user with no community to the communities list first.
+- **The CN pill shows the first community a user joined** and links to its feed.
+  With no community it reads "CN: Join" and opens the communities list, which can be sorted nearest first.
+- **The pill opens the communities page rather than a modal**, so the same list serves the pill, the header link, and a direct URL.
+- **The post form starts on the zone a cleanup would help most**: the one the user was hovering, otherwise the lowest-scoring zone whose water is not unsafe.
+- **After posting from the map, the beach reloads in place**, so the zone fades to its new color without moving the camera.
+- **Reports are write-only.**
+  Users can file one report per post and cannot read reports back; moderators read them with the service role.
+- **Feeds show public author details only.**
+  A post by someone with a private profile appears as "A volunteer".
+- **Likes update at once and roll back if the server refuses.**
+- **Demo post photos are generated abstract shorelines**, so the seeded feed never uses a real person's picture.
+- **Demo posts count toward demo users' stats and badges** but never toward a zone's litter score.
+- **A stale session is cleared quietly.**
+  If the account behind a saved session no longer exists, the app signs out locally instead of erroring.
+
 ## Tooling
 
 - pnpm, Vitest for unit tests, and Playwright for end-to-end checks.
+- **End-to-end tests run against the real Supabase project** with throwaway accounts that are deleted afterwards.
+  They run two at a time, because they share one dev server and a free-tier database, and the "core moment within 3 seconds" check should measure the app rather than contention between tests.
+- **Map tests wait for the camera to arrive**, since the beach panel renders before the map style has loaded.
 - The project was scaffolded in a lowercase temp folder, because npm rejects the capital letters in `Shore-Up`.

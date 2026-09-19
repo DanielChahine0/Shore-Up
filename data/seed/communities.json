@@ -1,0 +1,42 @@
+{
+  "nonprofits": [
+    {
+      "slug": "tideline-collective",
+      "name": "Tideline Collective",
+      "description": "A volunteer-run nonprofit that supplies gloves, grabbers, and bags to shoreline cleanups around Toronto's east end.",
+      "url": null
+    }
+  ],
+  "communities": [
+    { "slug": "woodbine-shore-crew", "name": "Woodbine Shore Crew", "area": "The Beaches, Toronto", "beach": "woodbine", "nonprofit": "tideline-collective", "members": ["maya_okafor", "liam_tremblay", "priya_nair", "sofia_rossi", "noah_kim", "jonah_weiss"] },
+    { "slug": "toronto-island-stewards", "name": "Toronto Island Stewards", "area": "Toronto Islands, Toronto", "beach": "wards-island", "nonprofit": null, "members": ["amara_diallo", "jonah_weiss"] },
+    { "slug": "kits-beach-keepers", "name": "Kits Beach Keepers", "area": "Kitsilano, Vancouver", "beach": "kitsilano", "nonprofit": null, "members": ["hana_sato"] },
+    { "slug": "bondi-dawn-patrol", "name": "Bondi Dawn Patrol", "area": "Bondi, Sydney", "beach": "bondi", "nonprofit": null, "members": ["isla_campbell", "oliver_nguyen", "ben_walker"] },
+    { "slug": "westside-sand-sweepers", "name": "Westside Sand Sweepers", "area": "Venice, Los Angeles", "beach": "venice", "nonprofit": null, "members": ["diego_morales", "chloe_martin"] }
+  ],
+  "posts": [
+    { "author": "maya_okafor", "community": "woodbine-shore-crew", "beaches": ["cherry", "woodbine", "kew-balmy", "bluffers-park", "sunnyside"], "count": 10 },
+    { "author": "liam_tremblay", "community": "woodbine-shore-crew", "beaches": ["cherry", "woodbine"], "count": 3 },
+    { "author": "priya_nair", "community": "woodbine-shore-crew", "beaches": ["bluffers-park"], "count": 3 },
+    { "author": "sofia_rossi", "community": "woodbine-shore-crew", "beaches": ["kew-balmy", "cherry"], "count": 2 },
+    { "author": "noah_kim", "community": "woodbine-shore-crew", "beaches": ["woodbine"], "count": 1 },
+    { "author": "amara_diallo", "community": "toronto-island-stewards", "beaches": ["wards-island", "hanlans-point", "centre-island"], "count": 3 },
+    { "author": "hana_sato", "community": "kits-beach-keepers", "beaches": ["kitsilano", "english-bay"], "count": 2 },
+    { "author": "isla_campbell", "community": "bondi-dawn-patrol", "beaches": ["bondi", "tamarama"], "count": 3 },
+    { "author": "oliver_nguyen", "community": "bondi-dawn-patrol", "beaches": ["manly"], "count": 1 },
+    { "author": "diego_morales", "community": "westside-sand-sweepers", "beaches": ["venice"], "count": 1 },
+    { "author": "chloe_martin", "community": "westside-sand-sweepers", "beaches": ["santa-monica"], "count": 1 }
+  ],
+  "bodies": [
+    "Mostly bottle caps and cigarette butts along the high tide line. Two bags before the rain started.",
+    "Found a tangle of fishing line wrapped around driftwood. Cut it up and bagged it so birds can't get caught.",
+    "Busy weekend left a lot behind: cans, food wrappers, a single flip-flop. Looks much better now.",
+    "Quiet morning sweep. Small plastics mostly, the kind you only see when you crouch down.",
+    "Storm washed up a lot of foam pieces near the rocks. Got most of it with a sieve.",
+    "Four of us covered the whole zone in an hour. Thanks to everyone who showed up.",
+    "Broken glass near the path, so watch your step. Cleared what we could find.",
+    "Plastic bags caught in the dune grass. Took a while to untangle them without damaging the plants.",
+    "Short one after work. One bag, mostly straws and lids from the snack bar.",
+    "Water bottles, a deflated beach ball, and about a hundred bread tags. Where do they all come from?"
+  ]
+}

@@ -42,22 +42,29 @@ test("place search offers geocoded places", async ({ page }) => {
   await expect(page.getByRole("option", { name: /Lisbon/ }).first()).toBeVisible({ timeout: 8000 });
 });
 
-type MapHandle = { getCenter(): { lng: number; lat: number }; getZoom(): number; isMoving(): boolean };
+type MapHandle = { getCenter(): { lng: number; lat: number }; getZoom(): number; isMoving(): boolean; isStyleLoaded(): boolean };
 const camera = (page: import("@playwright/test").Page) =>
   page.evaluate(() => {
     const map = (window as unknown as { __shoreMap: MapHandle }).__shoreMap;
     return { ...map.getCenter(), zoom: map.getZoom() };
   });
+/** The map has loaded its style and stopped moving. */
 const settled = (page: import("@playwright/test").Page) =>
   page.waitForFunction(() => {
     const map = (window as unknown as { __shoreMap?: MapHandle }).__shoreMap;
-    return map && !map.isMoving();
+    return map && map.isStyleLoaded() && !map.isMoving();
+  });
+/** The camera has arrived at a beach. The panel renders before the map style loads, so tests must wait for this. */
+const onBeach = (page: import("@playwright/test").Page) =>
+  page.waitForFunction(() => {
+    const map = (window as unknown as { __shoreMap?: MapHandle }).__shoreMap;
+    return map && map.isStyleLoaded() && !map.isMoving() && map.getZoom() > 10;
   });
 
 test("closing a beach leaves the camera where it is", async ({ page }) => {
   await page.goto("/beach/cherry");
   await expect(page.getByRole("heading", { name: "Cherry Beach" })).toBeVisible();
-  await settled(page);
+  await onBeach(page);
   const before = await camera(page);
 
   await page.getByRole("button", { name: "Close beach details" }).click();
@@ -72,7 +79,7 @@ test("closing a beach leaves the camera where it is", async ({ page }) => {
 test("Back to globe zooms out over the current spot, not the starting view", async ({ page }) => {
   await page.goto("/beach/bondi");
   await expect(page.getByRole("heading", { name: "Bondi Beach" })).toBeVisible();
-  await settled(page);
+  await onBeach(page);
 
   await page.getByRole("button", { name: "Back to globe" }).click();
   await page.waitForTimeout(500);
