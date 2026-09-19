@@ -4,6 +4,9 @@
     "posthog": {
       "name": "PostHog"
     },
+    "supabase": {
+      "name": "Supabase"
+    },
     "vercel": {
       "name": "Vercel"
     }
@@ -28,6 +31,53 @@
       "name": "vercel-plan",
       "providerName": "Vercel",
       "serviceId": "hobby"
+    }
+  },
+  "environments": {
+    "default": {
+      "output": ".env",
+      "resources": [
+        {
+          "resourceName": "posthog-analytics"
+        },
+        {
+          "resourceName": "posthog-plan"
+        },
+        {
+          "resourceName": "shore-up"
+        },
+        {
+          "resourceName": "vercel-plan"
+        }
+      ],
+      "variables": [
+        {
+          "variableName": "mapbox-token",
+          "envKey": "NEXT_PUBLIC_MAPBOX_TOKEN"
+        },
+        {
+          "variableName": "supabase-publishable-key",
+          "envKey": "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
+        },
+        {
+          "variableName": "supabase-url",
+          "envKey": "NEXT_PUBLIC_SUPABASE_URL"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "mapbox-token": {
+      "name": "mapbox-token",
+      "backendId": "fprjvar_61VQqBOig7eA2c3t616VQnzs9SA8ld9JPKHNcX7ZY4gC"
+    },
+    "supabase-publishable-key": {
+      "name": "supabase-publishable-key",
+      "backendId": "fprjvar_61VQqBLbrJJpriRbi16VQnzs9SA8ld9JPKHNcX7ZYWOm"
+    },
+    "supabase-url": {
+      "name": "supabase-url",
+      "backendId": "fprjvar_61VQqBJ0sDCdQ7MS416VQnzs9SA8ld9JPKHNcX7ZYIno"
     }
   }
 }

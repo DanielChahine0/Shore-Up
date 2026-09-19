@@ -157,11 +157,11 @@ export function EventsMenu({ open, onClose, triggerRef, signedIn, onPickBeach, o
           ref={panelRef}
           tabIndex={-1}
           aria-label="Cleanup events near you"
-          // Full width on phones, so no sliver of the map buttons pokes out beside it.
-          // Unlike the other panels this one runs the full height, over the logo and search bar
-          // rather than only the map, so it is fully opaque: glass-panel's last 3% let them ghost through.
+          // On phones this is full width and full height, over the top bar, so no sliver of a button pokes
+          // out beside it, and it is fully opaque: glass-panel's last 3% let what is underneath ghost through.
+          // On desktop it sits below the top bar like the beach panel, and stops short of the Mapbox logo.
           style={{ background: "var(--color-surface)" }}
-          className={`glass glass-panel absolute bottom-0 left-0 top-0 z-20 flex w-full flex-col transition-transform duration-300 ease-out sm:w-[360px] ${shown ? "translate-x-0" : "-translate-x-full"}`}
+          className={`glass glass-panel absolute bottom-0 left-0 top-0 z-20 flex w-full flex-col overflow-hidden transition-transform duration-300 ease-out sm:bottom-10 sm:left-4 sm:top-[76px] sm:w-[360px] sm:rounded-3xl ${shown ? "translate-x-0" : "-translate-x-[calc(100%+1rem)]"}`}
         >
           <header className="flex items-start justify-between gap-3 px-5 pt-5">
             <div className="min-w-0">

@@ -21,7 +21,7 @@ import { MissingToken } from "./MissingToken";
 import { ZoneTooltip } from "./ZoneTooltip";
 
 const SHEET_PEEK_PX = 264;
-/** Short enough that the Log trash button and map attribution stay below the top bar. */
+/** Short enough that the map attribution stays below the top bar. */
 const SHEET_EXPANDED = "62dvh";
 const PANEL_WIDTH_PX = 380 + 16;
 const DESKTOP_QUERY = "(min-width: 640px)";
@@ -166,8 +166,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
       <div className={`pointer-events-none absolute inset-x-0 top-0 z-10 flex flex-wrap items-start justify-between gap-2 p-4 transition-opacity duration-700 ${mapReady ? "opacity-100" : "opacity-0"}`}>
         <div className="pointer-events-auto order-1 flex min-w-0 flex-1 items-center gap-2 sm:flex-none">
           <Logo />
-          {/* The open events panel covers the logo and half of this, so the rest steps aside. */}
-          <div className="hidden min-w-0 sm:block [main:has(#events-panel)_&]:invisible">
+          <div className="hidden min-w-0 sm:block">
             <SearchBar beaches={beaches} token={mapboxToken} onPickBeach={selectBeach} onPickPlace={pickPlace} />
           </div>
         </div>

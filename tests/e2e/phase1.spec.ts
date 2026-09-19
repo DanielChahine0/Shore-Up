@@ -7,6 +7,7 @@ test("lands on the globe with signed-out chrome", async ({ page }) => {
   await expect(page.getByRole("application", { name: "Globe and beach map" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Join a community" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Sign in" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Log trash/ })).toBeVisible();
   await expect(page.locator(".mapboxgl-ctrl-logo")).toBeVisible();
 });
 

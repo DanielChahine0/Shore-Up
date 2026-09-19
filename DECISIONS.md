@@ -139,7 +139,7 @@ The simplest option was chosen each time.
 - **The clean session sheet keeps Finish and Discard in a fixed footer**, outside the scrolling list of twelve items.
   Each item shows its count between its minus and plus buttons, which span the card at any width down to 320px.
 - **Below 370px the header logo drops its wordmark**, so the CN pill and Sign in never overlap it.
-- **The events panel is full width on phones**, and on desktop the search bar hides while it is open, so nothing pokes out beside or behind it.
+- **The events panel is full width on phones**, so nothing pokes out beside it; on desktop it sits below the top bar like the beach panel.
 - **The top bar holds every map control**: logo and search on the left, then Events, the community button, and Sign in or the avatar on the right.
   Events used to float over the map under the logo; in the bar it lines up with the rest and is icon only on phones.
 - **The community button is the owner's two-person icon, not the "CN:" text.**
@@ -148,9 +148,6 @@ The simplest option was chosen each time.
   It waits 180ms so a sweep across the list does not flash, stays open while the pointer is on it, closes on Escape, and is skipped on touch screens.
 - **The trash bag animates once per change and then rests**: the level rises with a little overshoot, the surface sloshes, the new item drops in, and the bag squashes.
   Nothing loops, and all of it is off under reduced motion.
-- **There are no donations.**
-  The Donate buttons and the planned Stripe phase were removed at the owner's request.
-  The unused `donations` table stays in the applied migrations; dropping it needs a new migration.
 - **The logo mark is an inline SVG traced from `public/brand/shore-up-logo.png`**, so it stays sharp and takes its color from the theme.
 
 ## Tooling
@@ -160,3 +157,11 @@ The simplest option was chosen each time.
   They run two at a time, because they share one dev server and a free-tier database, and the "core moment within 3 seconds" check should measure the app rather than contention between tests.
 - **Map tests wait for the camera to arrive**, since the beach panel renders before the map style has loaded.
 - The project was scaffolded in a lowercase temp folder, because npm rejects the capital letters in `Shore-Up`.
+
+## Donations removed
+
+- **Donations were dropped from the MVP at the product owner's request.**
+  The donate button, the beach panel's Donate action, and the Stripe Checkout plan are gone, and no Stripe payment keys are needed.
+- **The `donations` table and `recipient_totals` view from migration 0001 are left in place.**
+  They are empty, no client can reach them, and dropping them would mean a destructive migration for no user-visible gain.
+- **Stripe is still part of the project through Stripe Projects**, which provisions hosting (Vercel) and analytics (PostHog) and carries the public Supabase and Mapbox settings as project variables.
