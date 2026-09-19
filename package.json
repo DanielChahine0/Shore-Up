@@ -1,0 +1,43 @@
+{
+  "name": "shore-up",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "vitest run",
+    "fetch:beaches": "tsx scripts/fetch-beaches.ts",
+    "seed": "tsx scripts/seed.ts",
+    "typecheck": "next typegen && tsc --noEmit",
+    "gen:demo": "tsx scripts/gen-demo-state.ts"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.116.0",
+    "mapbox-gl": "^3.31.0",
+    "next": "16.3.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/postcss": "^4",
+    "@turf/turf": "^7.4.0",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "dotenv": "^18.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.5",
+    "osmtogeojson": "3.0.0-beta.5",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.13",
+    "typescript": "^5",
+    "vitest": "^5.0.1"
+  },
+  "packageManager": "pnpm@12.4.2"
+}

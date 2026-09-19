@@ -1,0 +1,2477 @@
+[
+ {
+  "zoneId": "woodbine-1",
+  "beachId": "woodbine",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "woodbine-2",
+  "beachId": "woodbine",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "woodbine-3",
+  "beachId": "woodbine",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 14,
+  "waterObservedHoursAgo": 7
+ },
+ {
+  "zoneId": "woodbine-4",
+  "beachId": "woodbine",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "woodbine-5",
+  "beachId": "woodbine",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "kew-balmy-1",
+  "beachId": "kew-balmy",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 10
+ },
+ {
+  "zoneId": "kew-balmy-2",
+  "beachId": "kew-balmy",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 13,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "kew-balmy-3",
+  "beachId": "kew-balmy",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "kew-balmy-4",
+  "beachId": "kew-balmy",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "kew-balmy-5",
+  "beachId": "kew-balmy",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "kew-balmy-6",
+  "beachId": "kew-balmy",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "kew-balmy-7",
+  "beachId": "kew-balmy",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 2
+ },
+ {
+  "zoneId": "kew-balmy-8",
+  "beachId": "kew-balmy",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "bluffers-park-1",
+  "beachId": "bluffers-park",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 13,
+  "waterObservedHoursAgo": 18
+ },
+ {
+  "zoneId": "bluffers-park-2",
+  "beachId": "bluffers-park",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 7
+ },
+ {
+  "zoneId": "bluffers-park-3",
+  "beachId": "bluffers-park",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "bluffers-park-4",
+  "beachId": "bluffers-park",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 1
+ },
+ {
+  "zoneId": "bluffers-park-5",
+  "beachId": "bluffers-park",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 10
+ },
+ {
+  "zoneId": "bluffers-park-6",
+  "beachId": "bluffers-park",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 22,
+  "waterObservedHoursAgo": 18
+ },
+ {
+  "zoneId": "cherry-1",
+  "beachId": "cherry",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "cherry-2",
+  "beachId": "cherry",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "cherry-3",
+  "beachId": "cherry",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 8
+ },
+ {
+  "zoneId": "cherry-4",
+  "beachId": "cherry",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 19
+ },
+ {
+  "zoneId": "sunnyside-1",
+  "beachId": "sunnyside",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 9,
+  "waterObservedHoursAgo": 10
+ },
+ {
+  "zoneId": "sunnyside-2",
+  "beachId": "sunnyside",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "sunnyside-3",
+  "beachId": "sunnyside",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 11,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "hanlans-point-1",
+  "beachId": "hanlans-point",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 8,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "hanlans-point-2",
+  "beachId": "hanlans-point",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 4
+ },
+ {
+  "zoneId": "hanlans-point-3",
+  "beachId": "hanlans-point",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "hanlans-point-4",
+  "beachId": "hanlans-point",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 11
+ },
+ {
+  "zoneId": "hanlans-point-5",
+  "beachId": "hanlans-point",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "hanlans-point-6",
+  "beachId": "hanlans-point",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "hanlans-point-7",
+  "beachId": "hanlans-point",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 4
+ },
+ {
+  "zoneId": "hanlans-point-8",
+  "beachId": "hanlans-point",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 9,
+  "waterObservedHoursAgo": 10
+ },
+ {
+  "zoneId": "gibraltar-point-1",
+  "beachId": "gibraltar-point",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 19,
+  "waterObservedHoursAgo": 10
+ },
+ {
+  "zoneId": "gibraltar-point-2",
+  "beachId": "gibraltar-point",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 2
+ },
+ {
+  "zoneId": "gibraltar-point-3",
+  "beachId": "gibraltar-point",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 10
+ },
+ {
+  "zoneId": "gibraltar-point-4",
+  "beachId": "gibraltar-point",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 8,
+  "waterObservedHoursAgo": 4
+ },
+ {
+  "zoneId": "gibraltar-point-5",
+  "beachId": "gibraltar-point",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "centre-island-1",
+  "beachId": "centre-island",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 13,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "centre-island-2",
+  "beachId": "centre-island",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "centre-island-3",
+  "beachId": "centre-island",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "centre-island-4",
+  "beachId": "centre-island",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 12,
+  "waterObservedHoursAgo": 14
+ },
+ {
+  "zoneId": "wards-island-1",
+  "beachId": "wards-island",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 16,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "wards-island-2",
+  "beachId": "wards-island",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "wards-island-3",
+  "beachId": "wards-island",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "kitsilano-1",
+  "beachId": "kitsilano",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 9,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "kitsilano-2",
+  "beachId": "kitsilano",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "kitsilano-3",
+  "beachId": "kitsilano",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 9,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "kitsilano-4",
+  "beachId": "kitsilano",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 9,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "english-bay-1",
+  "beachId": "english-bay",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 19
+ },
+ {
+  "zoneId": "english-bay-2",
+  "beachId": "english-bay",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 1
+ },
+ {
+  "zoneId": "english-bay-3",
+  "beachId": "english-bay",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 12,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "coney-island-1",
+  "beachId": "coney-island",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 8,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "coney-island-2",
+  "beachId": "coney-island",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 11
+ },
+ {
+  "zoneId": "coney-island-3",
+  "beachId": "coney-island",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 22,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "coney-island-4",
+  "beachId": "coney-island",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 18
+ },
+ {
+  "zoneId": "coney-island-5",
+  "beachId": "coney-island",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 9,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "coney-island-6",
+  "beachId": "coney-island",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 12,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "coney-island-7",
+  "beachId": "coney-island",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "coney-island-8",
+  "beachId": "coney-island",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 2
+ },
+ {
+  "zoneId": "south-beach-miami-1",
+  "beachId": "south-beach-miami",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "south-beach-miami-2",
+  "beachId": "south-beach-miami",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "south-beach-miami-3",
+  "beachId": "south-beach-miami",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 14
+ },
+ {
+  "zoneId": "south-beach-miami-4",
+  "beachId": "south-beach-miami",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "south-beach-miami-5",
+  "beachId": "south-beach-miami",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 11,
+  "waterObservedHoursAgo": 14
+ },
+ {
+  "zoneId": "south-beach-miami-6",
+  "beachId": "south-beach-miami",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "south-beach-miami-7",
+  "beachId": "south-beach-miami",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 8
+ },
+ {
+  "zoneId": "south-beach-miami-8",
+  "beachId": "south-beach-miami",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "venice-1",
+  "beachId": "venice",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 4
+ },
+ {
+  "zoneId": "venice-2",
+  "beachId": "venice",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "venice-3",
+  "beachId": "venice",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "venice-4",
+  "beachId": "venice",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 20,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "venice-5",
+  "beachId": "venice",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 1
+ },
+ {
+  "zoneId": "venice-6",
+  "beachId": "venice",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 9,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "venice-7",
+  "beachId": "venice",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "venice-8",
+  "beachId": "venice",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 9,
+  "waterObservedHoursAgo": 8
+ },
+ {
+  "zoneId": "santa-monica-1",
+  "beachId": "santa-monica",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 22,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "santa-monica-2",
+  "beachId": "santa-monica",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 8
+ },
+ {
+  "zoneId": "santa-monica-3",
+  "beachId": "santa-monica",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 13,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "santa-monica-4",
+  "beachId": "santa-monica",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "santa-monica-5",
+  "beachId": "santa-monica",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 11,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "santa-monica-6",
+  "beachId": "santa-monica",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 8,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "santa-monica-7",
+  "beachId": "santa-monica",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 22,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "santa-monica-8",
+  "beachId": "santa-monica",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 19
+ },
+ {
+  "zoneId": "ocean-beach-sf-1",
+  "beachId": "ocean-beach-sf",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "ocean-beach-sf-2",
+  "beachId": "ocean-beach-sf",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 10
+ },
+ {
+  "zoneId": "ocean-beach-sf-3",
+  "beachId": "ocean-beach-sf",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 13,
+  "waterObservedHoursAgo": 18
+ },
+ {
+  "zoneId": "ocean-beach-sf-4",
+  "beachId": "ocean-beach-sf",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 2
+ },
+ {
+  "zoneId": "ocean-beach-sf-5",
+  "beachId": "ocean-beach-sf",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "ocean-beach-sf-6",
+  "beachId": "ocean-beach-sf",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 15,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "ocean-beach-sf-7",
+  "beachId": "ocean-beach-sf",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 21,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "ocean-beach-sf-8",
+  "beachId": "ocean-beach-sf",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 14
+ },
+ {
+  "zoneId": "baker-beach-1",
+  "beachId": "baker-beach",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "baker-beach-2",
+  "beachId": "baker-beach",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "baker-beach-3",
+  "beachId": "baker-beach",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 17,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "baker-beach-4",
+  "beachId": "baker-beach",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "baker-beach-5",
+  "beachId": "baker-beach",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "baker-beach-6",
+  "beachId": "baker-beach",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 10
+ },
+ {
+  "zoneId": "cannon-beach-1",
+  "beachId": "cannon-beach",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 2
+ },
+ {
+  "zoneId": "cannon-beach-2",
+  "beachId": "cannon-beach",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 10,
+  "waterObservedHoursAgo": 10
+ },
+ {
+  "zoneId": "cannon-beach-3",
+  "beachId": "cannon-beach",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 18
+ },
+ {
+  "zoneId": "cannon-beach-4",
+  "beachId": "cannon-beach",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 19
+ },
+ {
+  "zoneId": "cannon-beach-5",
+  "beachId": "cannon-beach",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 11
+ },
+ {
+  "zoneId": "cannon-beach-6",
+  "beachId": "cannon-beach",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "cannon-beach-7",
+  "beachId": "cannon-beach",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 9,
+  "waterObservedHoursAgo": 7
+ },
+ {
+  "zoneId": "cannon-beach-8",
+  "beachId": "cannon-beach",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 15,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "waikiki-1",
+  "beachId": "waikiki",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "waikiki-2",
+  "beachId": "waikiki",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "waikiki-3",
+  "beachId": "waikiki",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 4
+ },
+ {
+  "zoneId": "waikiki-4",
+  "beachId": "waikiki",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "waikiki-5",
+  "beachId": "waikiki",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 11
+ },
+ {
+  "zoneId": "waikiki-6",
+  "beachId": "waikiki",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 4
+ },
+ {
+  "zoneId": "copacabana-1",
+  "beachId": "copacabana",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "copacabana-2",
+  "beachId": "copacabana",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "copacabana-3",
+  "beachId": "copacabana",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 22,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "copacabana-4",
+  "beachId": "copacabana",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 12,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "copacabana-5",
+  "beachId": "copacabana",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 10
+ },
+ {
+  "zoneId": "copacabana-6",
+  "beachId": "copacabana",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 2
+ },
+ {
+  "zoneId": "copacabana-7",
+  "beachId": "copacabana",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 11
+ },
+ {
+  "zoneId": "copacabana-8",
+  "beachId": "copacabana",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "ipanema-1",
+  "beachId": "ipanema",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 8
+ },
+ {
+  "zoneId": "ipanema-2",
+  "beachId": "ipanema",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 22,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "ipanema-3",
+  "beachId": "ipanema",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 10,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "ipanema-4",
+  "beachId": "ipanema",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "ipanema-5",
+  "beachId": "ipanema",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 2
+ },
+ {
+  "zoneId": "ipanema-6",
+  "beachId": "ipanema",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 14
+ },
+ {
+  "zoneId": "ipanema-7",
+  "beachId": "ipanema",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "ipanema-8",
+  "beachId": "ipanema",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 4
+ },
+ {
+  "zoneId": "barceloneta-1",
+  "beachId": "barceloneta",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "barceloneta-2",
+  "beachId": "barceloneta",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "barceloneta-3",
+  "beachId": "barceloneta",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 18,
+  "waterObservedHoursAgo": 10
+ },
+ {
+  "zoneId": "la-concha-1",
+  "beachId": "la-concha",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "la-concha-2",
+  "beachId": "la-concha",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 12,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "la-concha-3",
+  "beachId": "la-concha",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "la-concha-4",
+  "beachId": "la-concha",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 12,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "la-concha-5",
+  "beachId": "la-concha",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 8
+ },
+ {
+  "zoneId": "la-concha-6",
+  "beachId": "la-concha",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 1
+ },
+ {
+  "zoneId": "la-concha-7",
+  "beachId": "la-concha",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 9,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "carcavelos-1",
+  "beachId": "carcavelos",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 9,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "carcavelos-2",
+  "beachId": "carcavelos",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 11,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "carcavelos-3",
+  "beachId": "carcavelos",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 15,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "carcavelos-4",
+  "beachId": "carcavelos",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 4
+ },
+ {
+  "zoneId": "carcavelos-5",
+  "beachId": "carcavelos",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "carcavelos-6",
+  "beachId": "carcavelos",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 18
+ },
+ {
+  "zoneId": "carcavelos-7",
+  "beachId": "carcavelos",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "carcavelos-8",
+  "beachId": "carcavelos",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 8
+ },
+ {
+  "zoneId": "praia-da-rocha-1",
+  "beachId": "praia-da-rocha",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "praia-da-rocha-2",
+  "beachId": "praia-da-rocha",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 11,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "praia-da-rocha-3",
+  "beachId": "praia-da-rocha",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 18,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "praia-da-rocha-4",
+  "beachId": "praia-da-rocha",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 11,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "praia-da-rocha-5",
+  "beachId": "praia-da-rocha",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 4
+ },
+ {
+  "zoneId": "praia-da-rocha-6",
+  "beachId": "praia-da-rocha",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 10,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "praia-da-rocha-7",
+  "beachId": "praia-da-rocha",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "praia-da-rocha-8",
+  "beachId": "praia-da-rocha",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "brighton-1",
+  "beachId": "brighton",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 19
+ },
+ {
+  "zoneId": "brighton-2",
+  "beachId": "brighton",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "brighton-3",
+  "beachId": "brighton",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 8,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "brighton-4",
+  "beachId": "brighton",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 14
+ },
+ {
+  "zoneId": "brighton-5",
+  "beachId": "brighton",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 16,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "brighton-6",
+  "beachId": "brighton",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "brighton-7",
+  "beachId": "brighton",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "brighton-8",
+  "beachId": "brighton",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 13,
+  "waterObservedHoursAgo": 19
+ },
+ {
+  "zoneId": "zandvoort-1",
+  "beachId": "zandvoort",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 14
+ },
+ {
+  "zoneId": "zandvoort-2",
+  "beachId": "zandvoort",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 9,
+  "waterObservedHoursAgo": 7
+ },
+ {
+  "zoneId": "zandvoort-3",
+  "beachId": "zandvoort",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 13,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "zandvoort-4",
+  "beachId": "zandvoort",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 18,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "zandvoort-5",
+  "beachId": "zandvoort",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 13,
+  "waterObservedHoursAgo": 1
+ },
+ {
+  "zoneId": "zandvoort-6",
+  "beachId": "zandvoort",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "zandvoort-7",
+  "beachId": "zandvoort",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 17,
+  "waterObservedHoursAgo": 7
+ },
+ {
+  "zoneId": "zandvoort-8",
+  "beachId": "zandvoort",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 14
+ },
+ {
+  "zoneId": "reynisfjara-1",
+  "beachId": "reynisfjara",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 19
+ },
+ {
+  "zoneId": "reynisfjara-2",
+  "beachId": "reynisfjara",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 11
+ },
+ {
+  "zoneId": "reynisfjara-3",
+  "beachId": "reynisfjara",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 19
+ },
+ {
+  "zoneId": "reynisfjara-4",
+  "beachId": "reynisfjara",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 4
+ },
+ {
+  "zoneId": "reynisfjara-5",
+  "beachId": "reynisfjara",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 11
+ },
+ {
+  "zoneId": "reynisfjara-6",
+  "beachId": "reynisfjara",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 8,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "reynisfjara-7",
+  "beachId": "reynisfjara",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 12,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "reynisfjara-8",
+  "beachId": "reynisfjara",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 22,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "gordon-beach-1",
+  "beachId": "gordon-beach",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 8
+ },
+ {
+  "zoneId": "gordon-beach-2",
+  "beachId": "gordon-beach",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 18,
+  "waterObservedHoursAgo": 10
+ },
+ {
+  "zoneId": "gordon-beach-3",
+  "beachId": "gordon-beach",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 4
+ },
+ {
+  "zoneId": "camps-bay-1",
+  "beachId": "camps-bay",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 21,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "camps-bay-2",
+  "beachId": "camps-bay",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 8,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "camps-bay-3",
+  "beachId": "camps-bay",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 12,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "camps-bay-4",
+  "beachId": "camps-bay",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 21,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "camps-bay-5",
+  "beachId": "camps-bay",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "muizenberg-1",
+  "beachId": "muizenberg",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 11,
+  "waterObservedHoursAgo": 14
+ },
+ {
+  "zoneId": "muizenberg-2",
+  "beachId": "muizenberg",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 2
+ },
+ {
+  "zoneId": "muizenberg-3",
+  "beachId": "muizenberg",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 8
+ },
+ {
+  "zoneId": "muizenberg-4",
+  "beachId": "muizenberg",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "muizenberg-5",
+  "beachId": "muizenberg",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "muizenberg-6",
+  "beachId": "muizenberg",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 11,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "muizenberg-7",
+  "beachId": "muizenberg",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "muizenberg-8",
+  "beachId": "muizenberg",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 13,
+  "waterObservedHoursAgo": 18
+ },
+ {
+  "zoneId": "clifton-4th-1",
+  "beachId": "clifton-4th",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 21,
+  "waterObservedHoursAgo": 14
+ },
+ {
+  "zoneId": "clifton-4th-2",
+  "beachId": "clifton-4th",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 19,
+  "waterObservedHoursAgo": 11
+ },
+ {
+  "zoneId": "clifton-4th-3",
+  "beachId": "clifton-4th",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 19
+ },
+ {
+  "zoneId": "kite-beach-1",
+  "beachId": "kite-beach",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 14
+ },
+ {
+  "zoneId": "kite-beach-2",
+  "beachId": "kite-beach",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "kite-beach-3",
+  "beachId": "kite-beach",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 12,
+  "waterObservedHoursAgo": 18
+ },
+ {
+  "zoneId": "kite-beach-4",
+  "beachId": "kite-beach",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "kite-beach-5",
+  "beachId": "kite-beach",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 8,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "kite-beach-6",
+  "beachId": "kite-beach",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 18
+ },
+ {
+  "zoneId": "kite-beach-7",
+  "beachId": "kite-beach",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 10,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "kite-beach-8",
+  "beachId": "kite-beach",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "juhu-1",
+  "beachId": "juhu",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "juhu-2",
+  "beachId": "juhu",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 8,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "juhu-3",
+  "beachId": "juhu",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 18
+ },
+ {
+  "zoneId": "juhu-4",
+  "beachId": "juhu",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "juhu-5",
+  "beachId": "juhu",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "juhu-6",
+  "beachId": "juhu",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 11,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "juhu-7",
+  "beachId": "juhu",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 14,
+  "waterObservedHoursAgo": 1
+ },
+ {
+  "zoneId": "juhu-8",
+  "beachId": "juhu",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 11,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "marina-chennai-1",
+  "beachId": "marina-chennai",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "marina-chennai-2",
+  "beachId": "marina-chennai",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "marina-chennai-3",
+  "beachId": "marina-chennai",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 16,
+  "waterObservedHoursAgo": 7
+ },
+ {
+  "zoneId": "marina-chennai-4",
+  "beachId": "marina-chennai",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "marina-chennai-5",
+  "beachId": "marina-chennai",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 16,
+  "waterObservedHoursAgo": 7
+ },
+ {
+  "zoneId": "marina-chennai-6",
+  "beachId": "marina-chennai",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "marina-chennai-7",
+  "beachId": "marina-chennai",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 1
+ },
+ {
+  "zoneId": "marina-chennai-8",
+  "beachId": "marina-chennai",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "patong-1",
+  "beachId": "patong",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 8,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "patong-2",
+  "beachId": "patong",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 14,
+  "waterObservedHoursAgo": 20
+ },
+ {
+  "zoneId": "patong-3",
+  "beachId": "patong",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 19,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "patong-4",
+  "beachId": "patong",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 10,
+  "waterObservedHoursAgo": 11
+ },
+ {
+  "zoneId": "patong-5",
+  "beachId": "patong",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 19
+ },
+ {
+  "zoneId": "patong-6",
+  "beachId": "patong",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "patong-7",
+  "beachId": "patong",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 16,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "patong-8",
+  "beachId": "patong",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 7,
+  "waterObservedHoursAgo": 2
+ },
+ {
+  "zoneId": "kuta-1",
+  "beachId": "kuta",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 14,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "kuta-2",
+  "beachId": "kuta",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 10,
+  "waterObservedHoursAgo": 10
+ },
+ {
+  "zoneId": "kuta-3",
+  "beachId": "kuta",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 13,
+  "waterObservedHoursAgo": 19
+ },
+ {
+  "zoneId": "kuta-4",
+  "beachId": "kuta",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 17,
+  "waterObservedHoursAgo": 8
+ },
+ {
+  "zoneId": "kuta-5",
+  "beachId": "kuta",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 19
+ },
+ {
+  "zoneId": "kuta-6",
+  "beachId": "kuta",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 14,
+  "waterObservedHoursAgo": 2
+ },
+ {
+  "zoneId": "kuta-7",
+  "beachId": "kuta",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "kuta-8",
+  "beachId": "kuta",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "repulse-bay-1",
+  "beachId": "repulse-bay",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 11,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "repulse-bay-2",
+  "beachId": "repulse-bay",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 8,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "repulse-bay-3",
+  "beachId": "repulse-bay",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 6,
+  "waterObservedHoursAgo": 18
+ },
+ {
+  "zoneId": "repulse-bay-4",
+  "beachId": "repulse-bay",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 7
+ },
+ {
+  "zoneId": "bondi-1",
+  "beachId": "bondi",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 21,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "bondi-2",
+  "beachId": "bondi",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "bondi-3",
+  "beachId": "bondi",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 21,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "bondi-4",
+  "beachId": "bondi",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 9,
+  "waterObservedHoursAgo": 9
+ },
+ {
+  "zoneId": "bondi-5",
+  "beachId": "bondi",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "unsafe",
+  "lastCleanedDaysAgo": 13,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "bondi-6",
+  "beachId": "bondi",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 21,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "tamarama-1",
+  "beachId": "tamarama",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "tamarama-2",
+  "beachId": "tamarama",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "tamarama-3",
+  "beachId": "tamarama",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 11,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "manly-1",
+  "beachId": "manly",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 8,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "manly-2",
+  "beachId": "manly",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 22,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "manly-3",
+  "beachId": "manly",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 16,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "st-kilda-1",
+  "beachId": "st-kilda",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 4,
+  "waterObservedHoursAgo": 13
+ },
+ {
+  "zoneId": "st-kilda-2",
+  "beachId": "st-kilda",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 5
+ },
+ {
+  "zoneId": "st-kilda-3",
+  "beachId": "st-kilda",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 12,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "st-kilda-4",
+  "beachId": "st-kilda",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 17,
+  "waterObservedHoursAgo": 7
+ },
+ {
+  "zoneId": "st-kilda-5",
+  "beachId": "st-kilda",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 17
+ },
+ {
+  "zoneId": "st-kilda-6",
+  "beachId": "st-kilda",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 8
+ },
+ {
+  "zoneId": "cottesloe-1",
+  "beachId": "cottesloe",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "cottesloe-2",
+  "beachId": "cottesloe",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "cottesloe-3",
+  "beachId": "cottesloe",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 2
+ },
+ {
+  "zoneId": "surfers-paradise-1",
+  "beachId": "surfers-paradise",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 14,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "surfers-paradise-2",
+  "beachId": "surfers-paradise",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 12,
+  "waterObservedHoursAgo": 15
+ },
+ {
+  "zoneId": "surfers-paradise-3",
+  "beachId": "surfers-paradise",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 15,
+  "waterObservedHoursAgo": 4
+ },
+ {
+  "zoneId": "surfers-paradise-4",
+  "beachId": "surfers-paradise",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 1
+ },
+ {
+  "zoneId": "surfers-paradise-5",
+  "beachId": "surfers-paradise",
+  "name": "Zone E",
+  "position": 5,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 16,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "surfers-paradise-6",
+  "beachId": "surfers-paradise",
+  "name": "Zone F",
+  "position": 6,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 0,
+  "waterObservedHoursAgo": 4
+ },
+ {
+  "zoneId": "surfers-paradise-7",
+  "beachId": "surfers-paradise",
+  "name": "Zone G",
+  "position": 7,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 3,
+  "waterObservedHoursAgo": 12
+ },
+ {
+  "zoneId": "surfers-paradise-8",
+  "beachId": "surfers-paradise",
+  "name": "Zone H",
+  "position": 8,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 1,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "mission-bay-1",
+  "beachId": "mission-bay",
+  "name": "Zone A",
+  "position": 1,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 15,
+  "waterObservedHoursAgo": 3
+ },
+ {
+  "zoneId": "mission-bay-2",
+  "beachId": "mission-bay",
+  "name": "Zone B",
+  "position": 2,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 16
+ },
+ {
+  "zoneId": "mission-bay-3",
+  "beachId": "mission-bay",
+  "name": "Zone C",
+  "position": 3,
+  "waterStatus": "caution",
+  "lastCleanedDaysAgo": 2,
+  "waterObservedHoursAgo": 6
+ },
+ {
+  "zoneId": "mission-bay-4",
+  "beachId": "mission-bay",
+  "name": "Zone D",
+  "position": 4,
+  "waterStatus": "safe",
+  "lastCleanedDaysAgo": 5,
+  "waterObservedHoursAgo": 18
+ }
+]
