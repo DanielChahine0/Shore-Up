@@ -1,0 +1,22 @@
+[
+  { "username": "maya_okafor", "name": "Maya Okafor", "area": "The Beaches, Toronto", "mode": "looking_for_volunteers", "bio": "Out on Cherry Beach most Saturday mornings with spare gloves and grabbers. New faces always welcome." },
+  { "username": "liam_tremblay", "name": "Liam Tremblay", "area": "Leslieville, Toronto", "mode": "joining", "bio": "Weekend volunteer. Happy to haul the heavy bags." },
+  { "username": "priya_nair", "name": "Priya Nair", "area": "Scarborough, Toronto", "mode": "looking_for_volunteers", "bio": "Organizing monthly sweeps around the Bluffs. Families welcome." },
+  { "username": "jonah_weiss", "name": "Jonah Weiss", "area": "Parkdale, Toronto", "mode": "solo", "bio": "Early riser. I pick up along Sunnyside before work." },
+  { "username": "amara_diallo", "name": "Amara Diallo", "area": "Toronto Islands, Toronto", "mode": "joining", "bio": "Island resident. Ferry over and I'll show you the quiet beaches." },
+  { "username": "sofia_rossi", "name": "Sofia Rossi", "area": "Riverside, Toronto", "mode": "joining", "bio": "Marine biology student tracking what washes up." },
+  { "username": "noah_kim", "name": "Noah Kim", "area": "East York, Toronto", "mode": "solo", "bio": "One bag every walk." },
+  { "username": "hana_sato", "name": "Hana Sato", "area": "Kitsilano, Vancouver", "mode": "looking_for_volunteers", "bio": "Kits Beach regular. Low tide is the best time to find the small plastics." },
+  { "username": "diego_morales", "name": "Diego Morales", "area": "Venice, Los Angeles", "mode": "joining", "bio": "Surfer. If I'm in the water, I'm cleaning up after." },
+  { "username": "chloe_martin", "name": "Chloe Martin", "area": "Santa Monica", "mode": "solo", "bio": "Microplastics sifter and proud of it." },
+  { "username": "isla_campbell", "name": "Isla Campbell", "area": "Bondi, Sydney", "mode": "looking_for_volunteers", "bio": "Running dawn cleanups at Bondi before the crowds arrive." },
+  { "username": "oliver_nguyen", "name": "Oliver Nguyen", "area": "Manly, Sydney", "mode": "joining", "bio": "Here for the ocean and the coffee after." },
+  { "username": "lucia_fernandez", "name": "Lucia Fernandez", "area": "Barceloneta, Barcelona", "mode": "joining", "bio": "Summer crowds leave a lot behind. Come help on Mondays." },
+  { "username": "tomas_silva", "name": "Tomas Silva", "area": "Carcavelos, Cascais", "mode": "solo", "bio": "Fishing line and bottle caps, mostly." },
+  { "username": "zanele_khumalo", "name": "Zanele Khumalo", "area": "Muizenberg, Cape Town", "mode": "looking_for_volunteers", "bio": "Teacher. I bring my class down once a term." },
+  { "username": "arjun_mehta", "name": "Arjun Mehta", "area": "Juhu, Mumbai", "mode": "joining", "bio": "Part of the Sunday Juhu crew since 2021." },
+  { "username": "keanu_kahale", "name": "Keanu Kahale", "area": "Waikiki, Honolulu", "mode": "solo", "bio": "Malama i ke kai. Care for the ocean." },
+  { "username": "rafaela_costa", "name": "Rafaela Costa", "area": "Copacabana, Rio de Janeiro", "mode": "joining", "bio": "Volleyball first, cleanup second, every evening." },
+  { "username": "emma_jensen", "name": "Emma Jensen", "area": "Brighton", "mode": "break", "bio": "Back in the spring." },
+  { "username": "ben_walker", "name": "Ben Walker", "area": "St Kilda, Melbourne", "mode": "joining", "bio": "Penguins live here. Let's keep it clean for them." }
+]

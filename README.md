@@ -9,7 +9,7 @@ Volunteers post cleanups, and every post shows up on the map, in their community
 The MVP is built in four phases.
 
 1. Globe, search, beach selection, zones, and side panel on seed data. **Built.**
-2. Auth, profiles, and the people directory.
+2. Auth, profiles, and the people directory. **Built.**
 3. Communities and Community News posts, including score updates.
 4. Stripe donations.
 
@@ -34,9 +34,9 @@ All secrets live in `.env.local`, which is git-ignored.
 | Variable | Needed from | Where to find it |
 | --- | --- | --- |
 | `NEXT_PUBLIC_MAPBOX_TOKEN` | Phase 1 | account.mapbox.com, Tokens, default public token (`pk.`) |
-| `NEXT_PUBLIC_SUPABASE_URL` | Phase 2 (optional in 1) | Supabase dashboard, Project Settings, API |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Phase 2 (optional in 1) | Same page |
-| `SUPABASE_SERVICE_ROLE_KEY` | Phase 2 (optional in 1) | Same page. Server only, bypasses Row Level Security |
+| `NEXT_PUBLIC_SUPABASE_URL` | Phase 2 (optional in 1) | Supabase dashboard, Project Settings, Data API |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Phase 2 (optional in 1) | Supabase dashboard, Project Settings, API Keys (`sb_publishable_`). The legacy `anon` key also works |
+| `SUPABASE_SERVICE_ROLE_KEY` | Phase 2 (optional in 1) | Project Settings, API Keys, Legacy API Keys tab. Server only, bypasses Row Level Security |
 | `STRIPE_SECRET_KEY` | Phase 4 | dashboard.stripe.com in test mode, Developers, API keys |
 | `STRIPE_WEBHOOK_SECRET` | Phase 4 | Printed by `stripe listen` |
 | `NEXT_PUBLIC_SITE_URL` | Phase 4 | `http://localhost:3000` locally |
@@ -59,7 +59,22 @@ pnpm seed
 ```
 
 The seed script is safe to re-run.
-It upserts beaches and zones and replaces demo water readings only.
+It upserts beaches, zones, and the 20 demo users, and replaces demo water readings and the 3 demo cleanups.
+Demo accounts use the reserved `.example` email domain and random passwords, so nobody can sign in as them.
+
+### Sign-in setup
+
+Email and password sign-in works as soon as the Supabase variables are set.
+
+- **Email confirmation.**
+  Supabase asks new users to confirm their email by default.
+  For quick local testing, turn it off in the Supabase dashboard under Authentication, Sign In / Providers, Email, "Confirm email".
+  With it on, new users see a "Check your email" screen and finish through the link.
+- **Redirect URLs.**
+  Under Authentication, URL Configuration, set the Site URL to `http://localhost:3000` and add `http://localhost:3000/auth/callback` to the redirect URLs.
+- **Google.**
+  Create an OAuth client in Google Cloud Console (Web application) with the redirect URI shown on the Supabase Google provider page.
+  Paste the client ID and secret into Supabase under Authentication, Sign In / Providers, Google, and enable it.
 
 ## Beach data
 
@@ -92,6 +107,9 @@ Map data is (c) OpenStreetMap contributors, credited in the map attribution.
 - `lib/scores/config.ts` holds every score rule: points, weights, bands, colors, and litter decay.
 - `lib/scores/getBeachZones.ts` is the one data interface for scores.
 - `lib/scores/sources.ts` holds the data sources behind it (demo file, Supabase, and later the forecasting service).
+- `lib/achievements/config.ts` holds badges and level thresholds.
+- `lib/images/process.ts` validates uploads and strips EXIF and GPS data.
+- `app/actions/` holds the server actions for profiles and cleanups.
 - `components/map/` holds the globe, layers, and camera.
 - `components/panel/` holds the beach side panel, which becomes a bottom sheet on phones.
 - `DECISIONS.md` logs every judgment call made where the spec was open.

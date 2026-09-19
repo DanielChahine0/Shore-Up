@@ -2,13 +2,14 @@
  * Seeds Supabase with demo data. Safe to re-run: reference rows are upserted
  * and demo water readings are replaced.
  *
- * Phase 1 seeds beaches, zones, and demo water readings. People, communities,
- * posts, and cleanups are added to this script in later phases.
+ * Seeds beaches, zones, demo water readings, 20 demo users, and 3 upcoming
+ * cleanups. Communities and posts are added in phase 3.
  *
  * Usage: pnpm seed   (needs NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local)
  */
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { randomBytes } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 import { config } from "dotenv";
 import type { FeatureCollection } from "geojson";
@@ -61,7 +62,80 @@ async function main() {
   }));
   check("water readings", (await supabase.from("water_readings").insert(readingRows)).error);
 
+  const users = await seedDemoUsers();
+  const cleanups = await seedCleanups(users);
+
+  console.log(`Seeded ${users.size} demo users and ${cleanups} upcoming cleanups.`);
   console.log(`Seeded ${beachRows.length} beaches, ${zoneRows.length} zones, ${readingRows.length} demo water readings.`);
+}
+
+type DemoUser = { username: string; name: string; area: string; mode: string; bio: string };
+
+/** Demo accounts use the reserved .example domain and random passwords, so nobody can sign in as them. */
+const demoEmail = (username: string) => `${username}@demo.shoreup.example`;
+
+async function seedDemoUsers(): Promise<Map<string, string>> {
+  const demoUsers = await readJson<DemoUser[]>("data/seed/demo-users.json");
+
+  const existing = new Map<string, string>();
+  for (let page = 1; ; page++) {
+    const { data, error } = await supabase.auth.admin.listUsers({ page, perPage: 200 });
+    check("list users", error);
+    for (const u of data.users) if (u.email) existing.set(u.email, u.id);
+    if (data.users.length < 200) break;
+  }
+
+  const ids = new Map<string, string>();
+  for (const demo of demoUsers) {
+    let id = existing.get(demoEmail(demo.username));
+    if (!id) {
+      const { data, error } = await supabase.auth.admin.createUser({
+        email: demoEmail(demo.username),
+        password: randomBytes(24).toString("base64url"),
+        email_confirm: true,
+        user_metadata: { display_name: demo.name, username: demo.username, is_adult_confirmed: true },
+      });
+      check(`create ${demo.username}`, error);
+      id = data.user!.id;
+    }
+    ids.set(demo.username, id);
+    // The sign-up trigger normally creates the profile row; upsert so the seed works either way.
+    const { error } = await supabase
+      .from("profiles")
+      .upsert({ id, username: demo.username, display_name: demo.name, area: demo.area, bio: demo.bio, mode: demo.mode, is_adult_confirmed: true, directory_opt_in: true, is_hidden: false });
+    check(`profile ${demo.username}`, error);
+  }
+  return ids;
+}
+
+/** Three upcoming cleanups, dated relative to today so the demo never goes stale. */
+async function seedCleanups(users: Map<string, string>): Promise<number> {
+  const at = (days: number, hourUtc: number) => {
+    const d = new Date();
+    d.setUTCDate(d.getUTCDate() + days);
+    d.setUTCHours(hourUtc, 0, 0, 0);
+    return d.toISOString();
+  };
+  const plans = [
+    { organizer: "maya_okafor", beach: "cherry", zone: "cherry-2", starts_at: at(4, 14), notes: "Meet at the lifeguard station. Gloves, grabbers, and bags provided. Bring water.", crew: ["liam_tremblay", "sofia_rossi"] },
+    { organizer: "priya_nair", beach: "bluffers-park", zone: null, starts_at: at(9, 15), notes: "Family friendly sweep of the east end. Parking fills early.", crew: ["noah_kim"] },
+    { organizer: "isla_campbell", beach: "bondi", zone: "bondi-1", starts_at: at(6, 20), notes: "Dawn cleanup at the north end, coffee after.", crew: ["oliver_nguyen"] },
+  ];
+
+  const organizerIds = [...users.values()];
+  check("clear demo cleanups", (await supabase.from("cleanups").delete().in("organizer_id", organizerIds)).error);
+
+  for (const plan of plans) {
+    const { data, error } = await supabase
+      .from("cleanups")
+      .insert({ beach_id: plan.beach, zone_id: plan.zone, organizer_id: users.get(plan.organizer), starts_at: plan.starts_at, notes: plan.notes })
+      .select("id")
+      .single();
+    check(`cleanup at ${plan.beach}`, error);
+    const attendees = plan.crew.map((username) => ({ cleanup_id: data!.id, user_id: users.get(username) }));
+    check(`attendees at ${plan.beach}`, (await supabase.from("cleanup_attendees").insert(attendees)).error);
+  }
+  return plans.length;
 }
 
 main().catch((err) => {

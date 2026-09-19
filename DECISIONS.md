@@ -68,6 +68,27 @@ The simplest option was chosen each time.
 - **Phase 1 action buttons show a short note** saying which phase opens them.
   The CN pill and Sign in link point at pages that arrive in phases 2 and 3.
 
+## Accounts and people
+
+- **Profiles are created by a database trigger on sign-up**, so every account has one no matter how it signed up (email or Google).
+  Usernames are generated from the display name and made unique with a short suffix.
+- **The 18+ confirmation is optional at sign-up.**
+  Without it a user can still use Shore Up privately, but nobody else can see them, as the spec requires.
+  Opting in to the directory is only possible after confirming.
+- **"Near me" never leaves the browser.**
+  The location is rounded to 1 decimal place (about 11 km) on the device, held in memory only, and compared against a coarse reference point for each person.
+  That reference is the beach of their next cleanup or a beach in their stated area, never a personal location, which Shore Up does not collect.
+- **People taking a break are left out of the directory**, since the spec lists only three directory badges.
+- **A host's own cleanup is the one shown in the directory**, ahead of any cleanup they are only attending, so "Join" always joins the right event.
+- **Joining goes through a database function** so the Crew Leader badge is awarded in the same transaction when a cleanup reaches 5 people, organizer included.
+- **Attendee lists show public profiles only**, plus a count of people with private profiles.
+- **Avatar uploads go through the server**, which checks the real file type, re-encodes to WebP (dropping all EXIF and GPS data), and crops to 512 px.
+- **"Join a cleanup" on a beach opens that beach's next cleanup.**
+  With none planned it offers to host one.
+- **Cleanup times are picked in the visitor's time zone** and stored as an exact instant.
+- **Google's logo is drawn in one color**, because green, yellow, and red are reserved for the cleanliness scale.
+- **The avatar opens the profile, and Sign out lives on the profile page**, matching the layout spec.
+
 ## Tooling
 
 - pnpm, Vitest for unit tests, and Playwright for end-to-end checks.

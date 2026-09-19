@@ -2,17 +2,22 @@
 
 import { CloseIcon } from "@/components/ui/icons";
 import type { BeachSummary } from "@/lib/beaches";
+import Link from "next/link";
+import type { CleanupSummary } from "@/lib/cleanups/queries";
 import type { BeachScore } from "@/lib/scores/types";
 import { SOURCE_LABELS } from "@/lib/scores/config";
 import { ScoreBadge } from "./ScoreBadge";
 import { ShoreStrip } from "./ShoreStrip";
 import { ZoneList } from "./ZoneList";
 
-export type PanelAction = "join" | "post" | "donate";
+export type PanelAction = "join" | "host" | "post" | "donate";
+
+const cleanupDate = new Intl.DateTimeFormat("en-CA", { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 
 type Props = {
   beach: BeachSummary;
   score: BeachScore | null;
+  upcomingCleanups: CleanupSummary[];
   error: string | null;
   activeZoneId: string | null;
   /** Phone bottom sheet state. Ignored on desktop. */
@@ -25,7 +30,7 @@ type Props = {
 };
 
 /** Side panel on desktop, bottom sheet on phones. */
-export function BeachPanel({ beach, score, error, activeZoneId, expanded, onToggleExpanded, onFocusZone, onAction, onRetry, onClose }: Props) {
+export function BeachPanel({ beach, score, upcomingCleanups, error, activeZoneId, expanded, onToggleExpanded, onFocusZone, onAction, onRetry, onClose }: Props) {
   return (
     <aside
       aria-label={`${beach.name} details`}
@@ -101,8 +106,29 @@ export function BeachPanel({ beach, score, error, activeZoneId, expanded, onTogg
             </section>
 
             <section className="mt-6">
-              <h2 className="text-sm font-semibold text-shell">Upcoming cleanups</h2>
-              <p className="mt-1.5 text-sm text-mist">None planned here yet. Host one and others nearby can join.</p>
+              <div className="flex items-center justify-between">
+                <h2 className="text-sm font-semibold text-shell">Upcoming cleanups</h2>
+                <button type="button" onClick={() => onAction("host")} className="text-sm font-medium text-foam">
+                  Host a cleanup
+                </button>
+              </div>
+              {upcomingCleanups.length === 0 ? (
+                <p className="mt-1.5 text-sm text-mist">None planned here yet. Host one and others nearby can join.</p>
+              ) : (
+                <ul className="mt-1 divide-y divide-line">
+                  {upcomingCleanups.map((c) => (
+                    <li key={c.id}>
+                      <Link href={`/cleanups/${c.id}`} className="flex items-center justify-between gap-3 px-1 py-2.5 hover:bg-tide/40">
+                        <span className="min-w-0">
+                          <span className="block text-sm font-medium text-shell">{cleanupDate.format(new Date(c.startsAt))}</span>
+                          <span className="block truncate text-xs text-mist">Hosted by {c.organizerName ?? "a volunteer"}</span>
+                        </span>
+                        <span className="shrink-0 text-xs text-mist">{c.attendeeCount} going</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </section>
 
             <section className="mt-6">

@@ -6,6 +6,8 @@ import { DonateFab } from "@/components/chrome/DonateFab";
 import { Logo } from "@/components/chrome/Logo";
 import { SearchBar, type PlaceResult } from "@/components/chrome/SearchBar";
 import { TopRight } from "@/components/chrome/TopRight";
+import { useViewer } from "@/components/chrome/useViewer";
+import { CreateCleanupModal } from "@/components/modals/CreateCleanupModal";
 import { BeachPanel, type PanelAction } from "@/components/panel/BeachPanel";
 import { Toast } from "@/components/ui/Toast";
 import type { BeachSummary } from "@/lib/beaches";
@@ -21,8 +23,7 @@ const SHEET_EXPANDED = "62dvh";
 const PANEL_WIDTH_PX = 380 + 16;
 const DESKTOP_QUERY = "(min-width: 640px)";
 
-const PHASE_NOTES: Record<PanelAction, string> = {
-  join: "Joining cleanups opens once sign-in is built (phase 2).",
+const PHASE_NOTES: Record<"post" | "donate", string> = {
   post: "Posting cleanups opens with Community News (phase 3).",
   donate: "Donations open with Stripe Checkout (phase 4).",
 };
@@ -45,6 +46,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const isDesktop = useIsDesktop();
+  const viewer = useViewer();
 
   const selectedId = pathname.match(/^\/beach\/([^/]+)/)?.[1] ?? null;
   const selected = useMemo(() => beaches.find((b) => b.id === selectedId) ?? null, [beaches, selectedId]);
@@ -57,6 +59,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   const [panelZoneId, setPanelZoneId] = useState<string | null>(null);
   const [sheetExpanded, setSheetExpanded] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const [hosting, setHosting] = useState(false);
   const [mapReady, setMapReady] = useState(false);
   const [globeCamera, setGlobeCamera] = useState<CameraCommand | null>(null);
   const [away, setAway] = useState(false);
@@ -128,6 +131,15 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
     router.push("/");
   }, [router]);
 
+  const onPanelAction = (action: PanelAction) => {
+    if (action === "post" || action === "donate") return setToast(PHASE_NOTES[action]);
+    const next = detail?.upcomingCleanups[0];
+    // "Join a cleanup" goes to the next one here. With none planned, it offers to host.
+    if (action === "join" && next) return router.push(`/cleanups/${next.id}`);
+    if (!viewer) return router.push(`/signin?next=${encodeURIComponent(`/beach/${selectedId}`)}`);
+    setHosting(true);
+  };
+
   const clearToast = useCallback(() => setToast(null), []);
   const markReady = useCallback(() => setMapReady(true), []);
 
@@ -185,16 +197,19 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
           key={selected.id}
           beach={selected}
           score={detail?.score ?? null}
+          upcomingCleanups={detail?.upcomingCleanups ?? []}
           error={error}
           activeZoneId={activeZoneId}
           expanded={sheetExpanded}
           onToggleExpanded={() => setSheetExpanded((v) => !v)}
           onFocusZone={setPanelZoneId}
-          onAction={(action) => setToast(PHASE_NOTES[action])}
+          onAction={onPanelAction}
           onRetry={() => setAttempt((n) => n + 1)}
           onClose={closeBeach}
         />
       )}
+
+      {hosting && selected && detail && <CreateCleanupModal beach={selected} zones={detail.score.zones} onClose={() => setHosting(false)} />}
 
       <DonateFab onClick={() => setToast(PHASE_NOTES.donate)} />
       {toast && <Toast message={toast} onDone={clearToast} />}
