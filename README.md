@@ -81,15 +81,26 @@ Email and password sign-in works as soon as the Supabase variables are set.
 ## Beach data
 
 Beach shapes come from OpenStreetMap and are committed in `data/geo/`.
-You only need to regenerate them when `data/beaches.seed.json` changes.
+Beaches come from two places: the hand-picked list in `data/beaches.seed.json`, and every beach an official water quality programme samples.
+Rerun the import when the seed list changes, or to refresh the official readings.
 
 ```bash
-pnpm fetch:beaches   # Overpass API, natural=beach, splits zones, logs skips
+pnpm fetch:beaches   # Overpass API, natural=beach, splits zones, imports official water quality, logs skips
 pnpm gen:demo        # regenerates demo water and litter state for every zone
 ```
 
+Water quality is real wherever an authority publishes it, and is written to `data/seed/water-official.json` with the authority's own result for each zone.
+
+| Source | Covers | What it publishes |
+| --- | --- | --- |
+| City of Toronto Open Data | Toronto's supervised beaches | Daily E. coli samples in season |
+| NSW Beachwatch | New South Wales swim sites | Daily pollution forecast and latest enterococci rating |
+| European Environment Agency (WISE_BWD) | Every EU coastal bathing water | Yearly Bathing Water Directive class |
+
+Zones with no official reading keep demo water values, and litter is demo everywhere until volunteers post cleanups.
+Both are labelled "Demo data" in the app.
 Beaches with no named `natural=beach` polygon in OpenStreetMap are skipped and listed in `data/geo/skipped.log`.
-Map data is (c) OpenStreetMap contributors, credited in the map attribution.
+Map data is (c) OpenStreetMap contributors, and the water quality sources are credited with it in the map attribution.
 
 ## Scripts
 

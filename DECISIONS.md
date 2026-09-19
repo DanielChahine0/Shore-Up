@@ -34,7 +34,21 @@ The simplest option was chosen each time.
   Nominatim gives the city's bounds and Overpass returns named `natural=beach` polygons inside them.
   No coordinates are written by hand.
 - **Skipped beaches:** Marie Curtis Park East, La Jolla Shores, Playa Norte, Bournemouth, Scheveningen, and Piha have no matching named polygon in OpenStreetMap.
-  They are logged in `data/geo/skipped.log`, which leaves 45 beaches, 9 of them in Toronto.
+  They are logged in `data/geo/skipped.log`, which leaves 45 hand-picked beaches, 9 of them in Toronto.
+  With the beaches discovered from official monitoring sites, the app has 469 beaches and 3,092 zones, 440 of them with official water quality.
+- **Water quality is real wherever an authority publishes it.**
+  Three open feeds are imported: City of Toronto Open Data (daily E. coli), NSW Beachwatch (daily pollution forecast and latest enterococci rating), and the European Environment Agency's Bathing Water Directive status (yearly class for every EU coastal bathing water).
+  Each maps onto the app's three water states: Excellent and Good are safe, Sufficient is caution, Poor is unsafe, and Toronto's and Beachwatch's own safe and unsafe calls are kept as they are.
+  The authority's own words ("E. coli 92 per 100 ml") are stored beside each reading in `data/seed/water-official.json`.
+- **A monitored beach enters the app only when OpenStreetMap has a named polygon within 150 m of the sampling point.**
+  Sampling points sit in the water just off the sand, so they are matched by distance rather than by being inside the shape.
+  A zone takes the reading of the sampling point nearest to it, so a long beach with several points shows real differences along its length.
+- **Discovered beaches are capped at 20 per EU country and 80 in New South Wales**, busiest first (most sampling points, then largest), so no coastline crowds out the globe.
+  Beaches under 250 m are left out because their zones would be too small to mean anything.
+- **Litter stays demo data.**
+  No public source says when a beach was last cleaned, which is the input the litter score runs on, and that gap is what the app exists to fill.
+  The panel keeps its "Demo data" label until a volunteer posts a cleanup.
+- **Woodbine keeps its hand-set demo zones**, including the one unsafe zone, because the demo and the end-to-end tests are built around it.
 - **Centre Island Beach is mapped in OpenStreetMap as Manitou Beach**, its official name, so it is matched on that.
 - **Kew-Balmy Beach is the union of the separate Kew Beach and Balmy Beach polygons.**
 - **Kite Beach replaces Jumeirah Beach**, because Kite Beach is the polygon OpenStreetMap actually has there.

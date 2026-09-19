@@ -60,7 +60,7 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
     // Handle for end-to-end tests and debugging. Never present in production builds.
     if (process.env.NODE_ENV !== "production") (window as unknown as { __shoreMap?: MapboxMap }).__shoreMap = map;
     map.addControl(
-      new mapboxgl.AttributionControl({ compact: true, customAttribution: "Beach shapes © OpenStreetMap contributors" }),
+      new mapboxgl.AttributionControl({ compact: true, customAttribution: "Beach shapes © OpenStreetMap contributors. Water quality: City of Toronto, NSW Beachwatch, European Environment Agency" }),
       "bottom-right",
     );
 

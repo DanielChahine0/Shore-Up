@@ -109,3 +109,26 @@ describe("demo source timing", () => {
     expect(scoreZone(zoneC, at).summary).toBe("Poor: heavy litter, last cleaned 14 days ago");
   });
 });
+
+describe("official water readings", () => {
+  const at = new Date("2026-09-19T12:00:00.000Z");
+
+  it("replace the demo water value for a zone, keeping the authority's own observation time", async () => {
+    const { demoFileSource } = await import("@/lib/scores/sources");
+    const { default: official } = await import("@/data/seed/water-official.json");
+    const reading = official.find((r) => r.authority === "toronto")!;
+    const zones = await demoFileSource.getZoneStates(reading.beachId, at);
+    const zone = zones.find((z) => z.zoneId === reading.zoneId)!;
+    expect(zone.waterSource).toBe("official");
+    expect(zone.waterStatus).toBe(reading.waterStatus);
+    expect(zone.waterObservedAt).toBe(reading.observedAt);
+    // Litter has no official source, so it stays demo until a volunteer posts a cleanup.
+    expect(zone.litterSource).toBe("demo");
+  });
+
+  it("leave Woodbine on its hand-set demo zones", async () => {
+    const { demoFileSource } = await import("@/lib/scores/sources");
+    const zones = await demoFileSource.getZoneStates("woodbine", at);
+    expect(zones.every((z) => z.waterSource === "demo")).toBe(true);
+  });
+});
