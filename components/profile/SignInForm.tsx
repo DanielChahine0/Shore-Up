@@ -8,7 +8,7 @@ type Mode = "signin" | "signup";
 
 const field = "h-11 w-full rounded-xl border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-ink-soft";
 
-export function SignInForm({ next, linkError, initialMode = "signin" }: { next: string; linkError: boolean; initialMode?: Mode }) {
+export function SignInForm({ next, linkError, initialMode = "signin", googleEnabled }: { next: string; linkError: boolean; initialMode?: Mode; googleEnabled: boolean }) {
   const router = useRouter();
   const [mode, setMode] = useState<Mode>(initialMode);
   const [pending, setPending] = useState(false);
@@ -86,18 +86,22 @@ export function SignInForm({ next, linkError, initialMode = "signin" }: { next: 
     <Card title={signup ? "Join Shore Up" : "Sign in to Shore Up"}>
       <p className="text-sm text-ink-soft">{signup ? "Post cleanups, join a community, and find volunteers near you." : "Welcome back."}</p>
 
-      <button type="button" onClick={withGoogle} className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-full border border-line-strong text-sm font-medium text-ink hover:bg-surface">
-        <GoogleMark />
-        Continue with Google
-      </button>
+      {googleEnabled && (
+        <>
+          <button type="button" onClick={withGoogle} className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-full border border-line-strong text-sm font-medium text-ink hover:bg-surface">
+            <GoogleMark />
+            Continue with Google
+          </button>
 
-      <div className="my-5 flex items-center gap-3 text-xs text-ink-soft">
-        <span className="h-px flex-1 bg-line" />
-        or use email
-        <span className="h-px flex-1 bg-line" />
-      </div>
+          <div className="my-5 flex items-center gap-3 text-xs text-ink-soft">
+            <span className="h-px flex-1 bg-line" />
+            or use email
+            <span className="h-px flex-1 bg-line" />
+          </div>
+        </>
+      )}
 
-      <form onSubmit={onSubmit} className="space-y-3">
+      <form onSubmit={onSubmit} className={googleEnabled ? "space-y-3" : "mt-5 space-y-3"}>
         {signup && (
           <label className="block text-sm text-ink">
             Display name
