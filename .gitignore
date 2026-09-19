@@ -60,3 +60,6 @@ playwright-report/
 .env.*
 !.env.example
 .projects/state.local.json
+
+# other sessions' worktrees carry their own copy of .env.local
+.claude/worktrees/
