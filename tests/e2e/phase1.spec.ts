@@ -27,10 +27,10 @@ test("searching Woodbine opens its zones and a plain-words reason", async ({ pag
   await expect(panel.getByText(/Zone E shows red because the water is unsafe/)).toBeAttached();
 });
 
-test("a beach URL opens on that beach, and Back to globe returns", async ({ page }) => {
+test("a beach URL opens on that beach, and closing it returns home", async ({ page }) => {
   await page.goto("/beach/cherry");
   await expect(page.getByRole("heading", { name: "Cherry Beach" })).toBeVisible();
-  await page.getByRole("button", { name: "Back to globe" }).click();
+  await page.getByRole("button", { name: "Close beach details" }).click();
   await expect(page).toHaveURL(/\/$/);
   await expect(page.getByRole("heading", { name: "Cherry Beach" })).toBeHidden();
 });
@@ -72,26 +72,4 @@ test("closing a beach leaves the camera where it is", async ({ page }) => {
   await page.waitForTimeout(500);
   await settled(page);
   expect(await camera(page)).toEqual(before);
-  // Still zoomed in, so the way out is still offered.
-  await expect(page.getByRole("button", { name: "Back to globe" })).toBeVisible();
-});
-
-test("Back to globe zooms out over the current spot, not the starting view", async ({ page }) => {
-  await page.goto("/beach/bondi");
-  await expect(page.getByRole("heading", { name: "Bondi Beach" })).toBeVisible();
-  await onBeach(page);
-
-  await page.getByRole("button", { name: "Back to globe" }).click();
-  await page.waitForTimeout(500);
-  await settled(page);
-  const after = await camera(page);
-  expect(after.zoom).toBeLessThan(2);
-  // Still over Sydney (151 E, 34 S), not back over the Atlantic.
-  expect(after.lng).toBeGreaterThan(140);
-  expect(after.lat).toBeLessThan(-20);
-  await expect(page.getByRole("button", { name: "Back to globe" })).toBeHidden();
-
-  // And it stays put: the idle rotation does not resume.
-  await page.waitForTimeout(1200);
-  expect((await camera(page)).lng).toBeCloseTo(after.lng, 3);
 });

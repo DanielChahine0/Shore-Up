@@ -4,12 +4,11 @@ import mapboxgl, { type GeoJSONSource, type Map as MapboxMap } from "mapbox-gl";
 import { useEffect, useRef } from "react";
 import type { BeachSummary } from "@/lib/beaches";
 import type { BeachDetail } from "@/lib/beachDetail";
-import { AWAY_FROM_GLOBE_ZOOM, FLIGHT_MS, globeView, KEPT_BASE_LAYERS, MAP_COLORS, SAND_MIN_ZOOM, SPIN_DEG_PER_SEC, SPIN_MAX_ZOOM } from "./mapConfig";
+import { FLIGHT_MS, globeView, KEPT_BASE_LAYERS, MAP_COLORS, SAND_MIN_ZOOM, SPIN_DEG_PER_SEC, SPIN_MAX_ZOOM } from "./mapConfig";
 
 export type CameraCommand =
   | { kind: "beach"; bounds: [number, number, number, number] }
-  | { kind: "place"; center: [number, number]; bounds?: [number, number, number, number] }
-  | { kind: "globe" };
+  | { kind: "place"; center: [number, number]; bounds?: [number, number, number, number] };
 
 export type ZoneHover = { zoneId: string; x: number; y: number } | null;
 
@@ -26,22 +25,20 @@ type Props = {
   highlightZoneId: string | null;
   onSelectBeach: (id: string) => void;
   onZoneHover: (hover: ZoneHover) => void;
-  /** Fires when the camera crosses between the whole-globe view and a zoomed-in view. */
-  onAwayChange: (away: boolean) => void;
   onReady: () => void;
 };
 
 const EMPTY: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
 
-export function MapCanvas({ token, beaches, selectedId, detail, camera, padding, highlightZoneId, onSelectBeach, onZoneHover, onAwayChange, onReady }: Props) {
+export function MapCanvas({ token, beaches, selectedId, detail, camera, padding, highlightZoneId, onSelectBeach, onZoneHover, onReady }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapboxMap | null>(null);
   const readyRef = useRef(false);
   const spinningRef = useRef(true);
-  const latest = useRef({ onSelectBeach, onZoneHover, onAwayChange, onReady, padding, selectedId, detail, camera });
+  const latest = useRef({ onSelectBeach, onZoneHover, onReady, padding, selectedId, detail, camera });
   // Map event handlers outlive renders, so they read the newest props through this ref.
   useEffect(() => {
-    latest.current = { onSelectBeach, onZoneHover, onAwayChange, onReady, padding, selectedId, detail, camera };
+    latest.current = { onSelectBeach, onZoneHover, onReady, padding, selectedId, detail, camera };
   });
 
   // Create the map once.
@@ -91,18 +88,6 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
       spinningRef.current = false;
     };
     for (const evt of ["mousedown", "touchstart", "wheel"] as const) map.on(evt, stopSpin);
-
-    // Checked on every zoom, at the end of every move, and once after the first camera placement,
-    // so the state is right even when a jump happens before listeners or React state are ready.
-    let away = false;
-    const syncAway = () => {
-      const next = map.getZoom() > AWAY_FROM_GLOBE_ZOOM;
-      if (next === away) return;
-      away = next;
-      latest.current.onAwayChange(next);
-    };
-    map.on("zoom", syncAway);
-    map.on("moveend", syncAway);
 
     map.on("style.load", () => {
       // A pale sky around the globe. No stars: the app is light mode only.
@@ -199,6 +184,9 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
 
       // Selected beach: zones on the cleanliness scale inside a firm outline.
       map.addSource("zones", { type: "geojson", data: EMPTY, promoteId: "zoneId" });
+      // The score labels get their own copy of the zones. Hover state lives on "zones", and Mapbox GL 3.31
+      // throws on every frame when a source with feature state also feeds a symbol layer while its data is swapped.
+      map.addSource("zone-labels", { type: "geojson", data: EMPTY });
       map.addSource("outline", { type: "geojson", data: EMPTY });
       map.addLayer({
         id: "zones-fill",
@@ -238,7 +226,7 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
       map.addLayer({
         id: "zones-score",
         type: "symbol",
-        source: "zones",
+        source: "zone-labels",
         layout: {
           "text-field": ["to-string", ["get", "score"]],
           "text-size": 14,
@@ -253,7 +241,6 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
       applySelection(map, latest.current.selectedId);
       if (latest.current.camera) runCamera(map, latest.current.camera, latest.current.padding, false);
       latest.current.onReady();
-      syncAway();
       startSpin();
     });
 
@@ -348,6 +335,7 @@ function applySelection(map: MapboxMap, selectedId: string | null) {
 
 function applyDetail(map: MapboxMap, detail: BeachDetail | null) {
   (map.getSource("zones") as GeoJSONSource).setData(detail?.zones ?? EMPTY);
+  (map.getSource("zone-labels") as GeoJSONSource).setData(detail?.zones ?? EMPTY);
   (map.getSource("outline") as GeoJSONSource).setData(detail?.outline ?? EMPTY);
   // Reset to transparent, then fade the new beach's zones in.
   map.setPaintProperty("zones-fill", "fill-opacity-transition", { duration: 0, delay: 0 });
@@ -362,11 +350,6 @@ function applyDetail(map: MapboxMap, detail: BeachDetail | null) {
 
 function runCamera(map: MapboxMap, camera: CameraCommand, padding: Props["padding"], animate: boolean) {
   const duration = animate ? FLIGHT_MS : 0;
-  if (camera.kind === "globe") {
-    // Zoom out over wherever the user already is. Never reset to the starting view.
-    map.flyTo({ ...globeView(window.innerWidth), center: map.getCenter(), duration, padding: { top: 0, right: 0, bottom: 0, left: 0 } });
-    return;
-  }
   if (camera.bounds) {
     map.fitBounds(camera.bounds, { padding: withMargin(padding, 48), duration, maxZoom: 16.5, curve: 1.5 });
   } else if (camera.kind === "place") {

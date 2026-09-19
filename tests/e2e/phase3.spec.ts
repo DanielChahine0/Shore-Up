@@ -96,10 +96,9 @@ test("join a community, post a cleanup, and the zone turns green", async ({ page
   await post.getByRole("button", { name: "Send report" }).click();
   await expect(post.getByText(/Reported\. Thanks/)).toBeVisible();
 
-  // The profile shows the cleanup, the level, and the badge.
+  // The profile shows the cleanup. Levels and badges stay locked until a clean session logs five items.
   await page.getByRole("link", { name: /Your profile, Rory Rockpool/ }).click();
-  await expect(page.getByText("Beachcomber")).toBeVisible();
-  await expect(page.getByRole("listitem").filter({ hasText: "First Cleanup" }).getByText("Earned", { exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Badges are locked" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Gibraltar Point Beach" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Toronto Island Stewards", exact: true })).toBeVisible();
 });

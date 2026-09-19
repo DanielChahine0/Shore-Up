@@ -49,13 +49,14 @@ The simplest option was chosen each time.
   It starts from Mapbox's light style and hides every layer except land, water, country borders, and country, continent, and major city labels.
   Roads, buildings, land use, points of interest, and satellite imagery are gone, so nothing competes with a beach.
   The kept layers are listed in `components/map/mapConfig.ts`.
-- **Land is white and the sea is the logo blue**, easing lighter as you zoom in so the zone colors stand out against it.
+- **Land is a light grey-green (`#AFD0D2`) and the sea is the logo blue**, easing a little lighter as you zoom in.
+  The sea stays darker than the land at every zoom, so the coastline never fades out.
 - **Every beach is drawn as a sand shape from zoom 9**, served once by `/api/beaches/shapes`, so beaches read as places before one is selected.
 - **Leaving a beach never resets the camera.**
   Closing the panel leaves the view exactly where it is.
-  "Back to globe" zooms out to the whole globe centered on the current spot, not the starting view.
 - **The globe stops rotating on the first touch and does not resume**, so the user's position is never moved for them.
-- **"Back to globe" is offered whenever the map is zoomed past the whole-globe view**, not only while a beach is open.
+- **There is no "Back to globe" button.**
+  It was removed at the owner's request; zooming out and search cover the same need.
 - **The map lives in a shared layout** for `/` and `/beach/[id]`, so selecting a beach moves the camera instead of reloading the globe.
 - **The selected beach swaps its dot for the outline and zones.**
   Every other beach stays a neutral white dot ringed in deep blue at every zoom level.
@@ -134,6 +135,11 @@ The simplest option was chosen each time.
 - **Every text pair meets WCAG 2.1 AA (4.5:1), and every control edge meets 3:1**, which is what AODA requires.
   Inputs, selects, and outlined buttons use the stronger border color; cards keep the soft decorative one.
   The ratios are recorded beside the tokens in `app/globals.css`.
+- **Every button, input, and select is at least 44px tall**, so touch targets are comfortable on phones.
+- **The clean session sheet keeps Finish and Discard in a fixed footer**, outside the scrolling list of twelve items.
+  Each item shows its count between its minus and plus buttons, which span the card at any width down to 320px.
+- **Below 370px the header logo drops its wordmark**, so the CN pill and Sign in never overlap it.
+- **The events panel is full width on phones**, and on desktop the search bar hides while it is open, so nothing pokes out beside or behind it.
 - **The logo mark is an inline SVG traced from `public/brand/shore-up-logo.png`**, so it stays sharp and takes its color from the theme.
 
 ## Tooling

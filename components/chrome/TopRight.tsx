@@ -18,7 +18,7 @@ export function TopRight() {
       <Link
         href={community ? `/cn/${community.slug}` : "/communities"}
         aria-label={community ? `CN: ${community.name}` : "CN: Join"}
-        className="glass flex h-11 min-w-0 max-w-[46vw] items-center rounded-full px-4 text-sm text-ink sm:max-w-xs"
+        className="glass flex h-11 min-w-0 max-w-[46vw] items-center rounded-full px-3 text-sm text-ink min-[370px]:px-4 sm:max-w-xs"
       >
         <span className="shrink-0 text-ink-soft">CN:&nbsp;</span>
         <span className="truncate font-medium">{community ? community.name : "Join"}</span>

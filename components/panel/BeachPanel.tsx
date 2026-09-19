@@ -90,13 +90,13 @@ export function BeachPanel({ beach, score, upcomingCleanups, recentPosts, error,
             <p className="mt-4 text-sm leading-relaxed text-ink">{score.reason}</p>
 
             <div className="mt-5 grid grid-cols-2 gap-2">
-              <button type="button" onClick={() => onAction("join")} className="col-span-2 h-10 rounded-full bg-brand-strong text-sm font-semibold text-white">
+              <button type="button" onClick={() => onAction("join")} className="col-span-2 h-11 rounded-full bg-brand-strong text-sm font-semibold text-white">
                 Join a cleanup
               </button>
-              <button type="button" onClick={() => onAction("post")} className="h-10 rounded-full border border-brand-strong/60 text-sm font-semibold text-brand-strong">
+              <button type="button" onClick={() => onAction("post")} className="h-11 rounded-full border border-brand-strong/60 text-sm font-semibold text-brand-strong">
                 Post a cleanup
               </button>
-              <button type="button" onClick={() => onAction("donate")} className="h-10 rounded-full border border-brand-strong/60 text-sm font-semibold text-brand-strong">
+              <button type="button" onClick={() => onAction("donate")} className="h-11 rounded-full border border-brand-strong/60 text-sm font-semibold text-brand-strong">
                 Donate
               </button>
             </div>

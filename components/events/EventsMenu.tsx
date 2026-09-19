@@ -137,7 +137,7 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
         onClick={() => setOpen(true)}
         aria-expanded={open}
         aria-controls="events-panel"
-        className={`glass absolute left-4 top-[212px] z-10 flex h-11 items-center gap-2 rounded-full px-4 text-sm font-medium text-ink sm:top-[132px] ${open ? "hidden" : ""}`}
+        className={`glass absolute left-4 top-[120px] z-10 flex h-11 items-center gap-2 rounded-full px-4 text-sm font-medium text-ink sm:top-[76px] ${open ? "hidden" : ""}`}
       >
         <CalendarIcon className="h-[18px] w-[18px] text-brand-strong" />
         Events
@@ -149,10 +149,11 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
           ref={panelRef}
           tabIndex={-1}
           aria-label="Cleanup events near you"
+          // Full width on phones, so no sliver of the map buttons pokes out beside it.
           // Unlike the other panels this one runs the full height, over the logo and search bar
           // rather than only the map, so it is fully opaque: glass-panel's last 3% let them ghost through.
           style={{ background: "var(--color-surface)" }}
-          className={`glass glass-panel absolute bottom-0 left-0 top-0 z-20 flex w-[calc(100%-2rem)] max-w-[360px] flex-col transition-transform duration-300 ease-out sm:w-[360px] ${shown ? "translate-x-0" : "-translate-x-full"}`}
+          className={`glass glass-panel absolute bottom-0 left-0 top-0 z-20 flex w-full flex-col transition-transform duration-300 ease-out sm:w-[360px] ${shown ? "translate-x-0" : "-translate-x-full"}`}
         >
           <header className="flex items-start justify-between gap-3 px-5 pt-5">
             <div className="min-w-0">

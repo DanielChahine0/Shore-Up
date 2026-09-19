@@ -3,7 +3,7 @@
  * and demo water readings are replaced.
  *
  * Seeds beaches, zones, demo water readings, 20 demo users, 3 upcoming cleanups,
- * 5 communities (one hosted by a nonprofit), and 30 demo posts with public domain cleanup photos.
+ * 13 communities (one hosted by a nonprofit), and 70 demo posts with public domain cleanup photos.
  *
  * Usage: pnpm seed   (needs NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local)
  */

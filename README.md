@@ -59,7 +59,7 @@ pnpm seed
 ```
 
 The seed script is safe to re-run.
-It upserts beaches, zones, the 20 demo users, and the 5 communities, and replaces demo water readings, the 3 demo cleanups, and the 30 demo posts.
+It upserts beaches, zones, the 20 demo users, and the 13 communities, and replaces demo water readings, the 3 demo cleanups, and the 70 demo posts.
 Demo post photos are generated shoreline placeholders, not real pictures.
 Demo accounts use the reserved `.example` email domain and random passwords, so nobody can sign in as them.
 

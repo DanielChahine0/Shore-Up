@@ -10,7 +10,7 @@ import { JoinButton } from "./JoinButton";
 
 const NEAR_KM = 50;
 const dateFmt = new Intl.DateTimeFormat("en-CA", { weekday: "short", month: "short", day: "numeric" });
-const select = "h-10 rounded-full border border-line-strong bg-surface px-3 text-sm text-ink";
+const select = "h-11 rounded-full border border-line-strong bg-surface px-3 text-sm text-ink";
 
 type Props = { people: DirectoryEntry[]; viewerId: string | null; joinedCleanupIds: string[] };
 
@@ -55,7 +55,7 @@ export function Directory({ people, viewerId, joinedCleanupIds }: Props) {
           onClick={toggleNear}
           aria-pressed={here !== null}
           disabled={locating === "busy"}
-          className={`h-10 rounded-full border px-4 text-sm ${here ? "border-brand-strong bg-brand-strong/15 text-brand-strong" : "border-line text-ink"}`}
+          className={`h-11 rounded-full border px-4 text-sm ${here ? "border-brand-strong bg-brand-strong/15 text-brand-strong" : "border-line-strong bg-surface text-ink"}`}
         >
           {locating === "busy" ? "Finding you" : "Near me"}
         </button>

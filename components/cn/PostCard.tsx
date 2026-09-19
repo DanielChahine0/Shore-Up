@@ -102,8 +102,8 @@ export function PostCard({ post, compact = false }: { post: FeedPost; compact?: 
 
       {reporting && (
         <form action={onReport} className="mt-3 flex gap-2">
-          <input name="reason" maxLength={500} placeholder="What's wrong with this post? (optional)" aria-label="Reason for reporting" className="h-9 min-w-0 flex-1 rounded-full border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-ink-soft" />
-          <button type="submit" className="h-9 shrink-0 rounded-full border border-line-strong px-4 text-sm text-ink">
+          <input name="reason" maxLength={500} placeholder="What's wrong with this post? (optional)" aria-label="Reason for reporting" className="h-11 min-w-0 flex-1 rounded-full border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-ink-soft" />
+          <button type="submit" className="h-11 shrink-0 rounded-full border border-line-strong px-4 text-sm text-ink">
             Send report
           </button>
         </form>

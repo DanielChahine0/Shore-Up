@@ -10,7 +10,7 @@ import { CheckIcon } from "./icons";
 import { itemLabel, unlockProgress, type CleanSession } from "./session";
 
 const primary = "h-11 w-full rounded-full bg-brand-strong text-sm font-semibold text-white disabled:opacity-60";
-const quiet = "h-11 rounded-full border border-line-strong px-4 text-sm font-medium text-ink-soft hover:text-ink";
+const quiet = "h-11 rounded-full border border-line-strong px-4 text-sm font-medium text-ink hover:bg-tint";
 
 export type TrashSheetProps = {
   beach: { id: string; name: string } | null;
@@ -60,7 +60,9 @@ export function TrashSheet(props: TrashSheetProps) {
         onKeyDown={(e) => e.key === "Escape" && onClose()}
         // Desktop sits just above the two buttons, which stay where they are; the offsets keep
         // it clear of the beach panel and the map attribution.
-        className="glass glass-panel fade-in fixed inset-x-0 bottom-0 z-20 flex max-h-[86dvh] flex-col rounded-t-3xl sm:absolute sm:inset-x-auto sm:bottom-[calc(var(--sheet-offset,0px)+164px)] sm:right-[calc(var(--panel-offset,0px)+16px)] sm:max-h-[min(66dvh,560px)] sm:w-[380px] sm:rounded-3xl sm:transition-[bottom,right] sm:duration-300"
+        // Fully opaque: the beach panel sits underneath on phones and must not show through.
+        style={{ background: "var(--color-surface)" }}
+        className="glass glass-panel fade-in fixed inset-x-0 bottom-0 z-20 flex max-h-[86dvh] flex-col rounded-t-3xl sm:absolute sm:inset-x-auto sm:bottom-[calc(var(--sheet-offset,0px)+164px)] sm:right-[calc(var(--panel-offset,0px)+16px)] sm:max-h-[min(calc(100dvh-256px),720px)] sm:w-[380px] sm:rounded-3xl sm:transition-[bottom,right] sm:duration-300"
       >
         <header className="flex shrink-0 items-start justify-between gap-3 px-5 pb-1 pt-5">
           <div className="min-w-0">
@@ -74,7 +76,7 @@ export function TrashSheet(props: TrashSheetProps) {
           </button>
         </header>
 
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-5 pt-2">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-5 pt-3">
           {/* One polite announcement per change, carrying both the item and the new total. */}
           <p aria-live="polite" className="sr-only">
             {announcement}
@@ -94,42 +96,53 @@ export function TrashSheet(props: TrashSheetProps) {
               </div>
 
               <ItemGrid counts={counts} onAdjust={onAdjust} />
-
-              {error && (
-                <p role="alert" className="mt-4 rounded-xl border border-line bg-surface px-3 py-2 text-sm text-ink">
-                  {error}
-                </p>
-              )}
-
-              <div className="mt-5">
-                <button type="button" onClick={onFinish} disabled={!canFinish || saving} className={primary}>
-                  {saving ? "Saving" : "Finish session"}
-                </button>
-                {!canFinish && <p className="mt-1.5 text-center text-xs text-ink-soft">Log at least one item to finish.</p>}
-              </div>
-
-              <div className="mt-3 flex items-center justify-center gap-2">
-                {confirmDiscard ? (
-                  <>
-                    <p className="text-sm text-ink-soft">Throw this session away?</p>
-                    <button type="button" onClick={onDiscard} className={quiet}>
-                      Yes, discard
-                    </button>
-                    <button type="button" onClick={() => setConfirmDiscard(false)} className={quiet}>
-                      Keep
-                    </button>
-                  </>
-                ) : (
-                  <button type="button" onClick={() => setConfirmDiscard(true)} className={quiet}>
-                    Discard session
-                  </button>
-                )}
-              </div>
             </>
           ) : (
             <StartScreen beach={beach} signedIn={signedIn} pending={pending} saving={saving} error={error} onStart={onStart} onSavePending={onSavePending} />
           )}
         </div>
+
+        {/* Outside the scrolling list, so finishing never means scrolling past twelve items. */}
+        {session && !justFinished && (
+          <footer className="shrink-0 border-t border-line px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4">
+            {error && (
+              <p role="alert" className="mb-3 rounded-xl border border-line-strong bg-surface px-3 py-2 text-sm text-ink">
+                {error}
+              </p>
+            )}
+            {confirmDiscard ? (
+              <>
+                <p className="text-center text-sm text-ink">Throw this session away?</p>
+                <div className="mt-3 grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      // Reset first, so the next session does not open on this question.
+                      setConfirmDiscard(false);
+                      onDiscard();
+                    }}
+                    className={quiet}
+                  >
+                    Yes
+                  </button>
+                  <button type="button" onClick={() => setConfirmDiscard(false)} className={quiet}>
+                    Keep
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <button type="button" onClick={onFinish} disabled={!canFinish || saving} className={primary}>
+                  {saving ? "Saving" : "Finish session"}
+                </button>
+                {!canFinish && <p className="mt-2 text-center text-xs text-ink-soft">Log at least one item to finish.</p>}
+                <button type="button" onClick={() => setConfirmDiscard(true)} className={`${quiet} mt-3 w-full`}>
+                  Discard session
+                </button>
+              </>
+            )}
+          </footer>
+        )}
       </section>
     </>
   );

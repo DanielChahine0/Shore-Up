@@ -40,7 +40,8 @@ test("sign up, edit the profile, upload a photo, and join a cleanup from People"
   // The sign-up trigger made a profile. Edit it.
   await avatar.click();
   await expect(page.getByRole("heading", { name: "Tessa Tidewater" })).toBeVisible();
-  await expect(page.getByText("Newcomer")).toBeVisible();
+  // Levels and badges stay locked until a clean session logs five items.
+  await expect(page.getByRole("heading", { name: "Badges are locked" })).toBeVisible();
   await page.getByRole("link", { name: "Edit profile" }).click();
 
   // Photo with GPS data in it; the server must strip it.
@@ -75,8 +76,8 @@ test("sign up, edit the profile, upload a photo, and join a cleanup from People"
   const maya = page.getByRole("listitem").filter({ hasText: "Maya Okafor" });
   await expect(maya.getByText("Looking for volunteers")).toBeVisible();
   await expect(maya.getByText(/Cherry Beach/)).toBeVisible();
-  await maya.getByRole("button", { name: "Join" }).click();
-  await expect(maya.getByRole("button", { name: "Leave cleanup" })).toBeVisible({ timeout: 10_000 });
+  await maya.getByRole("button", { name: "Register for this cleanup" }).click();
+  await expect(maya.getByRole("button", { name: "Cancel your registration" })).toBeVisible({ timeout: 10_000 });
 
   // The cleanup page lists them, and so does their directory entry.
   await maya.getByRole("link", { name: /Cherry Beach/ }).click();
@@ -119,6 +120,6 @@ test("signed-out visitors are sent to sign in before joining or editing", async 
   await expect(page).toHaveURL(/\/signin\?next=%2Fprofile%2Fedit|\/signin\?next=\/profile\/edit/);
 
   await page.goto("/people");
-  await page.getByRole("listitem").filter({ hasText: "Maya Okafor" }).getByRole("button", { name: "Join" }).click();
+  await page.getByRole("listitem").filter({ hasText: "Maya Okafor" }).getByRole("button", { name: "Register for this cleanup" }).click();
   await expect(page).toHaveURL(/\/signin\?next=/);
 });

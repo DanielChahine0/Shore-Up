@@ -57,7 +57,7 @@ export function CommunityList({ communities, joinedIds }: Props) {
           onClick={toggleNear}
           aria-pressed={here !== null}
           disabled={locating === "busy"}
-          className={`h-10 rounded-full border px-4 text-sm ${here ? "border-brand-strong bg-brand-strong/15 text-brand-strong" : "border-line text-ink"}`}
+          className={`h-11 rounded-full border px-4 text-sm ${here ? "border-brand-strong bg-brand-strong/15 text-brand-strong" : "border-line-strong bg-surface text-ink"}`}
         >
           {locating === "busy" ? "Finding you" : "Nearest first"}
         </button>
@@ -87,11 +87,11 @@ export function CommunityList({ communities, joinedIds }: Props) {
             </p>
             <div className="mt-4 flex items-center gap-3">
               {joined.has(c.id) ? (
-                <Link href={`/cn/${c.slug}`} className="flex h-10 items-center rounded-full border border-line-strong px-5 text-sm text-ink">
+                <Link href={`/cn/${c.slug}`} className="flex h-11 items-center rounded-full border border-line-strong px-5 text-sm text-ink">
                   Open feed
                 </Link>
               ) : (
-                <button type="button" onClick={() => onJoin(c)} disabled={busyId === c.id} className="h-10 rounded-full bg-brand-strong px-5 text-sm font-semibold text-white disabled:opacity-60">
+                <button type="button" onClick={() => onJoin(c)} disabled={busyId === c.id} className="h-11 rounded-full bg-brand-strong px-5 text-sm font-semibold text-white disabled:opacity-60">
                   {busyId === c.id ? "Joining" : "Join"}
                 </button>
               )}
