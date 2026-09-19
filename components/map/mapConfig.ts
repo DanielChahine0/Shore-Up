@@ -12,11 +12,26 @@ export const FLIGHT_MS = 2600;
 export const SPIN_DEG_PER_SEC = 3;
 export const SPIN_MAX_ZOOM = 4;
 
-/** Satellite imagery is invisible at `from` and fully opaque at `to`. */
-export const SATELLITE_FADE = { from: 10, to: 13.5 };
+/**
+ * Map palette: light grey-green land and the brand blue sea, so beaches are the only detail.
+ * The sea stays darker than the land at every zoom, so the coastline never fades out.
+ * None of these is a cleanliness-scale color.
+ */
+export const MAP_COLORS = {
+  land: "#c7e1e3",
+  /** The logo blue from far away, easing a little lighter up close so zone colors stand out against it. */
+  waterFar: "#499ab2",
+  waterNear: "#5ea6bc",
+  sand: "#f0dfb8",
+  sandEdge: "#a8863f",
+  ink: "#0f2f3a",
+  brandDeep: "#1d5467",
+  white: "#ffffff",
+  border: "#4f7f8c",
+};
 
-/** Beach dots, clusters, and labels. Never a cleanliness-scale color. */
-export const NEUTRAL = "rgb(234, 244, 244)";
+/** Base-style layers that stay visible. Roads, buildings, land use, points of interest, and minor labels are all hidden. */
+export const KEPT_BASE_LAYERS = new Set(["land", "water", "admin-0-boundary", "admin-0-boundary-disputed", "country-label", "continent-label", "settlement-major-label"]);
 
-/** Past this zoom the user has left the whole-globe view, and "Back to globe" is offered. */
-export const AWAY_FROM_GLOBE_ZOOM = 3;
+/** Beach sand shapes appear once dots alone stop being enough. */
+export const SAND_MIN_ZOOM = 9;

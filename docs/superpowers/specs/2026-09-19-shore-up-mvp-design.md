@@ -17,7 +17,7 @@ This document records the architecture chosen to deliver it, and `DECISIONS.md` 
 
 ## Map
 
-- One dark style with a satellite raster layer whose opacity follows zoom.
+- One light style stripped down to land, water, borders, and major labels, with beaches drawn as sand shapes. (Originally a dark style with satellite imagery; see DECISIONS.md.)
 - A clustered GeoJSON source for neutral beach dots.
 - Zone fill, zone score labels, and a glowing outline for the selected beach only.
 - The map is mounted in a layout shared by `/` and `/beach/[id]`.
@@ -45,7 +45,7 @@ See `supabase/migrations/0001_schema.sql` and `0002_rls.sql`.
 1. Globe, search, beach selection, zones, and side panel on seed data.
 2. Auth, profiles, and the people directory.
 3. Communities and Community News posts, including score updates.
-4. Stripe donations.
+4. ~~Stripe donations.~~ Dropped at the owner's request; see DECISIONS.md.
 
 Each phase ends with a stop for testing.
 

@@ -7,7 +7,7 @@ import { Avatar } from "@/components/ui/Avatar";
 import { MODE_LABELS, MODES } from "@/lib/profiles/modes";
 import type { OwnProfile } from "@/lib/profiles/queries";
 
-const field = "mt-1 w-full rounded-xl border border-line bg-navy px-3 text-sm text-shell placeholder:text-mist";
+const field = "mt-1 w-full rounded-xl border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-ink-soft";
 
 export function ProfileForm({ profile }: { profile: OwnProfile }) {
   const [state, action, pending] = useActionState<ProfileFormState, FormData>(updateProfile, {});
@@ -41,13 +41,13 @@ export function ProfileForm({ profile }: { profile: OwnProfile }) {
       <section className="flex items-center gap-4">
         <Avatar name={displayName} src={avatarUrl} size={72} />
         <div>
-          <button type="button" onClick={() => fileRef.current?.click()} disabled={upload.busy} className="rounded-full border border-line px-4 py-2 text-sm text-shell disabled:opacity-60">
+          <button type="button" onClick={() => fileRef.current?.click()} disabled={upload.busy} className="rounded-full border border-line-strong px-4 py-2 text-sm text-ink disabled:opacity-60">
             {upload.busy ? "Uploading" : avatarUrl ? "Change photo" : "Add a photo"}
           </button>
           <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" onChange={onPickPhoto} className="sr-only" aria-label="Profile photo" />
-          <p className="mt-1.5 text-xs text-mist">JPG, PNG, or WebP up to 5 MB. Location data is removed from every photo.</p>
+          <p className="mt-1.5 text-xs text-ink-soft">JPG, PNG, or WebP up to 5 MB. Location data is removed from every photo.</p>
           {upload.error && (
-            <p role="alert" className="mt-1 text-xs text-shell">
+            <p role="alert" className="mt-1 text-xs text-ink">
               {upload.error}
             </p>
           )}
@@ -70,11 +70,11 @@ export function ProfileForm({ profile }: { profile: OwnProfile }) {
       </section>
 
       <fieldset>
-        <legend className="text-sm font-semibold text-shell">Current mode</legend>
+        <legend className="text-sm font-semibold text-ink">Current mode</legend>
         <div className="mt-2 grid gap-2 sm:grid-cols-2">
           {MODES.map((mode) => (
-            <label key={mode} className="flex items-center gap-2.5 rounded-xl border border-line px-3 py-2.5 text-sm text-shell has-checked:border-foam/70 has-checked:bg-foam/10">
-              <input type="radio" name="mode" value={mode} defaultChecked={profile.mode === mode} className="h-4 w-4 accent-[#8fe3d0]" />
+            <label key={mode} className="flex items-center gap-2.5 rounded-xl border border-line px-3 py-2.5 text-sm text-ink has-checked:border-brand-strong/70 has-checked:bg-brand-strong/10">
+              <input type="radio" name="mode" value={mode} defaultChecked={profile.mode === mode} className="h-4 w-4 accent-brand-strong" />
               {MODE_LABELS[mode]}
             </label>
           ))}
@@ -82,7 +82,7 @@ export function ProfileForm({ profile }: { profile: OwnProfile }) {
       </fieldset>
 
       <fieldset className="space-y-3">
-        <legend className="text-sm font-semibold text-shell">Visibility</legend>
+        <legend className="text-sm font-semibold text-ink">Visibility</legend>
         <Check name="is_adult_confirmed" checked={isAdult} onChange={setIsAdult} label="I am 18 or older" hint="Required before your profile can be seen by anyone else." />
         <Check
           name="directory_opt_in"
@@ -95,16 +95,16 @@ export function ProfileForm({ profile }: { profile: OwnProfile }) {
       </fieldset>
 
       {state.error && (
-        <p role="alert" className="rounded-xl border border-line bg-navy px-3 py-2 text-sm text-shell">
+        <p role="alert" className="rounded-xl border border-line bg-surface px-3 py-2 text-sm text-ink">
           {state.error}
         </p>
       )}
 
       <div className="flex items-center gap-3">
-        <button type="submit" disabled={pending} className="h-11 rounded-full bg-foam px-6 text-sm font-semibold text-foam-deep disabled:opacity-60">
+        <button type="submit" disabled={pending} className="h-11 rounded-full bg-brand-strong px-6 text-sm font-semibold text-white disabled:opacity-60">
           {pending ? "Saving" : "Save profile"}
         </button>
-        <Link href={`/profile/${profile.username}`} className="text-sm text-mist hover:text-shell">
+        <Link href={`/profile/${profile.username}`} className="text-sm text-ink-soft hover:text-ink">
           Cancel
         </Link>
       </div>
@@ -114,12 +114,12 @@ export function ProfileForm({ profile }: { profile: OwnProfile }) {
 
 function Field({ label, hint, error, children }: { label: string; hint?: string; error?: string; children: React.ReactNode }) {
   return (
-    <label className="block text-sm text-shell">
+    <label className="block text-sm text-ink">
       {label}
       {children}
-      {hint && !error && <span className="mt-1 block text-xs text-mist">{hint}</span>}
+      {hint && !error && <span className="mt-1 block text-xs text-ink-soft">{hint}</span>}
       {error && (
-        <span role="alert" className="mt-1 block text-xs text-shell">
+        <span role="alert" className="mt-1 block text-xs text-ink">
           {error}
         </span>
       )}
@@ -131,7 +131,7 @@ type CheckProps = { name: string; label: string; hint: string; disabled?: boolea
 
 function Check({ name, label, hint, disabled, defaultChecked, checked, onChange }: CheckProps) {
   return (
-    <label className={`flex items-start gap-2.5 text-sm text-shell ${disabled ? "opacity-50" : ""}`}>
+    <label className={`flex items-start gap-2.5 text-sm text-ink ${disabled ? "opacity-50" : ""}`}>
       <input
         type="checkbox"
         name={name}
@@ -139,11 +139,11 @@ function Check({ name, label, hint, disabled, defaultChecked, checked, onChange 
         defaultChecked={checked === undefined ? defaultChecked : undefined}
         checked={checked}
         onChange={onChange ? (e) => onChange(e.target.checked) : undefined}
-        className="mt-0.5 h-4 w-4 accent-[#8fe3d0]"
+        className="mt-0.5 h-4 w-4 accent-brand-strong"
       />
       <span>
         {label}
-        <span className="block text-xs text-mist">{hint}</span>
+        <span className="block text-xs text-ink-soft">{hint}</span>
       </span>
     </label>
   );

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#499AB2"/>
+  <g transform="translate(66 165.4) scale(0.34)" fill="#fff" fill-rule="evenodd">
+    <path transform="translate(-441 -459)" d="M597 459H987L1070 496L1168 459H1560V1022H1170L1070 990L985 1022H597V856H441V625H597ZM738 607V875H961L1066 834L1191 875H1419V607H1192L1066 655L959 607ZM502 690V792H590V690Z"/>
+  </g>
+</svg>

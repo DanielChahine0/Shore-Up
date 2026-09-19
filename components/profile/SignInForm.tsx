@@ -6,9 +6,9 @@ import { supabaseBrowser } from "@/lib/supabase/client";
 
 type Mode = "signin" | "signup";
 
-const field = "h-11 w-full rounded-xl border border-line bg-navy px-3 text-sm text-shell placeholder:text-mist";
+const field = "h-11 w-full rounded-xl border border-line-strong bg-surface px-3 text-sm text-ink placeholder:text-ink-soft";
 
-export function SignInForm({ next, linkError, initialMode = "signin" }: { next: string; linkError: boolean; initialMode?: Mode }) {
+export function SignInForm({ next, linkError, initialMode = "signin", googleEnabled }: { next: string; linkError: boolean; initialMode?: Mode; googleEnabled: boolean }) {
   const router = useRouter();
   const [mode, setMode] = useState<Mode>(initialMode);
   const [pending, setPending] = useState(false);
@@ -19,9 +19,9 @@ export function SignInForm({ next, linkError, initialMode = "signin" }: { next: 
   if (!supabase) {
     return (
       <Card title="Sign-in isn't set up yet">
-        <p className="text-sm leading-relaxed text-mist">
-          Add <code className="text-shell">NEXT_PUBLIC_SUPABASE_URL</code> and <code className="text-shell">NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code> to{" "}
-          <code className="text-shell">.env.local</code>, then restart the dev server. The README has the steps.
+        <p className="text-sm leading-relaxed text-ink-soft">
+          Add <code className="text-ink">NEXT_PUBLIC_SUPABASE_URL</code> and <code className="text-ink">NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code> to{" "}
+          <code className="text-ink">.env.local</code>, then restart the dev server. The README has the steps.
         </p>
       </Card>
     );
@@ -30,8 +30,8 @@ export function SignInForm({ next, linkError, initialMode = "signin" }: { next: 
   if (checkEmail) {
     return (
       <Card title="Check your email">
-        <p className="text-sm leading-relaxed text-mist">
-          We sent a confirmation link to <span className="text-shell">{checkEmail}</span>. Open it on this device to finish signing up.
+        <p className="text-sm leading-relaxed text-ink-soft">
+          We sent a confirmation link to <span className="text-ink">{checkEmail}</span>. Open it on this device to finish signing up.
         </p>
       </Card>
     );
@@ -84,57 +84,61 @@ export function SignInForm({ next, linkError, initialMode = "signin" }: { next: 
   const signup = mode === "signup";
   return (
     <Card title={signup ? "Join Shore Up" : "Sign in to Shore Up"}>
-      <p className="text-sm text-mist">{signup ? "Post cleanups, join a community, and find volunteers near you." : "Welcome back."}</p>
+      <p className="text-sm text-ink-soft">{signup ? "Post cleanups, join a community, and find volunteers near you." : "Welcome back."}</p>
 
-      <button type="button" onClick={withGoogle} className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-full border border-line text-sm font-medium text-shell hover:bg-navy">
-        <GoogleMark />
-        Continue with Google
-      </button>
+      {googleEnabled && (
+        <>
+          <button type="button" onClick={withGoogle} className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-full border border-line-strong text-sm font-medium text-ink hover:bg-surface">
+            <GoogleMark />
+            Continue with Google
+          </button>
 
-      <div className="my-5 flex items-center gap-3 text-xs text-mist">
-        <span className="h-px flex-1 bg-line" />
-        or use email
-        <span className="h-px flex-1 bg-line" />
-      </div>
+          <div className="my-5 flex items-center gap-3 text-xs text-ink-soft">
+            <span className="h-px flex-1 bg-line" />
+            or use email
+            <span className="h-px flex-1 bg-line" />
+          </div>
+        </>
+      )}
 
-      <form onSubmit={onSubmit} className="space-y-3">
+      <form onSubmit={onSubmit} className={googleEnabled ? "space-y-3" : "mt-5 space-y-3"}>
         {signup && (
-          <label className="block text-sm text-shell">
+          <label className="block text-sm text-ink">
             Display name
             <input name="display_name" required maxLength={60} autoComplete="name" className={`${field} mt-1`} />
           </label>
         )}
-        <label className="block text-sm text-shell">
+        <label className="block text-sm text-ink">
           Email
           <input name="email" type="email" required autoComplete="email" className={`${field} mt-1`} />
         </label>
-        <label className="block text-sm text-shell">
+        <label className="block text-sm text-ink">
           Password
           <input name="password" type="password" required minLength={8} autoComplete={signup ? "new-password" : "current-password"} className={`${field} mt-1`} />
-          {signup && <span className="mt-1 block text-xs text-mist">At least 8 characters.</span>}
+          {signup && <span className="mt-1 block text-xs text-ink-soft">At least 8 characters.</span>}
         </label>
         {signup && (
-          <label className="flex items-start gap-2.5 pt-1 text-sm text-shell">
-            <input name="is_adult_confirmed" type="checkbox" className="mt-0.5 h-4 w-4 accent-[#8fe3d0]" />
+          <label className="flex items-start gap-2.5 pt-1 text-sm text-ink">
+            <input name="is_adult_confirmed" type="checkbox" className="mt-0.5 h-4 w-4 accent-brand-strong" />
             <span>
               I am 18 or older.
-              <span className="block text-xs text-mist">Only adults can appear publicly. You can still use Shore Up privately without this.</span>
+              <span className="block text-xs text-ink-soft">Only adults can appear publicly. You can still use Shore Up privately without this.</span>
             </span>
           </label>
         )}
 
         {error && (
-          <p role="alert" className="rounded-xl border border-line bg-navy px-3 py-2 text-sm text-shell">
+          <p role="alert" className="rounded-xl border border-line bg-surface px-3 py-2 text-sm text-ink">
             {error}
           </p>
         )}
 
-        <button type="submit" disabled={pending} className="h-11 w-full rounded-full bg-foam text-sm font-semibold text-foam-deep disabled:opacity-60">
+        <button type="submit" disabled={pending} className="h-11 w-full rounded-full bg-brand-strong text-sm font-semibold text-white disabled:opacity-60">
           {pending ? "One moment" : signup ? "Create account" : "Sign in"}
         </button>
       </form>
 
-      <p className="mt-5 text-center text-sm text-mist">
+      <p className="mt-5 text-center text-sm text-ink-soft">
         {signup ? "Already have an account?" : "New here?"}{" "}
         <button
           type="button"
@@ -142,7 +146,7 @@ export function SignInForm({ next, linkError, initialMode = "signin" }: { next: 
             setMode(signup ? "signin" : "signup");
             setError(null);
           }}
-          className="font-medium text-foam"
+          className="font-medium text-brand-strong"
         >
           {signup ? "Sign in" : "Create an account"}
         </button>
@@ -153,8 +157,8 @@ export function SignInForm({ next, linkError, initialMode = "signin" }: { next: 
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="mx-auto mt-6 max-w-sm rounded-3xl border border-line bg-navy/60 p-6">
-      <h1 className="text-xl font-semibold tracking-tight text-shell">{title}</h1>
+    <div className="mx-auto mt-6 max-w-sm rounded-3xl border border-line bg-surface p-6">
+      <h1 className="text-xl font-semibold tracking-tight text-ink">{title}</h1>
       <div className="mt-1.5">{children}</div>
     </div>
   );

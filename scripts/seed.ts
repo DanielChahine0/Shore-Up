@@ -3,7 +3,7 @@
  * and demo water readings are replaced.
  *
  * Seeds beaches, zones, demo water readings, 20 demo users, 3 upcoming cleanups,
- * 5 communities (one hosted by a nonprofit), and 30 demo posts with placeholder photos.
+ * 13 communities (one hosted by a nonprofit), and 70 demo posts with public domain cleanup photos.
  *
  * Usage: pnpm seed   (needs NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local)
  */
@@ -11,9 +11,9 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { randomBytes } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
-import sharp from "sharp";
 import { config } from "dotenv";
 import type { FeatureCollection } from "geojson";
+import { UNCREDITED_PHOTOS } from "../lib/images/cleanupPhotos";
 import type { DemoZoneState, OfficialReading } from "../lib/scores/sources";
 
 const ROOT = path.resolve(__dirname, "..");
@@ -160,28 +160,19 @@ type CommunitySeed = {
   bodies: string[];
 };
 
-const PLACEHOLDER_COUNT = 6;
-
-/** Abstract shoreline placeholders (sand meeting water), so the feed has photos without using anyone's real picture. */
-async function uploadPlaceholderPhotos(): Promise<string[]> {
+/**
+ * Real beach cleanup photos for the demo feed, so Community News looks like the real thing.
+ * Public domain photos only: feed posts show no credit line, so none may be owed.
+ */
+async function uploadDemoPhotos(): Promise<string[]> {
   const paths: string[] = [];
-  for (let i = 0; i < PLACEHOLDER_COUNT; i++) {
-    const shore = 38 + i * 7;
-    const tilt = (i % 2 === 0 ? 1 : -1) * (4 + i * 2);
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
-      <defs>
-        <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d3b55"/><stop offset="1" stop-color="#3d8f9f"/></linearGradient>
-        <linearGradient id="sand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c7a3"/><stop offset="1" stop-color="#b89f75"/></linearGradient>
-      </defs>
-      <rect width="1200" height="900" fill="url(#sand)"/>
-      <path d="M0 0 H1200 V${shore * 9 + tilt * 6} Q900 ${shore * 9 + 60 - tilt * 4} 600 ${shore * 9 + 10} T0 ${shore * 9 - tilt * 6} Z" fill="url(#sea)"/>
-      <path d="M0 ${shore * 9 - tilt * 6 + 14} Q300 ${shore * 9 + 40} 600 ${shore * 9 + 26} T1200 ${shore * 9 + tilt * 6 + 16}" fill="none" stroke="#eaf4f4" stroke-opacity="0.55" stroke-width="10"/>
-    </svg>`;
-    const webp = await sharp(Buffer.from(svg)).webp({ quality: 80 }).toBuffer();
-    const path = `demo/shore-${i + 1}.webp`;
-    const { error } = await supabase.storage.from("post-photos").upload(path, webp, { contentType: "image/webp", upsert: true });
-    check(`placeholder photo ${i + 1}`, error);
-    paths.push(path);
+  for (const [i, photo] of UNCREDITED_PHOTOS.entries()) {
+    // Already 1200 by 900 WebP, the same shape the upload route produces.
+    const webp = await readFile(path.join(ROOT, "public", photo.src));
+    const storagePath = `demo/cleanup-${i + 1}.webp`;
+    const { error } = await supabase.storage.from("post-photos").upload(storagePath, webp, { contentType: "image/webp", upsert: true });
+    check(`demo photo ${i + 1}`, error);
+    paths.push(storagePath);
   }
   return paths;
 }
@@ -221,7 +212,7 @@ async function seedCommunities(
 
   // Demo posts are replaced wholesale. They fill the feeds but never change a litter score.
   check("clear demo posts", (await supabase.from("posts").delete().eq("is_demo", true)).error);
-  const photos = await uploadPlaceholderPhotos();
+  const photos = await uploadDemoPhotos();
   const zonesByBeach = new Map<string, string[]>();
   for (const z of zoneStates) zonesByBeach.set(z.beachId, [...(zonesByBeach.get(z.beachId) ?? []), z.zoneId]);
 

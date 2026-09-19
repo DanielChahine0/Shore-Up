@@ -47,7 +47,7 @@ export function CommunityFeed({ community, posts, isMember, signedIn, beaches, n
     <>
       <div className="mt-5 flex flex-wrap items-center gap-3">
         {member && (
-          <button type="button" onClick={() => setPosting(true)} className="h-11 rounded-full bg-foam px-6 text-sm font-semibold text-foam-deep">
+          <button type="button" onClick={() => setPosting(true)} className="h-11 rounded-full bg-brand-strong px-6 text-sm font-semibold text-white">
             Post a cleanup
           </button>
         )}
@@ -55,21 +55,21 @@ export function CommunityFeed({ community, posts, isMember, signedIn, beaches, n
           type="button"
           onClick={onMembership}
           disabled={pending}
-          className={`h-11 rounded-full px-6 text-sm font-semibold disabled:opacity-60 ${member ? "border border-line text-shell" : "bg-foam text-foam-deep"}`}
+          className={`h-11 rounded-full px-6 text-sm font-semibold disabled:opacity-60 ${member ? "border border-line text-ink" : "bg-brand-strong text-white"}`}
         >
           {pending ? "One moment" : member ? "Leave community" : "Join community"}
         </button>
-        {!member && <p className="text-sm text-mist">Join to post your cleanups here.</p>}
+        {!member && <p className="text-sm text-ink-soft">Join to post your cleanups here.</p>}
       </div>
       {error && (
-        <p role="alert" className="mt-3 rounded-xl border border-line bg-navy px-3 py-2 text-sm text-shell">
+        <p role="alert" className="mt-3 rounded-xl border border-line bg-surface px-3 py-2 text-sm text-ink">
           {error}
         </p>
       )}
 
       <section aria-label="Community News" className="mt-8 space-y-4">
         {posts.length === 0 ? (
-          <p className="rounded-3xl border border-line p-6 text-center text-sm text-mist">No posts yet. The first cleanup posted here leads the feed.</p>
+          <p className="rounded-3xl border border-line p-6 text-center text-sm text-ink-soft">No posts yet. The first cleanup posted here leads the feed.</p>
         ) : (
           posts.map((post) => <PostCard key={post.id} post={post} />)
         )}

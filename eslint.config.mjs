@@ -7,6 +7,8 @@ const eslintConfig = defineConfig([
   ...nextTs,
   // Override default ignores of eslint-config-next.
   globalIgnores([
+    // Other sessions' worktrees and agent tooling, not project source.
+    ".claude/**",
     // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",

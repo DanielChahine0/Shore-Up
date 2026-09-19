@@ -8,7 +8,7 @@ export type Viewer = {
   username: string;
   displayName: string;
   avatarUrl: string | null;
-  /** The first community they joined, shown in the CN pill. */
+  /** The first community they joined, opened by the community button. */
   community: { id: string; slug: string; name: string } | null;
 };
 

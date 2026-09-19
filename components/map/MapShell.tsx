@@ -1,12 +1,12 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Logo } from "@/components/chrome/Logo";
 import { SearchBar, type PlaceResult } from "@/components/chrome/SearchBar";
 import { TopRight } from "@/components/chrome/TopRight";
 import { useViewer } from "@/components/chrome/useViewer";
-import { EventsMenu } from "@/components/events/EventsMenu";
+import { EventsButton, EventsMenu } from "@/components/events/EventsMenu";
 import { CreateCleanupModal } from "@/components/modals/CreateCleanupModal";
 import { NewPostModal } from "@/components/modals/NewPostModal";
 import { WelcomeDialog } from "@/components/onboarding/WelcomeDialog";
@@ -16,7 +16,6 @@ import { TrashLogger } from "@/components/trash/TrashLogger";
 import { Toast } from "@/components/ui/Toast";
 import type { BeachSummary } from "@/lib/beaches";
 import type { BeachDetail } from "@/lib/beachDetail";
-import { BackToGlobe } from "./BackToGlobe";
 import { MapCanvas, type CameraCommand, type ZoneHover } from "./MapCanvas";
 import { MissingToken } from "./MissingToken";
 import { ZoneTooltip } from "./ZoneTooltip";
@@ -61,8 +60,8 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   const [hosting, setHosting] = useState(false);
   const [posting, setPosting] = useState(false);
   const [mapReady, setMapReady] = useState(false);
-  const [globeCamera, setGlobeCamera] = useState<CameraCommand | null>(null);
-  const [away, setAway] = useState(false);
+  const [eventsOpen, setEventsOpen] = useState(false);
+  const eventsButtonRef = useRef<HTMLButtonElement>(null);
 
   // Only ever show data for the beach that is selected right now.
   const detail = loaded && loaded.id === selectedId ? loaded.detail : null;
@@ -83,12 +82,11 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
     return () => controller.abort();
   }, [selectedId, attempt]);
 
-  // A selected beach flies in. Leaving one moves nothing: the camera stays where the user is
-  // unless they ask for "Back to globe".
+  // A selected beach flies in. Leaving one moves nothing: the camera stays where the user is.
   const camera = useMemo<CameraCommand | null>(() => {
     if (selected) return { kind: "beach", bounds: selected.bounds };
-    return placeCamera ?? globeCamera;
-  }, [selected, placeCamera, globeCamera]);
+    return placeCamera;
+  }, [selected, placeCamera]);
 
   const padding = useMemo(
     () =>
@@ -101,7 +99,6 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   const selectBeach = useCallback(
     (id: string) => {
       setPlaceCamera(null);
-      setGlobeCamera(null);
       setSheetExpanded(false);
       router.push(`/beach/${id}`);
     },
@@ -110,24 +107,15 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
 
   const pickPlace = useCallback(
     (place: PlaceResult) => {
-      setGlobeCamera(null);
       setPlaceCamera({ kind: "place", center: place.center, bounds: place.bounds });
       if (selectedId) router.push("/");
     },
     [router, selectedId],
   );
 
-  /** Zooms out to the whole globe, centered on wherever the user already is. */
-  const backToGlobe = useCallback(() => {
-    setPlaceCamera(null);
-    setGlobeCamera({ kind: "globe" });
-    if (selectedId) router.push("/");
-  }, [router, selectedId]);
-
   /** Closes the beach panel and leaves the camera exactly where it is. */
   const closeBeach = useCallback(() => {
     setPlaceCamera(null);
-    setGlobeCamera(null);
     router.push("/");
   }, [router]);
 
@@ -147,6 +135,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   };
 
   const clearToast = useCallback(() => setToast(null), []);
+  const closeEvents = useCallback(() => setEventsOpen(false), []);
   const markReady = useCallback(() => setMapReady(true), []);
 
   if (!mapboxToken) return <MissingToken />;
@@ -155,11 +144,10 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
   const panelOffset = isDesktop && selected ? `${PANEL_WIDTH_PX + 8}px` : "0px";
   const activeZoneId = hover?.zoneId ?? panelZoneId;
   const hoveredZone = hover && detail ? detail.score.zones.find((z) => z.zoneId === hover.zoneId) : undefined;
-  const awayFromGlobe = away || Boolean(selected);
 
   return (
     <main
-      className="relative h-dvh w-full overflow-hidden bg-abyss"
+      className="relative h-dvh w-full overflow-hidden bg-wash"
       style={{ "--sheet-offset": sheetOffset, "--panel-offset": panelOffset, "--sheet-peek": `${SHEET_PEEK_PX}px`, "--sheet-expanded": SHEET_EXPANDED } as React.CSSProperties}
     >
       <MapCanvas
@@ -172,7 +160,6 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
         highlightZoneId={panelZoneId}
         onSelectBeach={selectBeach}
         onZoneHover={setHover}
-        onAwayChange={setAway}
         onReady={markReady}
       />
 
@@ -183,17 +170,13 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
             <SearchBar beaches={beaches} token={mapboxToken} onPickBeach={selectBeach} onPickPlace={pickPlace} />
           </div>
         </div>
-        <div className="pointer-events-auto order-2">
+        <div className="pointer-events-auto order-2 flex min-w-0 items-center gap-2">
+          <EventsButton open={eventsOpen} onOpen={() => setEventsOpen(true)} buttonRef={eventsButtonRef} />
           <TopRight />
         </div>
         <div className="pointer-events-auto order-3 flex w-full sm:hidden">
           <SearchBar beaches={beaches} token={mapboxToken} onPickBeach={selectBeach} onPickPlace={pickPlace} />
         </div>
-        {awayFromGlobe && (
-          <div className="pointer-events-auto order-4 w-full sm:absolute sm:left-4 sm:top-[76px] sm:w-auto">
-            <BackToGlobe onClick={backToGlobe} />
-          </div>
-        )}
       </div>
 
       {hoveredZone && hover && <ZoneTooltip zone={hoveredZone} x={hover.x} y={hover.y} />}
@@ -237,7 +220,7 @@ export function MapShell({ beaches, mapboxToken, children }: Props) {
       )}
 
       {/* Each of these owns its own buttons, panels, and dialogs. */}
-      <EventsMenu signedIn={Boolean(viewer)} onPickBeach={selectBeach} onToast={setToast} />
+      <EventsMenu open={eventsOpen} onClose={closeEvents} triggerRef={eventsButtonRef} signedIn={Boolean(viewer)} onPickBeach={selectBeach} onToast={setToast} />
       <TrashLogger beach={selected ? { id: selected.id, name: selected.name } : null} signedIn={Boolean(viewer)} onToast={setToast} />
       <WelcomeDialog mapboxToken={mapboxToken} signedIn={Boolean(viewer)} onPickPlace={pickPlace} />
       {toast && <Toast message={toast} onDone={clearToast} />}

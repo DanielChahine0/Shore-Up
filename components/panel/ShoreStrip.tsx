@@ -23,7 +23,7 @@ export function ShoreStrip({ zones, activeZoneId, onFocusZone }: Props) {
               onFocus={() => onFocusZone(zone.zoneId)}
               onBlur={() => onFocusZone(null)}
               aria-label={`${zone.name}: ${zone.score}, ${zone.label}`}
-              className={`h-11 min-w-0 flex-1 rounded-lg text-sm font-semibold tabular-nums transition-transform duration-200 ${activeZoneId === zone.zoneId ? "-translate-y-0.5 ring-2 ring-shell" : ""}`}
+              className={`h-11 min-w-0 flex-1 rounded-lg text-sm font-semibold tabular-nums transition-transform duration-200 ${activeZoneId === zone.zoneId ? "-translate-y-0.5 ring-2 ring-ink" : ""}`}
               style={{ background: band.color, color: band.textOn }}
             >
               {zone.score}
@@ -31,7 +31,7 @@ export function ShoreStrip({ zones, activeZoneId, onFocusZone }: Props) {
           );
         })}
       </div>
-      <div className="mt-1.5 flex justify-between text-[11px] text-mist">
+      <div className="mt-1.5 flex justify-between text-[11px] text-ink-soft">
         <span>{zones[0]?.name}</span>
         <span>{zones[zones.length - 1]?.name}</span>
       </div>

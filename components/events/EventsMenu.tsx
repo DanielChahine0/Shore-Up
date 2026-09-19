@@ -10,6 +10,10 @@ import { EventCard } from "./EventCard";
 import { CalendarIcon, CrosshairIcon } from "./icons";
 
 export type EventsMenuProps = {
+  open: boolean;
+  onClose: () => void;
+  /** The top bar's Events button, which gets focus back when the panel closes. */
+  triggerRef: React.RefObject<HTMLButtonElement | null>;
   signedIn: boolean;
   onPickBeach: (beachId: string) => void;
   onToast: (message: string) => void;
@@ -29,19 +33,35 @@ function useIsDesktop() {
   );
 }
 
+/** The top bar button that opens the events panel. Icon only on phones, where the bar is tight. */
+export function EventsButton({ open, onOpen, buttonRef }: { open: boolean; onOpen: () => void; buttonRef: React.Ref<HTMLButtonElement> }) {
+  return (
+    <button
+      ref={buttonRef}
+      type="button"
+      onClick={onOpen}
+      aria-label="Events"
+      aria-expanded={open}
+      aria-controls="events-panel"
+      className="glass flex h-11 w-11 shrink-0 items-center justify-center gap-2 rounded-full text-sm font-medium text-ink transition-colors hover:text-brand-strong sm:w-auto sm:px-4"
+    >
+      <CalendarIcon className="h-5 w-5 text-brand-strong sm:h-[18px] sm:w-[18px]" />
+      <span className="hidden sm:inline">Events</span>
+    </button>
+  );
+}
+
 /** Left side panel listing public cleanups near the visitor's chosen place. */
-export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) {
+export function EventsMenu({ open, onClose, triggerRef, signedIn, onPickBeach, onToast }: EventsMenuProps) {
   const isDesktop = useIsDesktop();
   const { place, setPlace } = useHomePlace();
 
-  const [open, setOpen] = useState(false);
   const [shown, setShown] = useState(false);
   const [events, setEvents] = useState<EventItem[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [geoError, setGeoError] = useState<string | null>(null);
 
-  const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const requested = useRef(false);
   const wasOpen = useRef(false);
@@ -66,9 +86,9 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
 
   /** Closing resets the slide, so the next open animates in from the left again. */
   const close = useCallback(() => {
-    setOpen(false);
+    onClose();
     setShown(false);
-  }, []);
+  }, [onClose]);
 
   // Slide in from the left once mounted. Reduced motion zeroes the transition in globals.css.
   useEffect(() => {
@@ -90,9 +110,9 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
   // Opening moves focus into the panel; closing hands it back to the toggle.
   useEffect(() => {
     if (open) panelRef.current?.focus();
-    else if (wasOpen.current) toggleRef.current?.focus();
+    else if (wasOpen.current) triggerRef.current?.focus();
     wasOpen.current = open;
-  }, [open]);
+  }, [open, triggerRef]);
 
   const { near, far } = useMemo(() => rankEvents(events ?? [], place), [events, place]);
 
@@ -131,36 +151,24 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
 
   return (
     <>
-      <button
-        ref={toggleRef}
-        type="button"
-        onClick={() => setOpen(true)}
-        aria-expanded={open}
-        aria-controls="events-panel"
-        className={`glass absolute left-4 top-[212px] z-10 flex h-11 items-center gap-2 rounded-full px-4 text-sm font-medium text-shell sm:top-[132px] ${open ? "hidden" : ""}`}
-      >
-        <CalendarIcon className="h-[18px] w-[18px] text-foam" />
-        Events
-      </button>
-
       {open && (
         <aside
           id="events-panel"
           ref={panelRef}
           tabIndex={-1}
           aria-label="Cleanup events near you"
-          // On phones this runs the full height, over the logo and search bar rather than only the
-          // map, so it is fully opaque: glass-panel's last 3% let them ghost through. On desktop it
-          // sits below the top bar like the beach panel, and stops short of the Mapbox logo.
-          style={{ background: "rgb(9 26 42)" }}
-          className={`glass glass-panel absolute bottom-0 left-0 top-0 z-20 flex w-[calc(100%-2rem)] max-w-[360px] flex-col overflow-hidden transition-transform duration-300 ease-out sm:bottom-10 sm:left-4 sm:top-[76px] sm:w-[360px] sm:rounded-3xl ${shown ? "translate-x-0" : "-translate-x-[calc(100%+1rem)]"}`}
+          // On phones this is full width and full height, over the top bar, so no sliver of a button pokes
+          // out beside it, and it is fully opaque: glass-panel's last 3% let what is underneath ghost through.
+          // On desktop it sits below the top bar like the beach panel, and stops short of the Mapbox logo.
+          style={{ background: "var(--color-surface)" }}
+          className={`glass glass-panel absolute bottom-0 left-0 top-0 z-20 flex w-full flex-col overflow-hidden transition-transform duration-300 ease-out sm:bottom-10 sm:left-4 sm:top-[76px] sm:w-[360px] sm:rounded-3xl ${shown ? "translate-x-0" : "-translate-x-[calc(100%+1rem)]"}`}
         >
           <header className="flex items-start justify-between gap-3 px-5 pt-5">
             <div className="min-w-0">
-              <h2 className="text-lg font-semibold tracking-tight text-shell">Events</h2>
-              <p className="text-sm text-mist">{place ? `Shore cleanups near ${place.name}` : "Shore cleanups anyone can join"}</p>
+              <h2 className="text-lg font-semibold tracking-tight text-ink">Events</h2>
+              <p className="text-sm text-ink-soft">{place ? `Shore cleanups near ${place.name}` : "Shore cleanups anyone can join"}</p>
             </div>
-            <button type="button" onClick={close} aria-label="Close events" className="-mr-1.5 rounded-full p-1.5 text-mist hover:text-shell">
+            <button type="button" onClick={close} aria-label="Close events" className="-mr-1.5 rounded-full p-1.5 text-ink-soft hover:text-ink">
               <CloseIcon className="h-5 w-5" />
             </button>
           </header>
@@ -170,14 +178,14 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
               <button
                 type="button"
                 onClick={useMyLocation}
-                className="flex h-11 items-center gap-2 rounded-full border border-line px-4 text-sm font-medium text-shell hover:border-foam/60"
+                className="flex h-11 items-center gap-2 rounded-full border border-line-strong px-4 text-sm font-medium text-ink hover:border-brand-strong/60"
               >
-                <CrosshairIcon className="h-[18px] w-[18px] text-foam" />
+                <CrosshairIcon className="h-[18px] w-[18px] text-brand-strong" />
                 Use my location
               </button>
-              <p className="mt-2 text-xs text-mist">It stays in this browser, rounded to about 11 km.</p>
+              <p className="mt-2 text-xs text-ink-soft">It stays in this browser, rounded to about 11 km.</p>
               {geoError && (
-                <p role="alert" className="mt-2 text-xs text-shell">
+                <p role="alert" className="mt-2 text-xs text-ink">
                   {geoError}
                 </p>
               )}
@@ -185,12 +193,12 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
           )}
 
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-5 pt-4">
-            {loading && <p className="text-sm text-mist">Loading cleanups near you.</p>}
+            {loading && <p className="text-sm text-ink-soft">Loading cleanups near you.</p>}
 
             {error && (
-              <div className="rounded-2xl border border-line p-4 text-sm text-shell">
+              <div className="rounded-2xl border border-line p-4 text-sm text-ink">
                 <p role="alert">{error}</p>
-                <button type="button" onClick={load} className="mt-3 h-11 rounded-full bg-foam px-4 text-sm font-semibold text-foam-deep">
+                <button type="button" onClick={load} className="mt-3 h-11 rounded-full bg-brand-strong px-4 text-sm font-semibold text-white">
                   Try again
                 </button>
               </div>
@@ -198,11 +206,11 @@ export function EventsMenu({ signedIn, onPickBeach, onToast }: EventsMenuProps) 
 
             {events && !loading && !error && (
               <>
-                {near.length === 0 ? <p className="text-sm text-mist">{emptyCopy}</p> : <ul className="grid gap-3">{near.map(renderCard)}</ul>}
+                {near.length === 0 ? <p className="text-sm text-ink-soft">{emptyCopy}</p> : <ul className="grid gap-3">{near.map(renderCard)}</ul>}
 
                 {far.length > 0 && (
                   <>
-                    <h3 className="mb-3 mt-6 text-sm font-semibold text-shell">Further away</h3>
+                    <h3 className="mb-3 mt-6 text-sm font-semibold text-ink">Further away</h3>
                     <ul className="grid gap-3">{far.map(renderCard)}</ul>
                   </>
                 )}

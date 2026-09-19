@@ -8,24 +8,350 @@
     }
   ],
   "communities": [
-    { "slug": "woodbine-shore-crew", "name": "Woodbine Shore Crew", "area": "The Beaches, Toronto", "beach": "woodbine", "nonprofit": "tideline-collective", "members": ["maya_okafor", "liam_tremblay", "priya_nair", "sofia_rossi", "noah_kim", "jonah_weiss"] },
-    { "slug": "toronto-island-stewards", "name": "Toronto Island Stewards", "area": "Toronto Islands, Toronto", "beach": "wards-island", "nonprofit": null, "members": ["amara_diallo", "jonah_weiss"] },
-    { "slug": "kits-beach-keepers", "name": "Kits Beach Keepers", "area": "Kitsilano, Vancouver", "beach": "kitsilano", "nonprofit": null, "members": ["hana_sato"] },
-    { "slug": "bondi-dawn-patrol", "name": "Bondi Dawn Patrol", "area": "Bondi, Sydney", "beach": "bondi", "nonprofit": null, "members": ["isla_campbell", "oliver_nguyen", "ben_walker"] },
-    { "slug": "westside-sand-sweepers", "name": "Westside Sand Sweepers", "area": "Venice, Los Angeles", "beach": "venice", "nonprofit": null, "members": ["diego_morales", "chloe_martin"] }
+    {
+      "slug": "woodbine-shore-crew",
+      "name": "Woodbine Shore Crew",
+      "area": "The Beaches, Toronto",
+      "beach": "woodbine",
+      "nonprofit": "tideline-collective",
+      "members": [
+        "maya_okafor",
+        "liam_tremblay",
+        "priya_nair",
+        "sofia_rossi",
+        "noah_kim",
+        "jonah_weiss"
+      ]
+    },
+    {
+      "slug": "toronto-island-stewards",
+      "name": "Toronto Island Stewards",
+      "area": "Toronto Islands, Toronto",
+      "beach": "wards-island",
+      "nonprofit": null,
+      "members": [
+        "amara_diallo",
+        "jonah_weiss"
+      ]
+    },
+    {
+      "slug": "kits-beach-keepers",
+      "name": "Kits Beach Keepers",
+      "area": "Kitsilano, Vancouver",
+      "beach": "kitsilano",
+      "nonprofit": null,
+      "members": [
+        "hana_sato"
+      ]
+    },
+    {
+      "slug": "bondi-dawn-patrol",
+      "name": "Bondi Dawn Patrol",
+      "area": "Bondi, Sydney",
+      "beach": "bondi",
+      "nonprofit": null,
+      "members": [
+        "isla_campbell",
+        "oliver_nguyen",
+        "ben_walker"
+      ]
+    },
+    {
+      "slug": "westside-sand-sweepers",
+      "name": "Westside Sand Sweepers",
+      "area": "Venice, Los Angeles",
+      "beach": "venice",
+      "nonprofit": null,
+      "members": [
+        "diego_morales",
+        "chloe_martin"
+      ]
+    },
+    {
+      "slug": "barceloneta-beach-crew",
+      "name": "Barceloneta Beach Crew",
+      "area": "Barceloneta, Barcelona",
+      "beach": "barceloneta",
+      "nonprofit": null,
+      "members": [
+        "lucia_fernandez",
+        "tomas_silva"
+      ]
+    },
+    {
+      "slug": "carcavelos-tide-team",
+      "name": "Carcavelos Tide Team",
+      "area": "Carcavelos, Cascais",
+      "beach": "carcavelos",
+      "nonprofit": null,
+      "members": [
+        "tomas_silva"
+      ]
+    },
+    {
+      "slug": "muizenberg-shore-keepers",
+      "name": "Muizenberg Shore Keepers",
+      "area": "Muizenberg, Cape Town",
+      "beach": "muizenberg",
+      "nonprofit": null,
+      "members": [
+        "zanele_khumalo"
+      ]
+    },
+    {
+      "slug": "juhu-beach-warriors",
+      "name": "Juhu Beach Warriors",
+      "area": "Juhu, Mumbai",
+      "beach": "juhu",
+      "nonprofit": null,
+      "members": [
+        "arjun_mehta"
+      ]
+    },
+    {
+      "slug": "waikiki-reef-and-sand",
+      "name": "Waikiki Reef and Sand",
+      "area": "Waikiki, Honolulu",
+      "beach": "waikiki",
+      "nonprofit": null,
+      "members": [
+        "keanu_kahale"
+      ]
+    },
+    {
+      "slug": "copacabana-limpa",
+      "name": "Copacabana Limpa",
+      "area": "Copacabana, Rio de Janeiro",
+      "beach": "copacabana",
+      "nonprofit": null,
+      "members": [
+        "rafaela_costa"
+      ]
+    },
+    {
+      "slug": "brighton-pebble-pickers",
+      "name": "Brighton Pebble Pickers",
+      "area": "Brighton",
+      "beach": "brighton",
+      "nonprofit": null,
+      "members": [
+        "emma_jensen"
+      ]
+    },
+    {
+      "slug": "st-kilda-foreshore-friends",
+      "name": "St Kilda Foreshore Friends",
+      "area": "St Kilda, Melbourne",
+      "beach": "st-kilda",
+      "nonprofit": null,
+      "members": [
+        "ben_walker"
+      ]
+    }
   ],
   "posts": [
-    { "author": "maya_okafor", "community": "woodbine-shore-crew", "beaches": ["cherry", "woodbine", "kew-balmy", "bluffers-park", "sunnyside"], "count": 10 },
-    { "author": "liam_tremblay", "community": "woodbine-shore-crew", "beaches": ["cherry", "woodbine"], "count": 3 },
-    { "author": "priya_nair", "community": "woodbine-shore-crew", "beaches": ["bluffers-park"], "count": 3 },
-    { "author": "sofia_rossi", "community": "woodbine-shore-crew", "beaches": ["kew-balmy", "cherry"], "count": 2 },
-    { "author": "noah_kim", "community": "woodbine-shore-crew", "beaches": ["woodbine"], "count": 1 },
-    { "author": "amara_diallo", "community": "toronto-island-stewards", "beaches": ["wards-island", "hanlans-point", "centre-island"], "count": 3 },
-    { "author": "hana_sato", "community": "kits-beach-keepers", "beaches": ["kitsilano", "english-bay"], "count": 2 },
-    { "author": "isla_campbell", "community": "bondi-dawn-patrol", "beaches": ["bondi", "tamarama"], "count": 3 },
-    { "author": "oliver_nguyen", "community": "bondi-dawn-patrol", "beaches": ["manly"], "count": 1 },
-    { "author": "diego_morales", "community": "westside-sand-sweepers", "beaches": ["venice"], "count": 1 },
-    { "author": "chloe_martin", "community": "westside-sand-sweepers", "beaches": ["santa-monica"], "count": 1 }
+    {
+      "author": "maya_okafor",
+      "community": "woodbine-shore-crew",
+      "beaches": [
+        "cherry",
+        "woodbine",
+        "kew-balmy",
+        "bluffers-park",
+        "sunnyside"
+      ],
+      "count": 10
+    },
+    {
+      "author": "liam_tremblay",
+      "community": "woodbine-shore-crew",
+      "beaches": [
+        "cherry",
+        "woodbine"
+      ],
+      "count": 3
+    },
+    {
+      "author": "priya_nair",
+      "community": "woodbine-shore-crew",
+      "beaches": [
+        "bluffers-park"
+      ],
+      "count": 3
+    },
+    {
+      "author": "sofia_rossi",
+      "community": "woodbine-shore-crew",
+      "beaches": [
+        "kew-balmy",
+        "cherry"
+      ],
+      "count": 2
+    },
+    {
+      "author": "noah_kim",
+      "community": "woodbine-shore-crew",
+      "beaches": [
+        "woodbine"
+      ],
+      "count": 1
+    },
+    {
+      "author": "amara_diallo",
+      "community": "toronto-island-stewards",
+      "beaches": [
+        "wards-island",
+        "hanlans-point",
+        "centre-island"
+      ],
+      "count": 3
+    },
+    {
+      "author": "hana_sato",
+      "community": "kits-beach-keepers",
+      "beaches": [
+        "kitsilano",
+        "english-bay"
+      ],
+      "count": 2
+    },
+    {
+      "author": "isla_campbell",
+      "community": "bondi-dawn-patrol",
+      "beaches": [
+        "bondi",
+        "tamarama"
+      ],
+      "count": 3
+    },
+    {
+      "author": "oliver_nguyen",
+      "community": "bondi-dawn-patrol",
+      "beaches": [
+        "manly"
+      ],
+      "count": 1
+    },
+    {
+      "author": "diego_morales",
+      "community": "westside-sand-sweepers",
+      "beaches": [
+        "venice"
+      ],
+      "count": 1
+    },
+    {
+      "author": "chloe_martin",
+      "community": "westside-sand-sweepers",
+      "beaches": [
+        "santa-monica"
+      ],
+      "count": 1
+    },
+    {
+      "author": "lucia_fernandez",
+      "community": "barceloneta-beach-crew",
+      "beaches": [
+        "barceloneta"
+      ],
+      "count": 4
+    },
+    {
+      "author": "tomas_silva",
+      "community": "carcavelos-tide-team",
+      "beaches": [
+        "carcavelos",
+        "praia-da-rocha"
+      ],
+      "count": 4
+    },
+    {
+      "author": "zanele_khumalo",
+      "community": "muizenberg-shore-keepers",
+      "beaches": [
+        "muizenberg",
+        "camps-bay",
+        "clifton-4th"
+      ],
+      "count": 4
+    },
+    {
+      "author": "arjun_mehta",
+      "community": "juhu-beach-warriors",
+      "beaches": [
+        "juhu"
+      ],
+      "count": 5
+    },
+    {
+      "author": "keanu_kahale",
+      "community": "waikiki-reef-and-sand",
+      "beaches": [
+        "waikiki"
+      ],
+      "count": 3
+    },
+    {
+      "author": "rafaela_costa",
+      "community": "copacabana-limpa",
+      "beaches": [
+        "copacabana",
+        "ipanema"
+      ],
+      "count": 4
+    },
+    {
+      "author": "emma_jensen",
+      "community": "brighton-pebble-pickers",
+      "beaches": [
+        "brighton"
+      ],
+      "count": 3
+    },
+    {
+      "author": "ben_walker",
+      "community": "st-kilda-foreshore-friends",
+      "beaches": [
+        "st-kilda"
+      ],
+      "count": 3
+    },
+    {
+      "author": "jonah_weiss",
+      "community": "toronto-island-stewards",
+      "beaches": [
+        "hanlans-point",
+        "gibraltar-point"
+      ],
+      "count": 3
+    },
+    {
+      "author": "hana_sato",
+      "community": "kits-beach-keepers",
+      "beaches": [
+        "english-bay",
+        "kitsilano"
+      ],
+      "count": 2
+    },
+    {
+      "author": "diego_morales",
+      "community": "westside-sand-sweepers",
+      "beaches": [
+        "venice",
+        "santa-monica"
+      ],
+      "count": 3
+    },
+    {
+      "author": "oliver_nguyen",
+      "community": "bondi-dawn-patrol",
+      "beaches": [
+        "manly",
+        "bondi"
+      ],
+      "count": 2
+    }
   ],
   "bodies": [
     "Mostly bottle caps and cigarette butts along the high tide line. Two bags before the rain started.",
@@ -37,6 +363,16 @@
     "Broken glass near the path, so watch your step. Cleared what we could find.",
     "Plastic bags caught in the dune grass. Took a while to untangle them without damaging the plants.",
     "Short one after work. One bag, mostly straws and lids from the snack bar.",
-    "Water bottles, a deflated beach ball, and about a hundred bread tags. Where do they all come from?"
+    "Water bottles, a deflated beach ball, and about a hundred bread tags. Where do they all come from?",
+    "Low tide showed a line of bottle caps we would have missed. Filled a whole jar with them.",
+    "School group joined us today. Thirty pairs of hands make short work of a long beach.",
+    "A lot of rope and net fragments after the swell. Heavy bag, worth it.",
+    "Picked up around the bins where the wind scatters everything. Lids, cups, napkins.",
+    "Sunrise sweep before the crowds. Mostly cans and cigarette butts from last night.",
+    "Found three single-use barbecues tucked behind the rocks. Carried them out with the rest.",
+    "Microplastics along the wrack line again. Slow work with a sieve, but the sand looks right now.",
+    "Two of us, two bags, forty minutes. The far end near the pier was the worst of it.",
+    "Wet wipes and cotton buds near the outfall after the rain. Gloves were a must today.",
+    "Good turnout and barely anything to find, which is the best kind of cleanup."
   ]
 }

@@ -4,12 +4,11 @@ import mapboxgl, { type GeoJSONSource, type Map as MapboxMap } from "mapbox-gl";
 import { useEffect, useRef } from "react";
 import type { BeachSummary } from "@/lib/beaches";
 import type { BeachDetail } from "@/lib/beachDetail";
-import { AWAY_FROM_GLOBE_ZOOM, FLIGHT_MS, globeView, NEUTRAL, SATELLITE_FADE, SPIN_DEG_PER_SEC, SPIN_MAX_ZOOM } from "./mapConfig";
+import { FLIGHT_MS, globeView, KEPT_BASE_LAYERS, MAP_COLORS, SAND_MIN_ZOOM, SPIN_DEG_PER_SEC, SPIN_MAX_ZOOM } from "./mapConfig";
 
 export type CameraCommand =
   | { kind: "beach"; bounds: [number, number, number, number] }
-  | { kind: "place"; center: [number, number]; bounds?: [number, number, number, number] }
-  | { kind: "globe" };
+  | { kind: "place"; center: [number, number]; bounds?: [number, number, number, number] };
 
 export type ZoneHover = { zoneId: string; x: number; y: number } | null;
 
@@ -26,22 +25,20 @@ type Props = {
   highlightZoneId: string | null;
   onSelectBeach: (id: string) => void;
   onZoneHover: (hover: ZoneHover) => void;
-  /** Fires when the camera crosses between the whole-globe view and a zoomed-in view. */
-  onAwayChange: (away: boolean) => void;
   onReady: () => void;
 };
 
 const EMPTY: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
 
-export function MapCanvas({ token, beaches, selectedId, detail, camera, padding, highlightZoneId, onSelectBeach, onZoneHover, onAwayChange, onReady }: Props) {
+export function MapCanvas({ token, beaches, selectedId, detail, camera, padding, highlightZoneId, onSelectBeach, onZoneHover, onReady }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapboxMap | null>(null);
   const readyRef = useRef(false);
   const spinningRef = useRef(true);
-  const latest = useRef({ onSelectBeach, onZoneHover, onAwayChange, onReady, padding, selectedId, detail, camera });
+  const latest = useRef({ onSelectBeach, onZoneHover, onReady, padding, selectedId, detail, camera });
   // Map event handlers outlive renders, so they read the newest props through this ref.
   useEffect(() => {
-    latest.current = { onSelectBeach, onZoneHover, onAwayChange, onReady, padding, selectedId, detail, camera };
+    latest.current = { onSelectBeach, onZoneHover, onReady, padding, selectedId, detail, camera };
   });
 
   // Create the map once.
@@ -52,7 +49,7 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
     const startsOnBeach = latest.current.camera?.kind === "beach";
     const map = new mapboxgl.Map({
       container: containerRef.current,
-      style: "mapbox://styles/mapbox/dark-v11",
+      style: "mapbox://styles/mapbox/light-v11",
       projection: "globe",
       ...globeView(window.innerWidth),
       attributionControl: false,
@@ -92,47 +89,35 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
     };
     for (const evt of ["mousedown", "touchstart", "wheel"] as const) map.on(evt, stopSpin);
 
-    // Checked on every zoom, at the end of every move, and once after the first camera placement,
-    // so the state is right even when a jump happens before listeners or React state are ready.
-    let away = false;
-    const syncAway = () => {
-      const next = map.getZoom() > AWAY_FROM_GLOBE_ZOOM;
-      if (next === away) return;
-      away = next;
-      latest.current.onAwayChange(next);
-    };
-    map.on("zoom", syncAway);
-    map.on("moveend", syncAway);
-
     map.on("style.load", () => {
+      // A pale sky around the globe. No stars: the app is light mode only.
       map.setFog({
-        color: "rgb(14, 36, 58)",
-        "high-color": "rgb(44, 110, 180)",
-        "horizon-blend": 0.05,
-        "space-color": "rgb(3, 8, 15)",
-        "star-intensity": 0.55,
+        color: "rgb(255, 255, 255)",
+        "high-color": "rgb(169, 211, 223)",
+        "horizon-blend": 0.04,
+        "space-color": "rgb(241, 248, 250)",
+        "star-intensity": 0,
       });
 
-      // Tint the base style toward the ocean: navy water, slightly lighter land.
-      if (map.getLayer("water")) map.setPaintProperty("water", "fill-color", "rgb(9, 30, 50)");
-      if (map.getLayer("land")) map.setPaintProperty("land", "background-color", "rgb(22, 40, 56)");
+      // Beaches are the only detail. Everything else in the base style is hidden, not restyled,
+      // so roads, buildings, land use, and points of interest never compete with a beach.
+      for (const layer of map.getStyle().layers ?? []) {
+        if (!KEPT_BASE_LAYERS.has(layer.id)) map.setLayoutProperty(layer.id, "visibility", "none");
+      }
+      map.setPaintProperty("land", "background-color", MAP_COLORS.land);
+      map.setPaintProperty("water", "fill-color", ["interpolate", ["linear"], ["zoom"], 3, MAP_COLORS.waterFar, 11, MAP_COLORS.waterNear]);
+      for (const id of ["admin-0-boundary", "admin-0-boundary-disputed"]) map.setPaintProperty(id, "line-color", MAP_COLORS.border);
+      for (const id of ["country-label", "continent-label", "settlement-major-label"]) {
+        map.setPaintProperty(id, "text-color", MAP_COLORS.ink);
+        map.setPaintProperty(id, "text-halo-color", MAP_COLORS.white);
+        map.setPaintProperty(id, "text-halo-width", 1.4);
+      }
 
-      // Satellite imagery fades in by zoom. No style swap, so custom layers survive.
+      // Every beach as a sand shape, drawn under the labels.
       const firstSymbol = map.getStyle().layers?.find((l) => l.type === "symbol")?.id;
-      map.addSource("satellite", { type: "raster", url: "mapbox://mapbox.satellite", tileSize: 256 });
-      map.addLayer(
-        {
-          id: "satellite",
-          type: "raster",
-          source: "satellite",
-          minzoom: SATELLITE_FADE.from,
-          paint: {
-            "raster-opacity": ["interpolate", ["linear"], ["zoom"], SATELLITE_FADE.from, 0, SATELLITE_FADE.to, 1],
-            "raster-fade-duration": 300,
-          },
-        },
-        firstSymbol,
-      );
+      map.addSource("sand", { type: "geojson", data: "/api/beaches/shapes" });
+      map.addLayer({ id: "sand-fill", type: "fill", source: "sand", minzoom: SAND_MIN_ZOOM, paint: { "fill-color": MAP_COLORS.sand } }, firstSymbol);
+      map.addLayer({ id: "sand-edge", type: "line", source: "sand", minzoom: SAND_MIN_ZOOM, paint: { "line-color": MAP_COLORS.sandEdge, "line-width": 1 } }, firstSymbol);
 
       map.addSource("beaches", {
         type: "geojson",
@@ -148,16 +133,16 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
           })),
         },
       });
-      // Beaches are neutral glowing dots. Only the selected beach ever shows scale colors.
+      // Beaches are white dots ringed in deep blue, readable on land and sea. Only the selected beach ever shows scale colors.
       map.addLayer({
         id: "beach-glow",
         type: "circle",
         source: "beaches",
         paint: {
-          "circle-color": NEUTRAL,
-          "circle-radius": ["case", ["has", "point_count"], ["interpolate", ["linear"], ["get", "point_count"], 2, 20, 12, 30], 12],
+          "circle-color": MAP_COLORS.brandDeep,
+          "circle-radius": ["case", ["has", "point_count"], ["interpolate", ["linear"], ["get", "point_count"], 2, 25, 12, 36], 12],
           "circle-blur": 1,
-          "circle-opacity": 0.4,
+          "circle-opacity": 0.35,
         },
       });
       map.addLayer({
@@ -166,10 +151,10 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
         source: "beaches",
         filter: ["has", "point_count"],
         paint: {
-          "circle-color": "rgb(12, 32, 51)",
-          "circle-stroke-color": NEUTRAL,
-          "circle-stroke-width": 1.5,
-          "circle-radius": ["interpolate", ["linear"], ["get", "point_count"], 2, 11, 12, 16],
+          "circle-color": MAP_COLORS.brandDeep,
+          "circle-stroke-color": MAP_COLORS.white,
+          "circle-stroke-width": 2,
+          "circle-radius": ["interpolate", ["linear"], ["get", "point_count"], 2, 15, 12, 21],
         },
       });
       map.addLayer({
@@ -177,15 +162,15 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
         type: "symbol",
         source: "beaches",
         filter: ["has", "point_count"],
-        layout: { "text-field": ["get", "point_count_abbreviated"], "text-size": 12, "text-font": ["DIN Pro Medium", "Arial Unicode MS Regular"], "text-allow-overlap": true },
-        paint: { "text-color": NEUTRAL },
+        layout: { "text-field": ["get", "point_count_abbreviated"], "text-size": 16, "text-font": ["DIN Pro Bold", "Arial Unicode MS Bold"], "text-allow-overlap": true },
+        paint: { "text-color": MAP_COLORS.white },
       });
       map.addLayer({
         id: "beach-dots",
         type: "circle",
         source: "beaches",
         filter: ["!", ["has", "point_count"]],
-        paint: { "circle-color": NEUTRAL, "circle-radius": 4.5, "circle-stroke-color": "rgb(7, 19, 31)", "circle-stroke-width": 1.5 },
+        paint: { "circle-color": MAP_COLORS.white, "circle-radius": 5, "circle-stroke-color": MAP_COLORS.brandDeep, "circle-stroke-width": 2.5 },
       });
       map.addLayer({
         id: "beach-names",
@@ -194,11 +179,14 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
         filter: ["!", ["has", "point_count"]],
         minzoom: 8,
         layout: { "text-field": ["get", "name"], "text-size": 12, "text-offset": [0, 1.1], "text-anchor": "top", "text-font": ["DIN Pro Medium", "Arial Unicode MS Regular"] },
-        paint: { "text-color": NEUTRAL, "text-halo-color": "rgb(7, 19, 31)", "text-halo-width": 1.2 },
+        paint: { "text-color": MAP_COLORS.ink, "text-halo-color": MAP_COLORS.white, "text-halo-width": 1.6 },
       });
 
-      // Selected beach: zones on the cleanliness scale plus a glowing outline.
+      // Selected beach: zones on the cleanliness scale inside a firm outline.
       map.addSource("zones", { type: "geojson", data: EMPTY, promoteId: "zoneId" });
+      // The score labels get their own copy of the zones. Hover state lives on "zones", and Mapbox GL 3.31
+      // throws on every frame when a source with feature state also feeds a symbol layer while its data is swapped.
+      map.addSource("zone-labels", { type: "geojson", data: EMPTY });
       map.addSource("outline", { type: "geojson", data: EMPTY });
       map.addLayer({
         id: "zones-fill",
@@ -215,9 +203,9 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
         type: "line",
         source: "zones",
         paint: {
-          "line-color": "rgb(7, 19, 31)",
+          "line-color": MAP_COLORS.ink,
           "line-width": ["case", ["boolean", ["feature-state", "hover"], false], 3, 1.2],
-          "line-opacity": 0.85,
+          "line-opacity": 0.9,
         },
       });
       map.addLayer({
@@ -225,27 +213,29 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
         type: "line",
         source: "outline",
         layout: { "line-join": "round" },
-        paint: { "line-color": "rgb(143, 227, 208)", "line-width": 14, "line-blur": 12, "line-opacity": 0.75 },
+        paint: { "line-color": MAP_COLORS.white, "line-width": 12, "line-blur": 8, "line-opacity": 0.9 },
       });
       map.addLayer({
         id: "outline-line",
         type: "line",
         source: "outline",
         layout: { "line-join": "round" },
-        paint: { "line-color": "rgb(234, 244, 244)", "line-width": 2 },
+        paint: { "line-color": MAP_COLORS.brandDeep, "line-width": 2.5 },
       });
       // Color is never the only signal: every zone carries its score on the map.
       map.addLayer({
         id: "zones-score",
         type: "symbol",
-        source: "zones",
+        source: "zone-labels",
         layout: {
           "text-field": ["to-string", ["get", "score"]],
-          "text-size": 14,
+          // Grows as the beach fills the screen, so the score stays in proportion to its zone. Long thin
+          // beaches fit at a lower zoom, where the gentler sizes keep neighbouring scores apart.
+          "text-size": ["interpolate", ["linear"], ["zoom"], 12, 15, 14.5, 19, 16, 28, 17.5, 34],
           "text-font": ["DIN Pro Bold", "Arial Unicode MS Bold"],
           "text-allow-overlap": true,
         },
-        paint: { "text-color": "rgb(255, 255, 255)", "text-halo-color": "rgb(7, 19, 31)", "text-halo-width": 1.6 },
+        paint: { "text-color": MAP_COLORS.ink, "text-halo-color": MAP_COLORS.white, "text-halo-width": 2.4 },
       });
 
       readyRef.current = true;
@@ -253,7 +243,6 @@ export function MapCanvas({ token, beaches, selectedId, detail, camera, padding,
       applySelection(map, latest.current.selectedId);
       if (latest.current.camera) runCamera(map, latest.current.camera, latest.current.padding, false);
       latest.current.onReady();
-      syncAway();
       startSpin();
     });
 
@@ -348,6 +337,7 @@ function applySelection(map: MapboxMap, selectedId: string | null) {
 
 function applyDetail(map: MapboxMap, detail: BeachDetail | null) {
   (map.getSource("zones") as GeoJSONSource).setData(detail?.zones ?? EMPTY);
+  (map.getSource("zone-labels") as GeoJSONSource).setData(detail?.zones ?? EMPTY);
   (map.getSource("outline") as GeoJSONSource).setData(detail?.outline ?? EMPTY);
   // Reset to transparent, then fade the new beach's zones in.
   map.setPaintProperty("zones-fill", "fill-opacity-transition", { duration: 0, delay: 0 });
@@ -356,17 +346,12 @@ function applyDetail(map: MapboxMap, detail: BeachDetail | null) {
   requestAnimationFrame(() => {
     if (!map.getLayer("zones-fill")) return;
     map.setPaintProperty("zones-fill", "fill-opacity-transition", { duration: 900, delay: 0 });
-    map.setPaintProperty("zones-fill", "fill-opacity", 0.62);
+    map.setPaintProperty("zones-fill", "fill-opacity", 0.85);
   });
 }
 
 function runCamera(map: MapboxMap, camera: CameraCommand, padding: Props["padding"], animate: boolean) {
   const duration = animate ? FLIGHT_MS : 0;
-  if (camera.kind === "globe") {
-    // Zoom out over wherever the user already is. Never reset to the starting view.
-    map.flyTo({ ...globeView(window.innerWidth), center: map.getCenter(), duration, padding: { top: 0, right: 0, bottom: 0, left: 0 } });
-    return;
-  }
   if (camera.bounds) {
     map.fitBounds(camera.bounds, { padding: withMargin(padding, 48), duration, maxZoom: 16.5, curve: 1.5 });
   } else if (camera.kind === "place") {

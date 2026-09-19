@@ -1,46 +1,60 @@
 @import "tailwindcss";
 
 /*
- * Palette: deep navy base, sea-foam accent. Green, yellow, orange, and red are
- * reserved for the cleanliness scale (lib/scores/config.ts) and never used here.
+ * Palette: white surfaces and the Shore Up blue. Light mode only.
+ * Every text pair below meets WCAG 2.1 AA (4.5:1), and every control edge meets 3:1.
+ *   brand         #499AB2  the logo blue. Fills, large shapes, and the map. Never behind small white text (3.2:1).
+ *   brand-strong  #2A6F85  buttons, links, focus rings. White on it is 5.7:1, and it is 5.7:1 on white.
+ *   brand-deep    #1D5467  hover and pressed states.
+ *   ink / ink-soft         body text (14:1) and secondary text (6.2:1 on white, 5.2:1 on tint).
+ *   wash / surface / tint  page background, cards, and raised or selected fills.
+ *   line / line-strong     decorative dividers, and control borders that must reach 3:1.
+ * Green, yellow, orange, and red are reserved for the cleanliness scale
+ * (lib/scores/config.ts) and never used here.
  */
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --color-abyss: #07131f;
-  --color-navy: #0c2033;
-  --color-tide: #173650;
-  --color-foam: #8fe3d0;
-  --color-foam-deep: #0b3b3a;
-  --color-shell: #eaf4f4;
-  --color-mist: #9db3c2;
-  --color-line: rgb(234 244 244 / 0.12);
+  --color-brand: #499ab2;
+  --color-brand-strong: #2a6f85;
+  --color-brand-deep: #1d5467;
+  --color-ink: #0f2f3a;
+  --color-ink-soft: #4a6572;
+  --color-wash: #f1f8fa;
+  --color-surface: #ffffff;
+  --color-tint: #ddeef3;
+  --color-line: #c9dee5;
+  --color-line-strong: #5f8c9b;
+}
+
+html {
+  color-scheme: light;
 }
 
 html,
 body {
-  background: var(--color-abyss);
-  color: var(--color-shell);
+  background: var(--color-wash);
+  color: var(--color-ink);
   font-family: var(--font-sans);
 }
 
-/* Frosted glass panel floating over the map. */
+/* Frosted white panel floating over the map. */
 .glass {
-  background: rgb(9 26 42 / 0.72);
+  background: rgb(255 255 255 / 0.88);
   border: 1px solid var(--color-line);
-  backdrop-filter: blur(18px) saturate(1.3);
-  -webkit-backdrop-filter: blur(18px) saturate(1.3);
-  box-shadow: 0 12px 40px rgb(2 8 14 / 0.45);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  box-shadow: 0 10px 30px rgb(15 47 58 / 0.14);
 }
 
-/* Panels that hold long text sit over busy satellite imagery, so they are nearly opaque. */
+/* Panels that hold long text are nearly opaque, so the map never shows through the words. */
 .glass-panel {
-  background: rgb(9 26 42 / 0.97);
+  background: rgb(255 255 255 / 0.98);
 }
 
 /* In the base layer so component utilities (like the search input's own ring) can override it. */
 @layer base {
   :focus-visible {
-    outline: 2px solid var(--color-foam);
+    outline: 2px solid var(--color-brand-strong);
     outline-offset: 2px;
   }
 }
@@ -50,6 +64,68 @@ body {
 }
 @keyframes fade-in {
   from {
+    opacity: 0;
+  }
+}
+
+/*
+ * The trash bag. Every animation runs once per change and then rests, so nothing on the
+ * page moves for more than a moment (WCAG 2.2.2), and all of it is off under reduced motion.
+ */
+.bag-level {
+  transition: transform 700ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.bag-slosh {
+  animation: bag-slosh 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes bag-slosh {
+  from {
+    transform: translateX(-40px);
+  }
+}
+.bag-drop {
+  animation: bag-drop 650ms cubic-bezier(0.3, 0, 0.4, 1) both;
+}
+@keyframes bag-drop {
+  0% {
+    transform: translateY(-80px) rotate(-25deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  62% {
+    transform: translateY(2.5px) rotate(4deg);
+  }
+  80% {
+    transform: translateY(-1.5px) rotate(-2deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+.bag-drop,
+.bag-squash {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.bag-squash {
+  animation: bag-squash 520ms ease-out 260ms both;
+}
+@keyframes bag-squash {
+  35% {
+    transform: scale(1.045, 0.965);
+  }
+  70% {
+    transform: scale(0.99, 1.012);
+  }
+}
+.bag-count {
+  animation: bag-count 380ms ease-out both;
+}
+@keyframes bag-count {
+  from {
+    transform: translateY(0.35em);
     opacity: 0;
   }
 }
@@ -65,11 +141,15 @@ body {
   right: var(--panel-offset, 0px);
 }
 .mapboxgl-ctrl-attrib.mapboxgl-compact {
-  background: rgb(9 26 42 / 0.72);
+  background: rgb(255 255 255 / 0.88);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fade-in {
+  .fade-in,
+  .bag-slosh,
+  .bag-drop,
+  .bag-squash,
+  .bag-count {
     animation: none;
   }
   * {

@@ -35,6 +35,11 @@ export function getBeach(id: string): BeachSummary | undefined {
   return listBeaches().find((b) => b.id === id);
 }
 
+/** All outlines with only an id, for the map's sand layer. */
+export function listBeachShapes(): FeatureCollection<Polygon | MultiPolygon> {
+  return { type: "FeatureCollection", features: beaches.map((f) => ({ type: "Feature", properties: { id: f.properties?.id }, geometry: f.geometry })) };
+}
+
 export function getBeachShape(id: string): Shape | undefined {
   return beaches.find((f) => f.properties?.id === id);
 }

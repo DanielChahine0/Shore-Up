@@ -20,19 +20,19 @@ export function ZoneTooltip({ zone, x, y }: { zone: ZoneScore; x: number; y: num
       style={{ left: `clamp(8px, ${x + 16}px, calc(100% - 264px))`, top: `clamp(8px, ${y + 16}px, calc(100% - 190px))` }}
     >
       <div className="flex items-center justify-between gap-2">
-        <p className="text-sm font-semibold text-shell">{zone.name}</p>
+        <p className="text-sm font-semibold text-ink">{zone.name}</p>
         <ScoreBadge score={zone.score} />
       </div>
-      <p className="mt-1.5 text-[13px] leading-snug text-shell">{zone.summary}</p>
+      <p className="mt-1.5 text-[13px] leading-snug text-ink">{zone.summary}</p>
       <dl className="mt-2.5 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs">
-        <dt className="text-mist">Water</dt>
-        <dd className="text-shell">{WATER_LABELS[zone.waterStatus]}</dd>
-        <dt className="text-mist">Litter</dt>
-        <dd className="text-shell">{LITTER_LABELS[zone.litterLevel]}</dd>
-        <dt className="text-mist">Updated</dt>
-        <dd className="text-shell">{timeAgo(zone.updatedAt)}</dd>
+        <dt className="text-ink-soft">Water</dt>
+        <dd className="text-ink">{WATER_LABELS[zone.waterStatus]}</dd>
+        <dt className="text-ink-soft">Litter</dt>
+        <dd className="text-ink">{LITTER_LABELS[zone.litterLevel]}</dd>
+        <dt className="text-ink-soft">Updated</dt>
+        <dd className="text-ink">{timeAgo(zone.updatedAt)}</dd>
       </dl>
-      {isDemo && <p className="mt-2 text-[11px] text-mist">{SOURCE_LABELS.demo}</p>}
+      {isDemo && <p className="mt-2 text-[11px] text-ink-soft">{SOURCE_LABELS.demo}</p>}
     </div>
   );
 }
