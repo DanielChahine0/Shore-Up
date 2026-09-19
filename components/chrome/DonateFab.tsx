@@ -1,14 +1,16 @@
 import { HeartIcon } from "@/components/ui/icons";
 
-/** Small round donate button, bottom right, sitting above the map attribution. */
+/**
+ * Small round donate button. TrashLogger places it, stacked directly above the
+ * "Log trash" button in the bottom-right corner of the map.
+ */
 export function DonateFab({ onClick }: { onClick: () => void }) {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-label="Donate"
-      className="glass absolute z-10 flex h-12 w-12 items-center justify-center rounded-full text-foam transition-[bottom,right] duration-300 hover:text-shell"
-      style={{ bottom: "calc(var(--sheet-offset, 0px) + 44px)", right: "calc(var(--panel-offset, 0px) + 16px)" }}
+      className="glass flex h-12 w-12 items-center justify-center rounded-full text-foam transition-colors hover:text-shell"
     >
       <HeartIcon className="h-5 w-5" />
     </button>
