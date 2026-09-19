@@ -8,9 +8,9 @@ type Mode = "signin" | "signup";
 
 const field = "h-11 w-full rounded-xl border border-line bg-navy px-3 text-sm text-shell placeholder:text-mist";
 
-export function SignInForm({ next, linkError }: { next: string; linkError: boolean }) {
+export function SignInForm({ next, linkError, initialMode = "signin" }: { next: string; linkError: boolean; initialMode?: Mode }) {
   const router = useRouter();
-  const [mode, setMode] = useState<Mode>("signin");
+  const [mode, setMode] = useState<Mode>(initialMode);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(linkError ? "That sign-in link didn't work or has expired. Try again." : null);
   const [checkEmail, setCheckEmail] = useState<string | null>(null);

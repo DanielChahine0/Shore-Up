@@ -6,5 +6,6 @@ export const metadata: Metadata = { title: "Sign in" };
 export default async function SignInPage({ searchParams }: PageProps<"/signin">) {
   const params = await searchParams;
   const next = typeof params.next === "string" && params.next.startsWith("/") && !params.next.startsWith("//") ? params.next : "/";
-  return <SignInForm next={next} linkError={params.error === "link"} />;
+  // The welcome popup's "Create an account" lands straight on the sign-up form.
+  return <SignInForm next={next} linkError={params.error === "link"} initialMode={params.mode === "signup" ? "signup" : "signin"} />;
 }
