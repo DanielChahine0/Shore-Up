@@ -1,0 +1,22 @@
+name: Beach data
+description: A beach is missing, misplaced, or shows the wrong water quality
+labels: [data]
+body:
+  - type: input
+    id: beach
+    attributes:
+      label: Beach and location
+      placeholder: Woodbine Beach, Toronto, Canada
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong or missing
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: A link to the OpenStreetMap feature or the official water quality page, if there is one.

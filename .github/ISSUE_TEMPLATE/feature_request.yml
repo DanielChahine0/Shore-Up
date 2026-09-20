@@ -1,0 +1,17 @@
+name: Feature request
+description: Suggest an idea for Shore Up
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: Who is this for, and what can they not do today?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+    validations:
+      required: true

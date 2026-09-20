@@ -1,0 +1,29 @@
+name: Bug report
+description: Something in Shore Up is broken or looks wrong
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the beach ...
+        2. Click ...
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Browser and device
+      placeholder: Chrome 140 on macOS, or Safari on iPhone 16
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots or console errors

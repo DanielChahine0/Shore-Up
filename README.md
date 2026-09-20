@@ -1,8 +1,56 @@
+<div align="center">
+
+<img src="public/brand/shore-up-logo.png" alt="Shore Up logo" width="120" />
+
 # Shore Up
 
-See how clean a beach is, zone by zone, and who is already helping it.
+**See how clean a beach is, zone by zone, and who is already helping it.**
+
+[Live demo](https://shore-up-danielchahine0-stripe.vercel.app) · [Decisions log](DECISIONS.md) · [Contributing](CONTRIBUTING.md)
+
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Next.js 16](https://img.shields.io/badge/Next.js-16-black)
+![React 19](https://img.shields.io/badge/React-19-149eca)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)
+![Supabase](https://img.shields.io/badge/Supabase-Postgres%20%2B%20Auth-3ecf8e)
+
+</div>
+
 Shore Up opens on a 3D globe, flies into a beach, and shows its zones on a green-to-red cleanliness scale.
 Volunteers post cleanups, and every post shows up on the map, in their community, and on their profile.
+It was built in a one-day hackathon on 2026-09-19.
+
+| Globe | Beach zones |
+| --- | --- |
+| ![The Shore Up globe with beach clusters](docs/screenshots/globe.png) | ![Woodbine Beach split into scored zones with the side panel open](docs/screenshots/beach.png) |
+
+## Features
+
+- **3D globe and search.**
+  469 beaches and 3,092 zones, with shapes from OpenStreetMap.
+- **Zone scores.**
+  Each zone gets a 0 to 100 score from water quality and litter, and unsafe water always shows red.
+- **Real water quality.**
+  440 zones carry official readings from the City of Toronto, NSW Beachwatch, and the European Environment Agency.
+- **Cleanups and events.**
+  Volunteers host cleanups, organizers check people in, and posts update the litter score on the map.
+- **Clean sessions.**
+  Log trash item by item while you walk the beach.
+- **Profiles, communities, and badges.**
+  Every post lands in a Community News feed and counts toward levels and badges.
+- **Private by default.**
+  Uploads are validated and stripped of EXIF and GPS data, and analytics go through a first-party endpoint.
+
+## Tech stack
+
+| Layer | Choice |
+| --- | --- |
+| App | Next.js 16 (App Router, server actions), React 19, TypeScript |
+| Map | Mapbox GL JS globe, Turf for zone splitting |
+| Data and auth | Supabase (Postgres, Row Level Security, Auth, Storage) |
+| Styling | Tailwind CSS 4 |
+| Tests | Vitest for unit tests, Playwright for end-to-end |
+| Hosting and analytics | Vercel and PostHog, provisioned through Stripe Projects |
 
 ## Status
 
@@ -126,3 +174,21 @@ Map data is (c) OpenStreetMap contributors, and the water quality sources are cr
 - `components/map/` holds the globe, layers, and camera.
 - `components/panel/` holds the beach side panel, which becomes a bottom sheet on phones.
 - `DECISIONS.md` logs every judgment call made where the spec was open.
+
+## Contributing
+
+Issues and pull requests are welcome.
+Read [CONTRIBUTING.md](CONTRIBUTING.md) for setup, checks, and conventions, and the [Code of Conduct](CODE_OF_CONDUCT.md) before taking part.
+Report security problems privately, as described in [SECURITY.md](SECURITY.md).
+
+## Acknowledgments
+
+- Map data is (c) [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, available under the Open Database License.
+- Water quality comes from [City of Toronto Open Data](https://open.toronto.ca/), [NSW Beachwatch](https://www.beachwatch.nsw.gov.au/), and the [European Environment Agency](https://www.eea.europa.eu/).
+- The globe is rendered with [Mapbox GL JS](https://www.mapbox.com/).
+
+## License
+
+The code is released under the [MIT License](LICENSE).
+Beach shapes in `data/geo/` are derived from OpenStreetMap and stay under the [Open Database License](https://opendatacommons.org/licenses/odbl/).
+Water quality readings in `data/seed/water-official.json` remain under the terms of the authority that published them.
