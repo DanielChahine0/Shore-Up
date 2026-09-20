@@ -23,8 +23,7 @@
     "seed": "tsx scripts/seed.ts",
     "typecheck": "next typegen && tsc --noEmit",
     "gen:demo": "tsx scripts/gen-demo-state.ts",
-    "test:e2e": "playwright test",
-    "loop:incognito": "tsx scripts/incognito-loop.ts"
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
