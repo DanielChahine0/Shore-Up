@@ -63,3 +63,6 @@ playwright-report/
 
 # other sessions' worktrees carry their own copy of .env.local
 .claude/worktrees/
+
+# pnpm loop:incognito --click
+/screenshots/

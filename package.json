@@ -1,6 +1,17 @@
 {
   "name": "shore-up",
   "version": "0.1.0",
+  "description": "See how clean a beach is, zone by zone, and who is already helping it.",
+  "license": "MIT",
+  "author": "Daniel Chahine",
+  "homepage": "https://shore-up-danielchahine0-stripe.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielChahine0/Shore-Up.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DanielChahine0/Shore-Up/issues"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
